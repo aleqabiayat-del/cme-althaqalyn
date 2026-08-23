@@ -413,6 +413,9 @@
         <input type="text" id="lookupIdInput" inputmode="numeric" placeholder="مثال: 123">
         <button class="lookup-btn" id="lookupIdBtn">🔎 بحث / Search</button>
       </div>
+      <div style="text-align:center; margin-top:6px;">
+        <button id="toggleAdminModeBtn" style="background:none; border:none; color:var(--muted); font-size:11.5px; text-decoration:underline; cursor:pointer; padding:4px;">🔒 تفعيل وضع الإدارة (لحذف السجلات)</button>
+      </div>
       <div id="lookupResult" class="lookup-result"></div>
     </div>
 
@@ -877,6 +880,8 @@ function renderEntryRows(id, adminMode){
   `;
 }
 
+let lookupAdminMode = false;
+
 function doLookup(){
   const id = document.getElementById('lookupIdInput').value.trim();
   const result = document.getElementById('lookupResult');
@@ -894,7 +899,7 @@ function doLookup(){
       <div class="lookup-name">${staff.nameAr} <span class="en" style="font-weight:600; color:var(--muted);">— ${staff.nameEn}</span></div>
       <div class="lookup-sub">${staff.title} · ${staff.dept}${staff.unit && staff.unit !== staff.dept ? ' · ' + staff.unit : ''}</div>
       <div class="lookup-total">${total} نقطة/ساعة <span class="en">points/hrs</span></div>
-      ${renderEntryRows(id)}
+      ${renderEntryRows(id, lookupAdminMode)}
     </div>
   `;
 }
@@ -902,6 +907,20 @@ function doLookup(){
 document.getElementById('lookupIdBtn').addEventListener('click', doLookup);
 document.getElementById('lookupIdInput').addEventListener('keydown', (e) => {
   if(e.key === 'Enter') doLookup();
+});
+
+document.getElementById('toggleAdminModeBtn').addEventListener('click', async () => {
+  if(lookupAdminMode){
+    lookupAdminMode = false;
+    document.getElementById('toggleAdminModeBtn').textContent = '🔒 تفعيل وضع الإدارة (لحذف السجلات)';
+    refreshLookupIfShown();
+    return;
+  }
+  const pin = prompt('أدخل رمز المسؤول لتفعيل وضع الإدارة:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+  lookupAdminMode = true;
+  document.getElementById('toggleAdminModeBtn').textContent = '🔓 إلغاء وضع الإدارة';
+  refreshLookupIfShown();
 });
 
 function refreshLookupIfShown(){
