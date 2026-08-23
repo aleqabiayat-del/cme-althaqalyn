@@ -975,9 +975,11 @@ document.getElementById('downloadCurrentBtn').addEventListener('click', async ()
   XLSX.writeFile(wb, 'نقاط_التعليم_الطبي_المستمر_الحالية.xlsx');
 });
 
-document.getElementById('uploadExcelPointsBtn').addEventListener('click', async () => {
-  const pin = prompt('أدخل رمز المسؤول لرفع الشيت:');
-  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+document.getElementById('uploadExcelPointsBtn').addEventListener('click', () => {
+  // Open the file picker immediately (must stay directly inside the click
+  // handler with no "await" before it, or some mobile browsers — notably
+  // iOS Safari — silently refuse to open it). The admin PIN is checked
+  // right after a file is chosen instead.
   document.getElementById('excelPointsFileInput').click();
 });
 
@@ -987,6 +989,10 @@ document.getElementById('excelPointsFileInput').addEventListener('change', async
   if(!file) return;
 
   const status = document.getElementById('excelImportStatus');
+
+  const pin = prompt('أدخل رمز المسؤول لرفع الشيت:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+
   status.textContent = 'جارٍ قراءة الملف...';
 
   try{
