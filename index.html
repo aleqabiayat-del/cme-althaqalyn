@@ -105,7 +105,6 @@
   .list{ padding:12px 20px; min-height:60px; }
   .empty{ color:var(--muted); font-size:13px; text-align:center; padding:22px 8px; }
  
-  /* تصميم بطاقة النشاط */
   .item{
     display:flex;
     justify-content:space-between;
@@ -121,7 +120,6 @@
   }
   .item:last-child{ margin-bottom:0; }
 
-  /* النشاط المنتهي (خافت وفي الأسفل) */
   .item.past-item{
     opacity: 0.58;
     background: #F8FAF9;
@@ -160,7 +158,6 @@
   .item-title{ font-weight:800; font-size:17px; margin-bottom:6px; line-height:1.4; color:var(--ink); }
   .item-meta{ font-size:13px; color:var(--muted); display:flex; flex-wrap:wrap; gap:6px 16px; margin-bottom:10px; font-weight:600; }
   
-  /* أزرار التعديل والحذف على صفحة اليسار */
   .item-actions-left{
     flex:none;
     display:flex;
@@ -210,7 +207,6 @@
   
   .specialized-merged .list{ padding:8px 20px 20px; }
   
-  /* صندوق الوصف مع ميزة أول 3 أسطر */
   .item-desc-box{
     margin-top:10px;
     padding:14px 16px;
@@ -218,8 +214,6 @@
     border-radius:10px;
     border:1px solid #E2E8F0;
     border-inline-start:4px solid var(--teal);
-    direction:auto;
-    text-align:start;
   }
   .item-desc-title{
     font-size:13.5px;
@@ -233,7 +227,7 @@
   .item-desc-content{
     font-size:15px;
     color:#1A202C;
-    line-height:1.8;
+    line-height:1.85;
     word-break:break-word;
     display:-webkit-box;
     -webkit-line-clamp:3;
@@ -245,10 +239,15 @@
     -webkit-line-clamp:unset;
     overflow:visible;
   }
+  .item-desc-content.is-en {
+    direction: ltr !important;
+    text-align: left !important;
+    font-family: 'Inter', sans-serif;
+  }
   .item-desc-content b, .item-desc-content strong{ font-weight:800; color:#0F172A; }
   .item-desc-content i, .item-desc-content em{ font-style:italic; }
   .item-desc-content .desc-head{ font-weight:800; font-size:16px; color:var(--teal); margin:8px 0 4px; }
-  .item-desc-content .desc-li{ margin-bottom:4px; padding-inline-start:8px; }
+  .item-desc-content .desc-li{ margin-bottom:4px; padding-inline-start:6px; }
 
   .desc-readmore-btn{
     background:none; border:none; padding:6px 0 0; cursor:pointer;
@@ -257,7 +256,6 @@
   }
   .desc-readmore-btn:hover{ text-decoration:underline; }
 
-  /* شريط أزرار التسجيل */
   .item-bottom-actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; align-items:center; }
   .reg-btn{
     display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:9px;
@@ -1272,7 +1270,15 @@ function isPastActivity(dateStr, timeStr){
   }
 }
 
-// تنسيق نصوص الوصف وعرضها بشكل جميل
+// فحص هل النص إنجليزي لضبط العنوان والاتجاه
+function isEnglishText(text){
+  if(!text) return false;
+  const latinCount = (text.match(/[a-zA-Z]/g) || []).length;
+  const arabicCount = (text.match(/[\u0600-\u06FF]/g) || []).length;
+  return latinCount > arabicCount;
+}
+
+// معالجة نصوص الوصف Markdown
 function formatDescriptionText(text){
   if(!text) return '';
   let safe = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -1291,7 +1297,7 @@ function insertFormat(startTag, endTag){
   const start = textarea.selectionStart;
   const end = textarea.selectionEnd;
   const text = textarea.value;
-  const selectedText = text.substring(start, end) || 'نص';
+  const selectedText = text.substring(start, end) || 'Text';
   const replacement = startTag + selectedText + endTag;
   textarea.value = text.substring(0, start) + replacement + text.substring(end);
   textarea.focus();
@@ -1312,14 +1318,12 @@ function renderItemsHtml(items, catKey){
     }
   });
 
-  // الأنشطة القادمة تترتب من الأقرب للأبعد في أعلى القائمة
   upcoming.sort((a,b) => {
     const da = (a.date || '') + 'T' + (a.time || '00:00');
     const db = (b.date || '') + 'T' + (b.time || '00:00');
     return da.localeCompare(db);
   });
 
-  // الأنشطة المنتهية تترتب من الأحدث للأقدم في أسفل القائمة
   past.sort((a,b) => {
     const da = (a.date || '') + 'T' + (a.time || '00:00');
     const db = (b.date || '') + 'T' + (b.time || '00:00');
@@ -1341,6 +1345,10 @@ function renderItemsHtml(items, catKey){
           const catDef = SPECIALIZED_CATS.find(c => c.key === ck);
           return catDef ? `<span class="cat-tag cat-${catDef.color}">${catDef.icon} ${catDef.ar}</span>` : '';
         }).join(' ') : '');
+
+    const isEn = isEnglishText(it.desc || it.title);
+    const descHeaderTitle = isEn ? '🎯 Objectives, Topics & Details' : '🎯 الأهداف والمحاور والتفاصيل';
+    const readMoreText = isEn ? '🔽 Show Full Details' : '🔽 عرض باقي التفاصيل الكاملة';
 
     return `
       <div class="item ${isPast ? 'past-item' : ''}">
@@ -1364,11 +1372,11 @@ function renderItemsHtml(items, catKey){
             
             ${it.desc ? `
             <div class="item-desc-box">
-              <div class="item-desc-title">🎯 الأهداف والمحاور والتفاصيل</div>
-              <div class="item-desc-content" id="desc_${it.id}">
+              <div class="item-desc-title">${descHeaderTitle}</div>
+              <div class="item-desc-content ${isEn ? 'is-en' : ''}" id="desc_${it.id}">
                 ${formatDescriptionText(it.desc)}
               </div>
-              <button type="button" class="desc-readmore-btn" onclick="toggleDescClamp('${it.id}', this)">🔽 عرض باقي التفاصيل الكاملة</button>
+              <button type="button" class="desc-readmore-btn" onclick="toggleDescClamp('${it.id}', this, ${isEn})">${readMoreText}</button>
             </div>` : ''}
 
             <div class="item-bottom-actions">
@@ -1386,14 +1394,14 @@ function renderItemsHtml(items, catKey){
   }).join('');
 }
 
-function toggleDescClamp(id, btn){
+function toggleDescClamp(id, btn, isEn){
   const el = document.getElementById('desc_' + id);
   if(el.classList.contains('expanded')){
     el.classList.remove('expanded');
-    btn.innerHTML = '🔽 عرض باقي التفاصيل الكاملة';
+    btn.innerHTML = isEn ? '🔽 Show Full Details' : '🔽 عرض باقي التفاصيل الكاملة';
   } else {
     el.classList.add('expanded');
-    btn.innerHTML = '🔼 إخفاء التفاصيل الإضافية';
+    btn.innerHTML = isEn ? '🔼 Hide Details' : '🔼 إخفاء التفاصيل الإضافية';
   }
 }
 
