@@ -134,6 +134,17 @@
   .item-body{ flex:1; min-width:0; }
   .item-title{ font-weight:700; font-size:14px; margin-bottom:3px; }
   .item-meta{ font-size:11.5px; color:var(--muted); display:flex; flex-wrap:wrap; gap:2px 8px; margin-bottom:6px; }
+  .cat-checkbox-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .cat-checkbox{
+    display:flex; align-items:center; gap:6px; border:1.5px solid var(--line);
+    border-radius:10px; padding:8px 12px; font-size:12.5px; font-weight:700;
+    cursor:pointer; color:var(--muted);
+  }
+  .cat-checkbox input{ width:auto; margin:0; }
+  .cat-checkbox.cat-teal:has(input:checked){ background:var(--teal-soft); color:var(--teal); border-color:var(--teal); }
+  .cat-checkbox.cat-rose:has(input:checked){ background:var(--rose-soft); color:var(--rose); border-color:var(--rose); }
+  .cat-checkbox.cat-violet:has(input:checked){ background:var(--violet-soft); color:var(--violet); border-color:var(--violet); }
+  .cat-checkbox.cat-blue:has(input:checked){ background:var(--blue-soft); color:var(--blue); border-color:var(--blue); }
   .cat-filter-row{ display:flex; flex-wrap:wrap; gap:8px; padding:14px 16px 0; }
   .cat-filter-chip{
     border:1.5px solid var(--line); background:#fff; border-radius:100px;
@@ -186,6 +197,13 @@
   }
   .item:hover .del-btn{ opacity:1; }
   .del-btn:hover{ background:#F1E4E4; color:#B5566B; }
+  .edit-btn{
+    position:absolute; inset-inline-start:26px; top:10px; width:22px; height:22px;
+    display:flex; align-items:center; justify-content:center; border:none; background:none;
+    color:var(--muted); opacity:0; cursor:pointer; border-radius:6px; font-size:13px;
+  }
+  .item:hover .edit-btn{ opacity:1; }
+  .edit-btn:hover{ background:var(--teal-soft); color:var(--teal); }
  
   .add-row{ padding:8px 16px 14px; }
   .add-btn{
@@ -518,13 +536,13 @@
     </div>
     <div class="modal-body">
       <div class="field" id="categoryFieldWrap" style="display:none;">
-        <label>الفئة المستهدفة (Target Audience) *</label>
-        <select id="f-category">
-          <option value="physicians">🩺 الأطباء — Physicians</option>
-          <option value="nurses">💉 الممرضين — Nurses</option>
-          <option value="pharmacists">💊 الصيادلة — Pharmacists</option>
-          <option value="support">🧑‍⚕️ الكادر الطبي المساعد — Allied Health Staff</option>
-        </select>
+        <label>الفئة المستهدفة (يمكن اختيار أكثر من فئة) *</label>
+        <div class="cat-checkbox-row">
+          <label class="cat-checkbox cat-teal"><input type="checkbox" class="f-cat-checkbox" value="physicians"> 🩺 الأطباء</label>
+          <label class="cat-checkbox cat-rose"><input type="checkbox" class="f-cat-checkbox" value="nurses"> 💉 الممرضين</label>
+          <label class="cat-checkbox cat-violet"><input type="checkbox" class="f-cat-checkbox" value="pharmacists"> 💊 الصيادلة</label>
+          <label class="cat-checkbox cat-blue"><input type="checkbox" class="f-cat-checkbox" value="support"> 🧑‍⚕️ الكادر الطبي المساعد</label>
+        </div>
       </div>
       <div class="field">
         <label>عنوان النشاط</label>
@@ -794,11 +812,16 @@ function renderSpecialized(){
   const grid = document.getElementById('gridSpecialized');
   grid.innerHTML = '';
 
-  const merged = [];
+  const seen = new Map();
   SPECIALIZED_CATS.forEach(cat => {
     const items = appData[cat.key] || [];
-    items.forEach(it => merged.push({ ...it, _catKey: cat.key, _catAr: cat.ar, _catIcon: cat.icon, _catColor: cat.color }));
+    items.forEach(it => {
+      if(!seen.has(it.id)){
+        seen.set(it.id, { ...it, _catKeys: (it.categories && it.categories.length ? it.categories : [cat.key]) });
+      }
+    });
   });
+  const merged = Array.from(seen.values());
 
   const filterChips = SPECIALIZED_CATS.map(cat =>
     `<button type="button" class="cat-filter-chip cat-${cat.color}" data-cat="${cat.key}" onclick="toggleCatFilter(this)">${cat.icon} ${cat.ar}</button>`
@@ -828,7 +851,7 @@ function toggleCatFilter(btn){
     btn.classList.add('active');
   }
   const merged = window._mergedSpecialized || [];
-  const filtered = activeCatFilters.size === 0 ? merged : merged.filter(it => activeCatFilters.has(it._catKey));
+  const filtered = activeCatFilters.size === 0 ? merged : merged.filter(it => it._catKeys.some(ck => activeCatFilters.has(ck)));
   document.getElementById('specializedList').innerHTML = renderItemsHtml(filtered, null);
 }
 
@@ -1231,16 +1254,23 @@ function renderItemsHtml(items, catKey){
   return sortedItems.map(it => {
     const isPast = isPastActivity(it.date, it.time);
     const regs = appData.registrations[it.id] || [];
-    const itemCatKey = catKey === null ? it._catKey : catKey;
+    const itemCatKey = catKey === null ? 'specialized' : catKey;
+    const catTags = it._catKeys
+      ? it._catKeys.map(ck => {
+          const catDef = SPECIALIZED_CATS.find(c => c.key === ck);
+          return catDef ? `<span class="cat-tag cat-${catDef.color}">${catDef.icon} ${catDef.ar}</span>` : '';
+        }).join(' ')
+      : '';
     return `
       <div class="item ${isPast ? 'past-item' : ''}">
         <button class="del-btn" onclick="deleteItem('${itemCatKey}', '${it.id}')">🗑️</button>
+        <button class="edit-btn" onclick="openEditModal('${itemCatKey}', '${it.id}')">✏️</button>
         <div class="date-pill" style="${isPast ? 'background:#E2E8F0; color:#64748B;' : ''}">
           <span class="d">${it.date ? it.date.split('-')[2] : '--'}</span>
           <span class="m">${it.date ? it.date.split('-')[1] : ''}</span>
         </div>
         <div class="item-body">
-          ${it._catAr ? `<span class="cat-tag cat-${it._catColor}">${it._catIcon} ${it._catAr}</span>` : ''}
+          ${catTags}
           <div class="item-title">
             ${it.title}
             ${it.units ? `<span style="font-size:10px; background:var(--amber-soft); color:var(--amber); padding:2px 6px; border-radius:4px;">${it.units} وحدات</span>` : ''}
@@ -1273,14 +1303,19 @@ function toggleDesc(btn){
   btn.textContent = isOpen ? '🎯 الأهداف والتفاصيل' : '🔽 إخفاء التفاصيل';
 }
 
+let editingItemId = null;
+let editingOriginalCatKey = null;
+
 async function openAddModal(catKey, catName){
   const pin = prompt('أدخل رمز المسؤول للنشر:');
   if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
   currentCategory = catKey;
+  editingItemId = null;
+  editingOriginalCatKey = null;
   const catWrap = document.getElementById('categoryFieldWrap');
   if(catKey === 'specialized'){
     catWrap.style.display = '';
-    document.getElementById('f-category').value = 'physicians';
+    document.querySelectorAll('.f-cat-checkbox').forEach(cb => cb.checked = false);
   } else {
     catWrap.style.display = 'none';
   }
@@ -1292,6 +1327,49 @@ async function openAddModal(catKey, catName){
   document.getElementById('f-time').value = '';
   document.getElementById('f-location').value = '';
   document.getElementById('f-units').value = '';
+  document.getElementById('saveActivityBtn').textContent = 'نشر النشاط';
+  document.getElementById('activityModal').classList.add('open');
+}
+
+async function openEditModal(catKey, id){
+  const pin = prompt('أدخل رمز المسؤول للتعديل:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+
+  let item = null;
+  if(catKey === 'specialized'){
+    for(const cat of SPECIALIZED_CATS){
+      const found = (appData[cat.key] || []).find(i => i.id === id);
+      if(found){ item = found; break; }
+    }
+  } else {
+    item = (appData[catKey] || []).find(i => i.id === id);
+  }
+  if(!item){ showToast('تعذر العثور على النشاط'); return; }
+
+  currentCategory = catKey;
+  editingItemId = id;
+  editingOriginalCatKey = catKey === 'specialized' ? null : catKey;
+
+  const catWrap = document.getElementById('categoryFieldWrap');
+  if(catKey === 'specialized'){
+    catWrap.style.display = '';
+    const selected = item.categories && item.categories.length ? item.categories : [];
+    document.querySelectorAll('.f-cat-checkbox').forEach(cb => {
+      cb.checked = selected.includes(cb.value);
+    });
+  } else {
+    catWrap.style.display = 'none';
+  }
+
+  document.getElementById('modalTitle').textContent = 'تعديل النشاط';
+  document.getElementById('f-title').value = item.title || '';
+  document.getElementById('f-desc').value = item.desc || '';
+  document.getElementById('f-speaker').value = item.speaker || '';
+  document.getElementById('f-date').value = item.date || '';
+  document.getElementById('f-time').value = item.time || '';
+  document.getElementById('f-location').value = item.location || '';
+  document.getElementById('f-units').value = item.units || '';
+  document.getElementById('saveActivityBtn').textContent = 'حفظ التعديلات';
   document.getElementById('activityModal').classList.add('open');
 }
 
@@ -1306,17 +1384,34 @@ document.getElementById('saveActivityBtn').addEventListener('click', () => {
 
   if(!title || !date){ showToast('يرجى إدخال العنوان والتاريخ'); return; }
 
-  let targetCategory = currentCategory;
   if(currentCategory === 'specialized'){
-    targetCategory = document.getElementById('f-category').value;
+    const checked = Array.from(document.querySelectorAll('.f-cat-checkbox:checked')).map(cb => cb.value);
+    if(checked.length === 0){ showToast('يرجى اختيار فئة مستهدفة واحدة على الأقل'); return; }
+
+    const id = editingItemId || ('act_' + Date.now());
+    if(editingItemId){ deleteSpecializedEverywhere(editingItemId); }
+    checked.forEach(catKey => {
+      if(!appData[catKey]) appData[catKey] = [];
+      appData[catKey].push({ id, title, desc, speaker, date, time, location, units, categories: checked });
+    });
+  } else {
+    const targetCategory = editingItemId ? editingOriginalCatKey : currentCategory;
+    const newItem = { id: editingItemId || ('act_' + Date.now()), title, desc, speaker, date, time, location, units };
+    if(!appData[targetCategory]) appData[targetCategory] = [];
+    if(editingItemId){
+      const idx = appData[targetCategory].findIndex(i => i.id === editingItemId);
+      if(idx > -1) appData[targetCategory][idx] = newItem;
+      else appData[targetCategory].push(newItem);
+    } else {
+      appData[targetCategory].push(newItem);
+    }
   }
 
-  const newItem = { id: 'act_' + Date.now(), title, desc, speaker, date, time, location, units };
-  if(!appData[targetCategory]) appData[targetCategory] = [];
-  appData[targetCategory].push(newItem);
   saveData();
   closeModal('activityModal');
-  showToast('تم نشر النشاط بنجاح');
+  showToast(editingItemId ? 'تم حفظ التعديلات بنجاح' : 'تم نشر النشاط بنجاح');
+  editingItemId = null;
+  editingOriginalCatKey = null;
 });
 
 function openRegModal(id, title){
@@ -1517,10 +1612,22 @@ async function deletePdf(id){
 async function deleteItem(catKey, id){
   const pin = prompt('أدخل رمز المسؤول للحذف:');
   if(!(await checkPin(pin))){ showToast('رمز غير صحيح'); return; }
-  appData[catKey] = appData[catKey].filter(i => i.id !== id);
+  if(catKey === 'specialized'){
+    SPECIALIZED_CATS.forEach(cat => {
+      if(appData[cat.key]) appData[cat.key] = appData[cat.key].filter(i => i.id !== id);
+    });
+  } else {
+    appData[catKey] = appData[catKey].filter(i => i.id !== id);
+  }
   delete appData.registrations[id];
   saveData();
   showToast('تم الحذف');
+}
+
+function deleteSpecializedEverywhere(id){
+  SPECIALIZED_CATS.forEach(cat => {
+    if(appData[cat.key]) appData[cat.key] = appData[cat.key].filter(i => i.id !== id);
+  });
 }
 
 function closeModal(id){
