@@ -105,7 +105,7 @@
   .list{ padding:12px 20px; min-height:60px; }
   .empty{ color:var(--muted); font-size:13px; text-align:center; padding:22px 8px; }
  
-  /* تصميم بطاقة النشاط الحديثة */
+  /* تصميم بطاقة النشاط */
   .item{
     display:flex;
     justify-content:space-between;
@@ -117,8 +117,28 @@
     background:#FFFFFF;
     margin-bottom:14px;
     box-shadow:0 2px 6px rgba(0,0,0,0.02);
+    transition:all .2s;
   }
   .item:last-child{ margin-bottom:0; }
+
+  /* النشاط المنتهي (خافت وفي الأسفل) */
+  .item.past-item{
+    opacity: 0.58;
+    background: #F8FAF9;
+    border-color: #E2E8F0;
+  }
+  .item.past-item:hover{
+    opacity: 0.85;
+  }
+  .past-badge{
+    font-size: 11px;
+    background: #E2E8F0;
+    color: #475569;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 800;
+    margin-inline-start: 6px;
+  }
 
   .item-content-wrapper{
     display:flex;
@@ -140,7 +160,7 @@
   .item-title{ font-weight:800; font-size:17px; margin-bottom:6px; line-height:1.4; color:var(--ink); }
   .item-meta{ font-size:13px; color:var(--muted); display:flex; flex-wrap:wrap; gap:6px 16px; margin-bottom:10px; font-weight:600; }
   
-  /* أزرار التعديل والحذف في الطرف الأيسر */
+  /* أزرار التعديل والحذف على صفحة اليسار */
   .item-actions-left{
     flex:none;
     display:flex;
@@ -190,7 +210,7 @@
   
   .specialized-merged .list{ padding:8px 20px 20px; }
   
-  /* صندوق الأهداف والوصف الكبير مع اقتصار 3 أسطر */
+  /* صندوق الوصف مع ميزة أول 3 أسطر */
   .item-desc-box{
     margin-top:10px;
     padding:14px 16px;
@@ -231,7 +251,7 @@
   .item-desc-content .desc-li{ margin-bottom:4px; padding-inline-start:8px; }
 
   .desc-readmore-btn{
-    background:none; border:none; padding:4px 0 0; cursor:pointer;
+    background:none; border:none; padding:6px 0 0; cursor:pointer;
     font-size:12.5px; font-weight:800; color:var(--teal);
     display:inline-flex; align-items:center; gap:4px;
   }
@@ -384,20 +404,6 @@
   .loading-overlay{
     position:fixed; inset:0; background:var(--bg); display:flex; align-items:center; justify-content:center;
     z-index:100; font-size:14px; color:var(--muted); font-weight:700;
-  }
-
-  .item.past-item{
-    opacity: 0.7;
-    background: #f4f6f5;
-  }
-  .past-badge{
-    font-size: 10px;
-    background: #E2E8F0;
-    color: #64748B;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-weight: 700;
-    margin-inline-start: 4px;
   }
 </style>
 </head>
@@ -639,7 +645,7 @@
 <div class="overlay" id="regModal">
   <div class="modal">
     <div class="modal-head">
-      <h3>تسجيل الحضور في النشاط</h3>
+      <h3>التسجيل في النشاط</h3>
       <button class="modal-close" onclick="closeModal('regModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -654,7 +660,7 @@
         <div class="staff-suggest" id="r-suggest"></div>
       </div>
 
-      <button class="save-btn" id="submitRegBtn">تأكيد التسجيل الآن</button>
+      <button class="save-btn" id="submitRegBtn">تأكيد التسجيل بالنشاط</button>
     </div>
   </div>
 </div>
@@ -1255,6 +1261,18 @@ document.getElementById('addExternalBtn').addEventListener('click', () => {
   openAddModal('external', 'قسم الأنشطة الخارجية');
 });
 
+function isPastActivity(dateStr, timeStr){
+  if(!dateStr) return false;
+  try{
+    const timeVal = timeStr ? timeStr.trim() : '23:59';
+    const actDateTime = new Date(`${dateStr}T${timeVal.length === 5 ? timeVal : '23:59'}:00`);
+    return actDateTime < new Date();
+  }catch(e){
+    return false;
+  }
+}
+
+// تنسيق نصوص الوصف وعرضها بشكل جميل
 function formatDescriptionText(text){
   if(!text) return '';
   let safe = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -1283,7 +1301,35 @@ function insertFormat(startTag, endTag){
 function renderItemsHtml(items, catKey){
   if(items.length === 0) return '<div class="empty">لا توجد أنشطة معلنة حالياً</div>';
 
-  return items.map(it => {
+  const upcoming = [];
+  const past = [];
+  
+  items.forEach(it => {
+    if(isPastActivity(it.date, it.time)){
+      past.push(it);
+    } else {
+      upcoming.push(it);
+    }
+  });
+
+  // الأنشطة القادمة تترتب من الأقرب للأبعد في أعلى القائمة
+  upcoming.sort((a,b) => {
+    const da = (a.date || '') + 'T' + (a.time || '00:00');
+    const db = (b.date || '') + 'T' + (b.time || '00:00');
+    return da.localeCompare(db);
+  });
+
+  // الأنشطة المنتهية تترتب من الأحدث للأقدم في أسفل القائمة
+  past.sort((a,b) => {
+    const da = (a.date || '') + 'T' + (a.time || '00:00');
+    const db = (b.date || '') + 'T' + (b.time || '00:00');
+    return db.localeCompare(da);
+  });
+
+  const sortedItems = [...upcoming, ...past];
+
+  return sortedItems.map(it => {
+    const isPast = isPastActivity(it.date, it.time);
     const itemCatKey = catKey === null ? 'specialized' : catKey;
     const regs = (appData.registrations && appData.registrations[it.id]) ? appData.registrations[it.id] : [];
     const catTags = it.categories && it.categories.length
@@ -1297,9 +1343,9 @@ function renderItemsHtml(items, catKey){
         }).join(' ') : '');
 
     return `
-      <div class="item">
+      <div class="item ${isPast ? 'past-item' : ''}">
         <div class="item-content-wrapper">
-          <div class="date-pill">
+          <div class="date-pill" style="${isPast ? 'background:#E2E8F0; color:#64748B;' : ''}">
             <span class="d">${it.date ? it.date.split('-')[2] : '--'}</span>
             <span class="m">${it.date ? it.date.split('-')[1] : ''}</span>
           </div>
@@ -1308,6 +1354,7 @@ function renderItemsHtml(items, catKey){
             <div class="item-title">
               ${it.title}
               ${it.units ? `<span style="font-size:11.5px; background:var(--amber-soft); color:var(--amber); padding:2px 8px; border-radius:4px; font-weight:800;">${it.units}</span>` : ''}
+              ${isPast ? '<span class="past-badge">منتهي (Ended)</span>' : ''}
             </div>
             <div class="item-meta">
               ${it.speaker ? `<span>👤 ${it.speaker}</span>` : ''}
@@ -1325,7 +1372,7 @@ function renderItemsHtml(items, catKey){
             </div>` : ''}
 
             <div class="item-bottom-actions">
-              <button class="reg-btn" onclick="openRegModal('${it.id}', '${encodeURIComponent(it.title)}')">📝 تسجيل حضور بالنشاط</button>
+              ${!isPast ? `<button class="reg-btn" onclick="openRegModal('${it.id}', '${encodeURIComponent(it.title)}')">📝 تسجيل بالنشاط</button>` : '<span style="font-size:11.5px; color:var(--muted); font-weight:700;">🔒 انتهى وقت التسجيل</span>'}
               <button class="view-reg-btn" onclick="viewRegistrations('${it.id}')">🔒 المسجلين (${regs.length})</button>
             </div>
           </div>
@@ -1398,7 +1445,7 @@ document.getElementById('submitRegBtn').addEventListener('click', () => {
 
   const alreadyReg = appData.registrations[currentActivityId].some(r => r.empId === empId);
   if(alreadyReg){
-    showToast('⚠️ لقد تم تسجيل حضورك في هذا النشاط مسبقاً!');
+    showToast('⚠️ لقد تم تسجيلك في هذا النشاط مسبقاً!');
     return;
   }
 
@@ -1413,7 +1460,7 @@ document.getElementById('submitRegBtn').addEventListener('click', () => {
 
   saveData();
   closeModal('regModal');
-  showToast(`✅ تم تسجيل حضور ${staff.nameAr} بنجاح!`);
+  showToast(`✅ تم تسجيل ${staff.nameAr} بالنشاط بنجاح!`);
 });
 
 async function viewRegistrations(activityId){
