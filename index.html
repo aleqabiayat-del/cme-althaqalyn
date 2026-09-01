@@ -106,37 +106,22 @@
   .empty{ color:var(--muted); font-size:12.5px; text-align:center; padding:18px 8px; }
  
   .item{
-    display:flex; align-items:flex-start; gap:14px; padding:14px 6px; border-bottom:1px dashed var(--line);
+    display:flex; gap:10px; padding:12px 2px; border-bottom:1px dashed var(--line);
     position:relative;
   }
   .item:last-child{ border-bottom:none; }
  
   .date-pill{
-    flex:none; width:52px; height:52px; border-radius:12px; background:#EFF2F0;
+    flex:none; width:48px; height:48px; border-radius:10px; background:#EFF2F0;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    font-family:'Inter',sans-serif; border:1px solid var(--line);
+    font-family:'Inter',sans-serif;
   }
-  .date-pill .d{ font-size:17px; font-weight:800; line-height:1; color:var(--ink); }
-  .date-pill .m{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin-top:3px; color:var(--teal); }
+  .date-pill .d{ font-size:16px; font-weight:700; line-height:1; }
+  .date-pill .m{ font-size:9px; text-transform:uppercase; letter-spacing:.03em; margin-top:2px; }
  
-  .item-body{ flex:1; min-width:0; padding-top:2px; }
-  .item-title{ font-weight:700; font-size:15px; margin-bottom:4px; line-height:1.4; }
-  .item-meta{ font-size:12px; color:var(--muted); display:flex; flex-wrap:wrap; gap:4px 12px; margin-bottom:6px; }
-  
-  .item-ctrls{
-    flex:none; display:flex; align-items:center; gap:6px; margin-top:2px;
-  }
-  .del-btn{
-    width:30px; height:30px; display:flex; align-items:center; justify-content:center; border:1px solid var(--line);
-    background:#fff; color:var(--muted); cursor:pointer; border-radius:8px; font-size:13px; transition:.15s;
-  }
-  .del-btn:hover{ background:#F7E9EC; color:#B5566B; border-color:#B5566B; }
-  .edit-btn{
-    width:30px; height:30px; display:flex; align-items:center; justify-content:center; border:1px solid var(--line);
-    background:#fff; color:var(--muted); cursor:pointer; border-radius:8px; font-size:13px; transition:.15s;
-  }
-  .edit-btn:hover{ background:var(--teal-soft); color:var(--teal); border-color:var(--teal); }
-
+  .item-body{ flex:1; min-width:0; }
+  .item-title{ font-weight:700; font-size:14px; margin-bottom:3px; }
+  .item-meta{ font-size:11.5px; color:var(--muted); display:flex; flex-wrap:wrap; gap:2px 8px; margin-bottom:6px; }
   .cat-checkbox-row{ display:flex; flex-wrap:wrap; gap:8px; }
   .cat-checkbox{
     display:flex; align-items:center; gap:6px; border:1.5px solid var(--line);
@@ -162,7 +147,7 @@
   
   .cat-tag{
     display:inline-block; font-size:10.5px; font-weight:700; padding:2px 8px;
-    border-radius:100px; margin-bottom:5px; margin-inline-end:4px;
+    border-radius:100px; margin-bottom:5px;
   }
   .cat-tag.cat-teal{ background:var(--teal-soft); color:var(--teal); }
   .cat-tag.cat-rose{ background:var(--rose-soft); color:var(--rose); }
@@ -182,6 +167,20 @@
     white-space:pre-wrap; margin-top:6px; padding:10px 12px;
     background:#F8FAFC; border-radius:8px; border-inline-start:3px solid var(--teal);
   }
+
+  .del-btn{
+    position:absolute; inset-inline-start:0; top:10px; width:26px; height:26px;
+    display:flex; align-items:center; justify-content:center; border:none;
+    background:#F4F5F4; color:var(--muted); opacity:1; cursor:pointer; border-radius:7px;
+    font-size:13px;
+  }
+  .del-btn:hover{ background:#F1E4E4; color:#B5566B; }
+  .edit-btn{
+    position:absolute; inset-inline-start:32px; top:10px; width:26px; height:26px;
+    display:flex; align-items:center; justify-content:center; border:none;
+    background:#F4F5F4; color:var(--muted); opacity:1; cursor:pointer; border-radius:7px; font-size:13px;
+  }
+  .edit-btn:hover{ background:var(--teal-soft); color:var(--teal); }
  
   .add-row{ padding:8px 16px 14px; }
   .add-btn{
@@ -837,7 +836,7 @@ function renderPDFs(){
       <div style="display:flex; gap:6px; align-items:center;">
         <button class="view-reg-btn" onclick="viewUploaderInfo('${p.id}')" style="background:var(--rose-soft); color:var(--rose); padding:6px 10px; border-radius:8px; border:none; cursor:pointer; font-weight:700;">🔒 بيانات الرافع</button>
         <a href="${p.fileData}" download="${p.title}.pdf" target="_blank" class="pdf-download-btn" style="background:var(--rose-soft); color:var(--rose);">فتح / تحميل PDF</a>
-        <button class="del-btn" style="border:none; background:#F4F5F4;" onclick="deletePdf('${p.id}')">🗑️</button>
+        <button class="del-btn" style="position:static; opacity:1;" onclick="deletePdf('${p.id}')">🗑️</button>
       </div>
     </div>
   `).join('');
@@ -896,7 +895,7 @@ function renderEntryRows(id, adminMode){
             <td><span class="role-tag ${role.cls}">${role.ar}</span></td>
             <td>${Number(e.points) || 0}</td>
             <td>${e.date || '-'}</td>
-            ${adminMode ? `<td><button class="del-btn" style="border:none;" onclick="deleteStaffPoint('${id}','${e.id}')">🗑️</button></td>` : ''}
+            ${adminMode ? `<td><button class="del-btn" style="position:static; opacity:1;" onclick="deleteStaffPoint('${id}','${e.id}')">🗑️</button></td>` : ''}
           </tr>`;
         }).join('')}
       </tbody>
@@ -1200,6 +1199,8 @@ function renderItemsHtml(items, catKey){
 
     return `
       <div class="item ${isPast ? 'past-item' : ''}">
+        <button class="del-btn" onclick="deleteItem('${itemCatKey}', '${it.id}')">🗑️</button>
+        <button class="edit-btn" onclick="openEditModal('${itemCatKey}', '${it.id}')">✏️</button>
         <div class="date-pill" style="${isPast ? 'background:#E2E8F0; color:#64748B;' : ''}">
           <span class="d">${it.date ? it.date.split('-')[2] : '--'}</span>
           <span class="m">${it.date ? it.date.split('-')[1] : ''}</span>
@@ -1208,7 +1209,7 @@ function renderItemsHtml(items, catKey){
           ${catTags ? `<div>${catTags}</div>` : ''}
           <div class="item-title">
             ${it.title}
-            ${it.units ? `<span style="font-size:10.5px; background:var(--amber-soft); color:var(--amber); padding:2px 8px; border-radius:4px; font-weight:700;">${it.units}</span>` : ''}
+            ${it.units ? `<span style="font-size:10px; background:var(--amber-soft); color:var(--amber); padding:2px 6px; border-radius:4px;">${it.units}</span>` : ''}
             ${isPast ? '<span class="past-badge">منتهي (Ended)</span>' : ''}
           </div>
           <div class="item-meta">
@@ -1221,10 +1222,6 @@ function renderItemsHtml(items, catKey){
             <button type="button" class="desc-toggle-btn" onclick="toggleDesc(this)">🎯 الأهداف والتفاصيل</button>
             <div class="item-desc" style="display:none;">${it.desc}</div>
           </div>` : ''}
-        </div>
-        <div class="item-ctrls">
-          <button class="edit-btn" title="تعديل النشاط" onclick="openEditModal('${itemCatKey}', '${it.id}')">✏️</button>
-          <button class="del-btn" title="حذف النشاط" onclick="deleteItem('${itemCatKey}', '${it.id}')">🗑️</button>
         </div>
       </div>
     `;
