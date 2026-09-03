@@ -1093,15 +1093,24 @@ document.getElementById('downloadCurrentBtn').addEventListener('click', async ()
   const pin = prompt('أدخل رمز المسؤول لتنزيل الشيت الحالي:');
   if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
 
-  const rows = [['Employee ID', 'Name', 'Activity', 'Role', 'Points', 'Date']];
+  const rows = [['Employee ID', 'Name', 'Activities', 'Number of Activities', 'Total Points']];
   const ids = Object.keys(appData.staffPoints || {}).sort((a,b) => Number(a) - Number(b));
   ids.forEach(id => {
     const staff = MASTER_STAFF_BY_ID[id];
     const name = staff ? (staff.nameAr + ' / ' + staff.nameEn) : '';
-    (appData.staffPoints[id] || []).forEach(en => {
+    const entries = appData.staffPoints[id] || [];
+    if(entries.length === 0) return;
+
+    const activitiesList = entries.map(en => {
       const role = ROLE_LABELS[en.role] || ROLE_LABELS.other;
-      rows.push([id, name, en.activity || '', role.en, en.points || 0, en.date || '']);
-    });
+      const pts = en.points || 0;
+      const date = en.date || '';
+      return `${en.activity || ''} (${role.en}, ${pts} pts, ${date})`;
+    }).join(' | ');
+
+    const totalPoints = entries.reduce((sum, en) => sum + (Number(en.points) || 0), 0);
+
+    rows.push([id, name, activitiesList, entries.length, totalPoints]);
   });
 
   if(rows.length === 1){
@@ -1110,6 +1119,13 @@ document.getElementById('downloadCurrentBtn').addEventListener('click', async ()
   }
 
   const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [
+    { wch: 12 },  // Employee ID
+    { wch: 30 },  // Name
+    { wch: 90 },  // Activities
+    { wch: 18 },  // Number of Activities
+    { wch: 12 }   // Total Points
+  ];
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'CME Points');
   XLSX.writeFile(wb, 'نقاط_التعليم_الطبي_المستمر_الحالية.xlsx');
