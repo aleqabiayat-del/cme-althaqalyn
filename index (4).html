@@ -1,0 +1,2574 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التعليم الطبي المستمر | Continuing Medical Education</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+  :root{
+    --bg: #F3F6F4;
+    --paper: #FFFFFF;
+    --ink: #14211D;
+    --muted: #64756D;
+    --line: #E1E8E4;
+    --teal: #1D6F64;
+    --teal-soft: #E4F1EE;
+    --rose: #B5566B;
+    --rose-soft: #F7E9EC;
+    --violet: #6B5B95;
+    --violet-soft: #ECE9F4;
+    --amber: #B07E24;
+    --amber-soft: #F6EEDD;
+    --blue: #2B6CB0;
+    --blue-soft: #EBF8FF;
+    --shadow: 0 2px 4px rgba(20,33,29,0.04), 0 10px 28px rgba(20,33,29,0.06);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Tajawal','Inter',sans-serif;
+    min-height:100vh;
+    padding:28px 18px 80px;
+  }
+  .en{ font-family:'Inter','Tajawal',sans-serif; }
+  .wrap{ max-width:1100px; margin:0 auto; }
+ 
+  header{ text-align:center; margin-bottom:6px; }
+  .eyebrow{
+    font-family:'Inter',sans-serif;
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--teal); font-weight:600; margin-bottom:10px;
+  }
+  h1{ font-size:clamp(24px,4vw,34px); font-weight:800; margin:0; }
+  h1 .en{ display:block; font-size:.5em; font-weight:600; color:var(--muted); margin-top:4px; letter-spacing:.02em; }
+ 
+  .pulse-wrap{ margin:22px auto 30px; max-width:640px; }
+  .pulse-wrap svg{ width:100%; height:34px; display:block; }
+  .pulse-line{
+    fill:none; stroke:var(--teal); stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:1000; stroke-dashoffset:1000;
+    animation:draw 1.6s ease-out forwards;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+ 
+  .board-meta{
+    display:flex; justify-content:center; align-items:center; gap:8px;
+    font-size:12px; color:var(--muted); margin-bottom:26px;
+  }
+  .dot{ width:6px; height:6px; border-radius:50%; background:#5AAE9E; }
+ 
+  .main-box{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    padding:26px;
+    margin-bottom:24px;
+    animation:rise .5s ease forwards;
+  }
+  .main-box-header{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-bottom:18px; margin-bottom:20px; border-bottom:2px solid var(--bg);
+  }
+  .main-box-header h2{ margin:0; font-size:21px; font-weight:800; color:var(--ink); }
+  .main-box-header .en{ font-size:13px; color:var(--muted); font-weight:600; margin-top:2px; display:block; }
+  .ratio-badge{
+    font-size:11.5px; font-weight:800; padding:4px 10px; border-radius:100px; margin-inline-start:8px;
+    vertical-align:middle; display:inline-block;
+  }
+  .badge-75{ background:var(--teal-soft); color:var(--teal); border:1px solid var(--teal); }
+  .badge-25{ background:var(--violet-soft); color:var(--violet); border:1px solid var(--violet); }
+
+  .main-icon{
+    width:48px; height:48px; border-radius:14px; background:var(--teal-soft); color:var(--teal);
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .main-icon svg{ width:26px; height:26px; }
+
+  .grid{ display:grid; grid-template-columns:1fr; gap:18px; }
+ 
+  .card{ background:#FAFBFA; border:1px solid var(--line); border-radius:16px; overflow:hidden; }
+  @keyframes rise{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
+ 
+  .card-head{
+    padding:16px 20px; display:flex; justify-content:space-between; align-items:center;
+    border-bottom:1px solid var(--line); background:#fff;
+  }
+  .card-titles h3{ margin:0; font-size:17px; font-weight:800; }
+  .card-titles .en{ display:block; font-size:12px; color:var(--muted); font-weight:600; margin-top:2px; }
+  
+  .list{ padding:12px 20px; min-height:60px; }
+  .empty{ color:var(--muted); font-size:13px; text-align:center; padding:22px 8px; }
+ 
+  .item{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:18px;
+    padding:20px 16px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#FFFFFF;
+    margin-bottom:14px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.02);
+    transition:all .2s;
+  }
+  .item:last-child{ margin-bottom:0; }
+
+  .item.past-item{
+    opacity: 0.58;
+    background: #F8FAF9;
+    border-color: #E2E8F0;
+  }
+  .item.past-item:hover{
+    opacity: 0.85;
+  }
+  .past-badge{
+    font-size: 11px;
+    background: #E2E8F0;
+    color: #475569;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 800;
+    margin-inline-start: 6px;
+  }
+
+  .item-content-wrapper{
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+    flex:1;
+    min-width:0;
+  }
+ 
+  .date-pill{
+    flex:none; width:58px; height:58px; border-radius:12px; background:#EFF2F0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-family:'Inter',sans-serif; border:1.5px solid var(--line);
+  }
+  .date-pill .d{ font-size:20px; font-weight:800; line-height:1; color:var(--ink); }
+  .date-pill .m{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin-top:3px; color:var(--teal); }
+ 
+  .item-body{ flex:1; min-width:0; }
+  .item-title{ font-weight:800; font-size:17px; margin-bottom:6px; line-height:1.4; color:var(--ink); }
+  .item-meta{ font-size:13px; color:var(--muted); display:flex; flex-wrap:wrap; gap:6px 16px; margin-bottom:10px; font-weight:600; }
+  
+  .item-actions-left{
+    flex:none;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+  }
+  .del-btn, .edit-btn{
+    width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+    border:1.5px solid var(--line); background:#fff; color:var(--muted); cursor:pointer;
+    border-radius:9px; font-size:15px; transition:all .15s;
+  }
+  .del-btn:hover{ background:#F7E9EC; color:#B5566B; border-color:#B5566B; }
+  .edit-btn:hover{ background:var(--teal-soft); color:var(--teal); border-color:var(--teal); }
+
+  .cat-checkbox-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .cat-checkbox{
+    display:flex; align-items:center; gap:6px; border:1.5px solid var(--line);
+    border-radius:10px; padding:8px 12px; font-size:13px; font-weight:700;
+    cursor:pointer; color:var(--muted);
+  }
+  .cat-checkbox input{ width:auto; margin:0; }
+  .cat-checkbox.cat-teal:has(input:checked){ background:var(--teal-soft); color:var(--teal); border-color:var(--teal); }
+  .cat-checkbox.cat-rose:has(input:checked){ background:var(--rose-soft); color:var(--rose); border-color:var(--rose); }
+  .cat-checkbox.cat-violet:has(input:checked){ background:var(--violet-soft); color:var(--violet); border-color:var(--violet); }
+  .cat-checkbox.cat-blue:has(input:checked){ background:var(--blue-soft); color:var(--blue); border-color:var(--blue); }
+  
+  .cat-filter-row{ display:flex; flex-wrap:wrap; gap:8px; padding:16px 20px 0; }
+  .cat-filter-chip{
+    border:1.5px solid var(--line); background:#fff; border-radius:100px;
+    padding:6px 14px; font-size:12.5px; font-weight:700; cursor:pointer; font-family:inherit;
+    color:var(--muted); transition:all .15s;
+  }
+  .cat-filter-chip.cat-teal.active{ background:var(--teal-soft); color:var(--teal); border-color:var(--teal); }
+  .cat-filter-chip.cat-rose.active{ background:var(--rose-soft); color:var(--rose); border-color:var(--rose); }
+  .cat-filter-chip.cat-violet.active{ background:var(--violet-soft); color:var(--violet); border-color:var(--violet); }
+  .cat-filter-chip.cat-blue.active{ background:var(--blue-soft); color:var(--blue); border-color:var(--blue); }
+  
+  .cat-tag{
+    display:inline-block; font-size:11.5px; font-weight:800; padding:3px 10px;
+    border-radius:100px; margin-bottom:6px; margin-inline-end:4px;
+  }
+  .cat-tag.cat-teal{ background:var(--teal-soft); color:var(--teal); }
+  .cat-tag.cat-rose{ background:var(--rose-soft); color:var(--rose); }
+  .cat-tag.cat-violet{ background:var(--violet-soft); color:var(--violet); }
+  .cat-tag.cat-blue{ background:var(--blue-soft); color:var(--blue); }
+  
+  .specialized-merged .list{ padding:8px 20px 20px; }
+  
+  .item-desc-box{
+    margin-top:10px;
+    padding:14px 16px;
+    background:#FAFCFB;
+    border-radius:10px;
+    border:1px solid #E2E8F0;
+    border-inline-start:4px solid var(--teal);
+  }
+  .item-desc-title{
+    font-size:13.5px;
+    font-weight:800;
+    color:var(--teal);
+    margin-bottom:6px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .item-desc-content{
+    font-size:15px;
+    color:#1A202C;
+    line-height:1.85;
+    word-break:break-word;
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    transition:all .2s;
+  }
+  .item-desc-content.expanded{
+    -webkit-line-clamp:unset;
+    overflow:visible;
+  }
+  .item-desc-content.is-en {
+    direction: ltr !important;
+    text-align: left !important;
+    font-family: 'Inter', sans-serif;
+  }
+  .item-desc-content b, .item-desc-content strong{ font-weight:800; color:#0F172A; }
+  .item-desc-content i, .item-desc-content em{ font-style:italic; }
+  .item-desc-content .desc-head{ font-weight:800; font-size:16px; color:var(--teal); margin:8px 0 4px; }
+  .item-desc-content .desc-li{ margin-bottom:4px; padding-inline-start:6px; }
+
+  .desc-readmore-btn{
+    background:none; border:none; padding:6px 0 0; cursor:pointer;
+    font-size:12.5px; font-weight:800; color:var(--teal);
+    display:inline-flex; align-items:center; gap:4px;
+  }
+  .desc-readmore-btn:hover{ text-decoration:underline; }
+
+  .item-bottom-actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; align-items:center; }
+  .reg-btn{
+    display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:9px;
+    background:var(--teal); color:#fff; font-size:13px; font-weight:800; border:none; cursor:pointer;
+    transition:background .15s; font-family:inherit;
+  }
+  .reg-btn:hover{ background:#13574e; }
+  .view-reg-btn{
+    display:inline-flex; align-items:center; gap:5px; padding:8px 14px; border-radius:9px;
+    background:var(--teal-soft); color:var(--teal); font-size:12.5px; font-weight:800; border:1px solid var(--teal); cursor:pointer;
+    font-family:inherit;
+  }
+  .view-reg-btn:hover{ background:#d1e8e3; }
+ 
+  .add-row{ padding:10px 20px 18px; }
+  .add-btn{
+    width:100%; padding:11px; border-radius:9px; border:1.5px dashed var(--line);
+    background:#fff; color:var(--muted); font-family:inherit; font-size:13.5px; font-weight:700;
+    cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;
+    transition:.15s;
+  }
+  .add-btn:hover{ border-color:var(--teal); color:var(--teal); background:var(--teal-soft); }
+
+  .editor-toolbar{
+    display:flex; gap:6px; margin-bottom:6px; background:#EFF2F0; padding:6px; border-radius:8px;
+  }
+  .tool-btn{
+    padding:4px 10px; border-radius:6px; border:1px solid var(--line); background:#fff;
+    cursor:pointer; font-weight:800; font-size:12px; color:var(--ink);
+  }
+  .tool-btn:hover{ background:var(--teal-soft); color:var(--teal); }
+
+  .pdf-item{
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
+    padding:14px 0; border-bottom:1px dashed var(--line);
+  }
+  .pdf-item:last-child{ border-bottom:none; }
+  .pdf-info{ display:flex; align-items:center; gap:12px; flex:1; min-width:0; }
+  .pdf-icon{
+    width:38px; height:38px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .pdf-title{ font-weight:700; font-size:14px; margin-bottom:2px; }
+  .pdf-sub{ font-size:11.5px; color:var(--muted); }
+  .pdf-download-btn{
+    display:inline-flex; align-items:center; gap:6px; padding:7px 14px; border-radius:8px;
+    font-weight:700; font-size:12px; text-decoration:none;
+  }
+
+  .qa-card{ background:#FAFBFA; border:1px solid var(--line); border-radius:14px; padding:16px; }
+  .qa-card h3{ margin:0 0 6px; font-size:15px; font-weight:800; }
+  .qa-card p{ margin:0 0 12px; font-size:12px; color:var(--muted); line-height:1.5; }
+  .form-open-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    padding:8px 16px; border:none; border-radius:8px; background:var(--violet); color:#fff;
+    font-size:12.5px; font-weight:700; text-decoration:none; width:100%;
+  }
+  .form-open-btn:hover{ background:#544675; }
+
+  .overlay{
+    position:fixed; inset:0; background:rgba(20,33,29,.45); backdrop-filter:blur(2px);
+    display:flex; align-items:center; justify-content:center; padding:16px; z-index:50;
+    opacity:0; pointer-events:none; transition:opacity .18s;
+  }
+  .overlay.open{ opacity:1; pointer-events:auto; }
+  .modal{
+    background:var(--paper); border-radius:16px; width:100%; max-width:480px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25); max-height:90vh; overflow-y:auto;
+  }
+  .modal-head{ padding:18px 20px 8px; display:flex; justify-content:space-between; align-items:center; }
+  .modal-head h3{ margin:0; font-size:16px; font-weight:800; }
+  .modal-close{ border:none; background:none; cursor:pointer; color:var(--muted); font-size:18px; }
+  .modal-body{ padding:6px 20px 20px; display:flex; flex-direction:column; gap:12px; }
+  .field label{ display:block; font-size:12px; font-weight:700; color:var(--muted); margin-bottom:5px; }
+  .field input, .field select, .field textarea{
+    width:100%; padding:10px 11px; border:1px solid var(--line); border-radius:9px;
+    font-family:inherit; font-size:14px; background:#FAFBFA; color:var(--ink);
+  }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .save-btn{
+    margin-top:4px; width:100%; padding:12px; border:none; border-radius:10px;
+    background:var(--teal); color:#fff; font-family:inherit; font-weight:700; font-size:14.5px;
+    cursor:pointer;
+  }
+  .save-btn:hover{ background:#175a51; }
+  .save-btn:disabled{ opacity:.5; cursor:not-allowed; }
+
+  .disclosure-box{
+    background:#FFFDF5; border:1px solid #EAD8A4; padding:10px 12px; border-radius:8px; font-size:11.5px; color:#6B5418;
+  }
+
+  .lookup-box{ padding:16px 20px 6px; }
+  .lookup-row{ display:flex; gap:8px; }
+  .lookup-row input{
+    flex:1; padding:11px 13px; border:1.5px solid var(--line); border-radius:9px;
+    font-family:inherit; font-size:14.5px; background:#FAFBFA; color:var(--ink);
+  }
+  .lookup-row input:focus{ outline:none; border-color:var(--amber); }
+  .lookup-btn{
+    padding:0 20px; border:none; border-radius:9px; background:var(--amber); color:#fff;
+    font-family:inherit; font-weight:700; font-size:13.5px; cursor:pointer; flex:none;
+  }
+  .lookup-btn:hover{ background:#8f6a1e; }
+  .lookup-result{ margin-top:14px; }
+  .lookup-card{
+    background:#FAFBFA; border:1px solid var(--line); border-radius:12px; padding:14px 16px;
+  }
+  .lookup-name{ font-weight:800; font-size:15px; }
+  .lookup-sub{ font-size:12px; color:var(--muted); margin-top:2px; }
+  .lookup-total{
+    margin-top:10px; display:inline-flex; align-items:baseline; gap:6px;
+    background:var(--amber-soft); color:var(--amber); padding:6px 14px; border-radius:100px;
+    font-weight:800; font-size:14px;
+  }
+  .lookup-total .en{ font-size:11px; font-weight:600; }
+  .entry-table{ width:100%; border-collapse:collapse; margin-top:12px; font-size:12.5px; }
+  .entry-table th{
+    text-align:right; color:var(--muted); font-weight:700; font-size:11px;
+    padding:6px 8px; border-bottom:1.5px solid var(--line);
+  }
+  .entry-table td{ padding:8px; border-bottom:1px dashed var(--line); }
+  .entry-table tr:last-child td{ border-bottom:none; }
+  .role-tag{
+    display:inline-block; padding:2px 9px; border-radius:100px; font-size:11px; font-weight:700;
+  }
+  .role-tag.lecturer{ background:var(--teal-soft); color:var(--teal); }
+  .role-tag.participant{ background:var(--blue-soft); color:var(--blue); }
+  .role-tag.other{ background:var(--violet-soft); color:var(--violet); }
+  .section-divider{ margin:16px 20px 4px; padding-top:14px; border-top:1px dashed var(--line); }
+  .section-divider .lbl{ font-size:11px; color:var(--muted); font-weight:700; }
+  .staff-suggest{
+    font-size:12.5px; color:var(--muted); margin-top:6px; min-height:18px; font-weight:700;
+  }
+  .staff-suggest.match{ color:var(--teal); }
+  .staff-suggest.nomatch{ color:var(--rose); }
+ 
+  .toast{
+    position:fixed; bottom:22px; left:50%; transform:translateX(-50%) translateY(12px);
+    background:var(--ink); color:#fff; padding:10px 18px; border-radius:100px; font-size:13px;
+    opacity:0; pointer-events:none; transition:.2s; z-index:60;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  .loading-overlay{
+    position:fixed; inset:0; background:var(--bg); display:flex; align-items:center; justify-content:center;
+    z-index:100; font-size:14px; color:var(--muted); font-weight:700;
+  }
+
+  /* ===== MEN'S HEALTH — NOVEMBER 2026 BOX ===== */
+  .mh-box{ animation:none; padding:0; overflow:hidden; border-color:var(--teal); border-width:1.5px; }
+  .mh-hero{
+    display:block; width:100%; text-align:center; cursor:pointer; font-family:inherit; color:var(--ink);
+    border:none; padding:30px 22px 26px;
+    background:linear-gradient(135deg, #FFFFFF 0%, var(--teal-soft) 100%);
+  }
+  .mh-hero:focus-visible{ outline:3px solid var(--teal); outline-offset:-3px; }
+  .mh-logo-wrap{ display:block; margin:0 auto 12px; }
+  .mh-logo{ width:96px; height:120px; display:block; margin:0 auto; filter:drop-shadow(0 4px 6px rgba(27,111,163,.22)); }
+  .mh-track-title{ font-family:'Inter',sans-serif; }
+  .mh-eyebrow{
+    display:inline-flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:4px 10px;
+    background:#fff; border:1px solid var(--teal); color:var(--teal);
+    border-radius:100px; padding:5px 16px; font-size:12.5px; font-weight:800; margin-bottom:16px;
+  }
+  .mh-eyebrow .mh-sep{ opacity:.45; }
+  .mh-title{
+    display:block; font-family:'Inter',sans-serif; font-weight:800; color:var(--teal);
+    font-size:clamp(34px,8vw,60px); line-height:1.05; letter-spacing:.05em; margin:0 0 10px;
+  }
+  .mh-tagline{
+    display:block; font-family:'Inter',sans-serif; font-weight:700; color:var(--ink);
+    font-size:clamp(15px,2.6vw,21px); line-height:1.4; margin:0 auto 10px; max-width:720px;
+  }
+  .mh-sub{
+    display:block; font-family:'Inter',sans-serif; font-weight:500; color:var(--muted);
+    font-size:clamp(12px,1.9vw,14px); line-height:1.6; margin:0 auto 16px; max-width:720px;
+  }
+  .mh-badges{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:20px; }
+  .mh-badge{
+    font-family:'Inter',sans-serif; font-size:11.5px; font-weight:800; padding:4px 12px;
+    border-radius:100px; background:var(--teal-soft); color:var(--teal); border:1px solid var(--teal);
+  }
+  .mh-badge.alt{ background:var(--violet-soft); color:var(--violet); border-color:var(--violet); }
+  .mh-badge.amber{ background:var(--amber-soft); color:var(--amber); border-color:var(--amber); }
+  .mh-cta{
+    display:inline-flex; align-items:center; gap:8px; padding:11px 26px; border-radius:10px;
+    background:var(--teal); color:#fff; font-size:14px; font-weight:800; transition:background .15s;
+  }
+  .mh-hero:hover .mh-cta{ background:#13574e; }
+  .mh-chev{ display:inline-block; transition:transform .2s; }
+  .mh-box.open .mh-chev{ transform:rotate(180deg); }
+
+  .mh-body{ display:none; padding:24px 26px 26px; border-top:1px solid var(--line); background:var(--paper); }
+  .mh-box.open .mh-body{ display:block; }
+
+  .mh-track{
+    display:flex; align-items:center; gap:12px; padding-bottom:16px; margin-bottom:18px;
+    border-bottom:2px solid var(--bg);
+  }
+  .mh-track-icon{
+    width:42px; height:42px; border-radius:12px; background:var(--teal-soft); color:var(--teal);
+    display:flex; align-items:center; justify-content:center; flex:none; font-size:20px;
+  }
+  .mh-track-title{ margin:0; font-size:18px; font-weight:800; color:var(--ink); }
+  .mh-track-title .en{ display:block; font-size:13px; color:var(--muted); font-weight:600; margin-top:2px; }
+
+  .mh-series{ margin-bottom:16px; }
+  .mh-series:last-child{ margin-bottom:0; }
+  .mh-series-head{ gap:12px; border-bottom:1px solid transparent; padding:12px 16px; }
+  .mh-series.open .mh-series-head{ border-bottom-color:var(--line); }
+  .mh-series-toggle{
+    flex:1; min-width:0; display:flex; align-items:center; gap:14px; justify-content:space-between;
+    background:none; border:none; padding:4px 0; font-family:inherit; color:inherit; cursor:pointer; text-align:start;
+  }
+  .mh-series-toggle:hover .mh-series-title{ color:var(--teal); }
+  .mh-series-toggle:focus-visible{ outline:3px solid var(--teal); outline-offset:2px; border-radius:8px; }
+  .mh-series-actions{ display:flex; align-items:center; gap:6px; flex:none; }
+  .mh-series-actions .edit-btn, .mh-series-actions .del-btn{ width:32px; height:32px; font-size:14px; }
+  .mh-move{ font-size:11px !important; }
+  .mh-move:disabled{ opacity:.35; cursor:not-allowed; }
+  .mh-move:disabled:hover{ background:#fff; color:var(--muted); border-color:var(--line); }
+  .mh-reset-btn{
+    background:none; border:none; cursor:pointer; font-family:inherit; font-size:11.5px; color:var(--muted);
+    text-decoration:underline; padding:6px;
+  }
+  .mh-reset-btn:hover{ color:var(--rose); }
+  .mh-series-main{ display:block; flex:1; min-width:0; }
+  .mh-series-title{ display:block; font-family:'Inter',sans-serif; font-weight:800; font-size:17px; color:var(--ink); line-height:1.4; }
+  .mh-series-ar{ display:block; font-size:12.5px; color:var(--muted); font-weight:700; margin-top:2px; }
+  .mh-series-side{ display:flex; align-items:center; gap:10px; flex:none; }
+  .mh-count{
+    font-family:'Inter',sans-serif; font-size:11.5px; font-weight:800; padding:3px 10px; border-radius:100px;
+    background:var(--teal-soft); color:var(--teal);
+  }
+  .mh-series.open .mh-chev{ transform:rotate(180deg); }
+  .mh-series-body{ display:none; }
+  .mh-series.open .mh-series-body{ display:block; }
+  .mh-series-intro{
+    padding:14px 20px 0; font-size:14px; color:var(--muted); line-height:1.7; font-family:'Inter',sans-serif;
+  }
+  .mh-series .list{ padding:14px 20px 18px; }
+  .mh-item-title-en{ font-family:'Inter',sans-serif; }
+  .mh-tba{ color:var(--amber); }
+
+  /* ===== PEP / بوكسات ببنية القائمة المباشرة + الثيم البنفسجي ===== */
+  .pg-theme-violet{ --teal:#6B5B95; --teal-soft:#ECE9F4; }
+  .pg-theme-violet .mh-hero{ background:linear-gradient(135deg, #FFFFFF 0%, #ECE9F4 100%); }
+  .pg-theme-violet .mh-hero:hover .mh-cta, .pg-theme-violet .reg-btn:hover{ background:#544675; }
+  .pg-theme-violet .view-reg-btn:hover{ background:#DDD7EC; }
+  .pg-theme-violet .mh-badge.amber{ background:var(--amber-soft); }
+
+  .pg-section{ margin-bottom:22px; }
+  .pg-section:last-of-type{ margin-bottom:0; }
+  .pg-section-head{
+    text-align:center; font-family:'Inter',sans-serif; font-weight:800; font-size:13.5px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--teal); background:var(--teal-soft);
+    border:1px solid var(--line); border-radius:10px; padding:11px 14px; margin-bottom:14px;
+  }
+  .pg-overview{
+    font-family:'Inter',sans-serif; background:#FAFCFB; border:1px solid var(--line);
+    border-inline-start:4px solid var(--teal); border-radius:12px; padding:16px 20px;
+  }
+  .pg-overview p{ margin:0 0 12px; font-size:14.5px; line-height:1.75; color:#1A202C; }
+  .pg-overview p:last-child{ margin-bottom:0; }
+  .pg-exam{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .pg-exam-tile{
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; text-align:center;
+    background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 12px;
+  }
+  .pg-exam-label{ font-family:'Inter',sans-serif; font-size:11.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .pg-exam-value{ font-family:'Inter',sans-serif; font-size:clamp(18px,3.4vw,26px); font-weight:800; color:var(--teal); line-height:1.2; }
+  .pg-section .list{ padding:0; }
+  .pg-section .add-row{ padding:12px 0 0; }
+
+  /* إصلاح موجود بالموقع الأصلي: حقل الرقم الوظيفي كان يدفع زر البحث خارج الشاشة بالموبايل */
+  .lookup-row input{ min-width:0; }
+
+  @media (max-width:560px){
+    .pg-exam{ grid-template-columns:1fr; }
+    .pg-overview{ padding:14px 14px; }
+    .mh-eyebrow{ border-radius:16px; flex-direction:column; gap:2px; padding:7px 14px; }
+    .mh-eyebrow .mh-sep{ display:none; }
+    .mh-hero{ padding:24px 14px 22px; }
+    .mh-body{ padding:18px 12px 18px; }
+    .mh-series-head{ flex-wrap:wrap; padding:10px 12px; }
+    .mh-series-actions{ width:100%; justify-content:flex-end; }
+    .mh-series .item-actions-left{ flex-direction:row; flex-wrap:wrap; gap:6px; }
+    .mh-series .item{ flex-direction:column; }
+    .mh-series .item-actions-left .edit-btn, .mh-series .item-actions-left .del-btn{ width:32px; height:32px; }
+    .mh-series .list{ padding:12px 10px 14px; }
+    .mh-series .item{ padding:16px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">جاري تحميل البيانات...</div>
+
+<div class="wrap">
+ 
+  <header>
+    <div class="eyebrow en">Al-Thaqalyn Hospital</div>
+    <h1>التعليم الطبي المستمر<span class="en">Continuing Medical Education</span></h1>
+  </header>
+ 
+  <div class="pulse-wrap">
+    <svg viewBox="0 0 640 34" preserveAspectRatio="none">
+      <path class="pulse-line" d="M0,17 L210,17 L228,17 L238,4 L250,32 L262,10 L272,17 L430,17 L448,17 L458,4 L470,32 L482,10 L492,17 L640,17" />
+    </svg>
+  </div>
+ 
+  <div class="board-meta">
+    <span class="dot"></span>
+    <span id="metaText">بوابة الأنشطة التدريبية المعتمدة لعام 2026</span>
+  </div>
+ 
+  <!-- البوكسات الخاصة: MEN'S HEALTH + PEP LEVEL 1 (تُرسم من بيانات MENS_HEALTH و PEP_LEVEL1 داخل الـ script) -->
+  <div id="pgRoot_mh"></div>
+  <div id="pgRoot_pep"></div>
+
+  <!-- SECTION 1: SPECIALIZED ACTIVITIES (75%) -->
+  <div class="main-box">
+    <div class="main-box-header">
+      <div>
+        <h2>الأنشطة التخصصية <span class="ratio-badge badge-75">75% كحد أدنى من نقاط الـ CME</span>
+          <span class="en">Specialized Medical Activities (Minimum 75%)</span>
+        </h2>
+      </div>
+      <div class="main-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+      </div>
+    </div>
+    
+    <div id="gridSpecialized" class="grid"></div>
+  </div>
+
+  <!-- SECTION 2: GENERAL ACTIVITIES (25%) -->
+  <div class="main-box">
+    <div class="main-box-header">
+      <div>
+        <h2>الأنشطة العامة وغير التخصصية <span class="ratio-badge badge-25">25% كحد أقصى من نقاط الـ CME</span>
+          <span class="en">General & Non-Specialized Activities (Up to 25%)</span>
+        </h2>
+      </div>
+      <div class="main-icon" style="background:var(--blue-soft); color:var(--blue);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/><path d="M3 12h18"/></svg>
+      </div>
+    </div>
+    
+    <div id="gridGeneral"></div>
+  </div>
+
+  <!-- SECTION 3: EXTERNAL ACTIVITIES -->
+  <div class="main-box">
+    <div class="main-box-header">
+      <div>
+        <h2>قسم الأنشطة والفعاليات الخارجية
+          <span class="en">External Activities & Conferences (Category 1)</span>
+        </h2>
+      </div>
+      <div class="main-icon" style="background:var(--rose-soft); color:var(--rose);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </div>
+    </div>
+    <div id="externalList" class="list"></div>
+    <div class="add-row">
+      <button class="add-btn" id="addExternalBtn">+ إضافة إعلان نشاط خارجي جديد (للمسؤول فقط)</button>
+    </div>
+  </div>
+
+  <!-- SECTION 4: SELF-DIRECTED LEARNING -->
+  <div class="main-box">
+    <div class="main-box-header">
+      <div>
+        <h2>قسم التعليم الذاتي والتدريس والاطلاع الطبي
+          <span class="en">Self-directed Learning, Teaching, & Literature</span>
+        </h2>
+      </div>
+      <div class="main-icon" style="background:var(--rose-soft); color:var(--rose);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="M6 6h10M6 10h10"/></svg>
+      </div>
+    </div>
+    <div id="pdfList" class="list"></div>
+    <div class="add-row">
+      <button class="add-btn" id="addPdfBtn" style="border-color:var(--rose); color:var(--rose); background:var(--rose-soft);">+ رفع ملف PDF موثوق جديد (مع التحقق من الهوية 🔒)</button>
+    </div>
+  </div>
+
+  <!-- SECTION 5: STAFF RECORDS & MARKS -->
+  <div class="main-box">
+    <div class="main-box-header">
+      <div>
+        <h2>سجلات ودرجات وحدات الموظفين
+          <span class="en">Staff Records & Marks</span>
+        </h2>
+      </div>
+      <div class="main-icon" style="background:var(--amber-soft); color:var(--amber);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+      </div>
+    </div>
+
+    <!-- Public lookup -->
+    <div class="lookup-box">
+      <div style="font-size:12.5px; color:var(--muted); margin-bottom:8px;">
+        أدخل الرقم الوظيفي (Employee ID) لعرض سجلك وساعات التعليم الطبي المستمر المسجلة
+        <span class="en" style="display:block; margin-top:2px;">Enter your Employee ID to view your logged CME hours</span>
+      </div>
+      <div class="lookup-row">
+        <input type="text" id="lookupIdInput" inputmode="numeric" placeholder="مثال: 123">
+        <button class="lookup-btn" id="lookupIdBtn">🔎 بحث / Search</button>
+      </div>
+      <div id="lookupResult" class="lookup-result"></div>
+    </div>
+
+    <div class="section-divider">
+      <span class="lbl">🔒 إدارة السجلات وإدخال النقاط (للمسؤول فقط)</span>
+    </div>
+    <div class="add-row" style="padding-top:12px; display:flex; gap:8px;">
+      <button class="add-btn" id="downloadTemplateBtn" style="flex:1; border-color:var(--line); color:var(--muted);">📥 تنزيل قالب النقاط (للمسؤول 🔒)</button>
+      <button class="add-btn" id="uploadExcelPointsBtn" style="flex:1; border-color:var(--amber); color:var(--amber); background:var(--amber-soft);">📤 رفع شيت نشاط جديد (للمسؤول 🔒)</button>
+    </div>
+    <div class="add-row" style="padding-top:0;">
+      <button class="add-btn" id="downloadCurrentBtn" style="border-color:var(--line); color:var(--muted); font-size:11.5px;">📄 تنزيل نسخة احتياطية من كل السجلات (للمسؤول 🔒)</button>
+    </div>
+    <input type="file" id="excelPointsFileInput" accept=".xlsx,.xls,.csv" style="display:none;">
+    <div id="excelImportStatus" style="padding:0 20px 10px; font-size:11.5px; color:var(--muted); text-align:center;"></div>
+
+    <div class="section-divider" style="margin-top:2px;">
+      <span class="lbl">تسجيل فردي يدوي</span>
+    </div>
+    <div class="add-row" style="padding-top:8px;">
+      <button class="add-btn" id="addStaffPointsBtn" style="border-color:var(--line); color:var(--muted);">+ تسجيل نشاط يدوي لموظف واحد (للمسؤول 🔒)</button>
+    </div>
+  </div>
+
+  <!-- SECTION 6: FORMS -->
+  <div class="main-box">
+    <div class="main-box-header">
+      <div>
+        <h2>الاستمارات الإلكترونية المعتمدة
+          <span class="en">Official CME Forms</span>
+        </h2>
+      </div>
+      <div class="main-icon" style="background:var(--violet-soft); color:var(--violet);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><path d="M9 12h6"/><path d="M9 16h6"/></svg>
+      </div>
+    </div>
+
+    <div class="grid" style="grid-template-columns:1fr 1fr;">
+      <div class="qa-card">
+        <h3>📋 طلب إضافة نشاط تدريبي</h3>
+        <p>لطلب إدراج محاضرة أو ورشة في جدول التعليم المستمر.</p>
+        <a class="form-open-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScHiJUSwNIF0YFhr-TpwHnqwm1LP6CQam-hUwimFITK8ouXvw/viewform" target="_blank">فتح الاستمارة</a>
+      </div>
+      <div class="qa-card">
+        <h3>📊 تقرير تحسين الجودة</h3>
+        <p>لتقديم تقارير تحسين جودة الرعاية والخدمات الصحية.</p>
+        <a class="form-open-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfM4o5O9UPDVbmmPL56LbPkEuklx7idPQem_P8ay3tSb9I85w/viewform" target="_blank">فتح الاستمارة</a>
+      </div>
+      <div class="qa-card">
+        <h3>📈 تقييم الاحتياج التدريبي (لرؤساء الأقسام)</h3>
+        <p>خاص برؤساء الأقسام لتحديد الاحتياجات التدريبية للملاكات.</p>
+        <a class="form-open-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeNUxnsV5H9LK-xjv2FmanoVLc4FQqJZcFBpQdNofrivPEzQg/viewform" target="_blank">فتح الاستمارة</a>
+      </div>
+      <div class="qa-card">
+        <h3>📝 طلب تقديم محاضرة</h3>
+        <p>للملاكات الراغبة بتقديم وإلقاء محاضرة علمية معتمدة.</p>
+        <a class="form-open-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSc8f--Isn2W1rzeBDx-XxuYnLTYaGck5OdsSYU5e06pC-7kUA/viewform" target="_blank">فتح الاستمارة</a>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+ 
+<!-- MODAL: MEN'S HEALTH — ADD / EDIT SESSION -->
+<div class="overlay" id="mhSessionModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="mhSessionModalTitle">إضافة جلسة</h3>
+      <button class="modal-close" onclick="closeModal('mhSessionModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label id="mh-lbl-title">عنوان الجلسة *</label>
+        <input type="text" id="mh-f-title" placeholder="مثال: Diagnosis & Staging" dir="auto">
+      </div>
+      <div class="field">
+        <label id="mh-lbl-desc">وصف وتفاصيل الجلسة</label>
+        <div class="editor-toolbar">
+          <button type="button" class="tool-btn" onclick="pgInsertFormat('**', '**')"><b>B</b> عريض</button>
+          <button type="button" class="tool-btn" onclick="pgInsertFormat('*', '*')"><i>I</i> مائل</button>
+          <button type="button" class="tool-btn" onclick="pgInsertFormat('### ', '')">عنوان H</button>
+          <button type="button" class="tool-btn" onclick="pgInsertFormat('- ', '')">• نقطة</button>
+        </div>
+        <textarea id="mh-f-desc" rows="6" placeholder="Objectives, topics, learning outcomes..." dir="auto"></textarea>
+      </div>
+      <div class="field">
+        <label>المحاضر / المقدّم</label>
+        <input type="text" id="mh-f-speaker" placeholder="مثال: Dr. Ahmed" dir="auto">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>التاريخ (اتركيه فارغ إذا لم يُحدد بعد)</label>
+          <input type="date" id="mh-f-date">
+        </div>
+        <div class="field">
+          <label>الوقت</label>
+          <input type="time" id="mh-f-time">
+        </div>
+      </div>
+      <div class="field">
+        <label>المكان</label>
+        <input type="text" id="mh-f-location" placeholder="مثال: قاعة الندوات" dir="auto">
+      </div>
+      <div class="field">
+        <label>الوحدات المعتمدة (CME Units)</label>
+        <input type="text" id="mh-f-units" placeholder="مثال: 1 CME hour" dir="auto">
+      </div>
+      <button class="save-btn" id="mhSaveSessionBtn" onclick="pgSaveSession()">حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: MEN'S HEALTH — ADD / EDIT SERIES -->
+<div class="overlay" id="mhSeriesModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="mhSeriesModalTitle">إضافة سلسلة</h3>
+      <button class="modal-close" onclick="closeModal('mhSeriesModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>عنوان السلسلة (English) *</label>
+        <input type="text" id="mh-s-title" placeholder="مثال: The Patient Journey: Prostate Cancer" dir="auto">
+      </div>
+      <div class="field">
+        <label>العنوان بالعربي (اختياري)</label>
+        <input type="text" id="mh-s-titleAr" placeholder="مثال: رحلة المريض: سرطان البروستات">
+      </div>
+      <div class="field">
+        <label>وصف قصير للسلسلة (اختياري)</label>
+        <textarea id="mh-s-intro" rows="3" dir="auto"></textarea>
+      </div>
+      <button class="save-btn" id="mhSaveSeriesBtn" onclick="pgSaveSeries()">حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ADD / EDIT ACTIVITY -->
+<div class="overlay" id="activityModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">إضافة نشاط جديد</h3>
+      <button class="modal-close" onclick="closeModal('activityModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field" id="categoryFieldWrap">
+        <label>الفئة المستهدفة (يمكن اختيار أكثر من فئة) *</label>
+        <div class="cat-checkbox-row">
+          <label class="cat-checkbox cat-teal"><input type="checkbox" class="f-cat-checkbox" value="physicians"> 🩺 الأطباء</label>
+          <label class="cat-checkbox cat-rose"><input type="checkbox" class="f-cat-checkbox" value="nurses"> 💉 الممرضين</label>
+          <label class="cat-checkbox cat-violet"><input type="checkbox" class="f-cat-checkbox" value="pharmacists"> 💊 الصيادلة</label>
+          <label class="cat-checkbox cat-blue"><input type="checkbox" class="f-cat-checkbox" value="support"> 🧑‍⚕️ الكادر الطبي المساعد</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>عنوان النشاط *</label>
+        <input type="text" id="f-title" placeholder="مثال: ورشة تدريبية عن...">
+      </div>
+      <div class="field">
+        <label>وصف وتفاصيل النشاط</label>
+        <div class="editor-toolbar">
+          <button type="button" class="tool-btn" onclick="insertFormat('**', '**')"><b>B</b> عريض</button>
+          <button type="button" class="tool-btn" onclick="insertFormat('*', '*')"><i>I</i> مائل</button>
+          <button type="button" class="tool-btn" onclick="insertFormat('### ', '')">عنوان H</button>
+          <button type="button" class="tool-btn" onclick="insertFormat('- ', '')">• نقطة</button>
+        </div>
+        <textarea id="f-desc" rows="6" placeholder="اكتب هنا التفاصيل والمحاور..."></textarea>
+      </div>
+      <div class="field">
+        <label>المحاضر / الجهة المنظمة</label>
+        <input type="text" id="f-speaker" placeholder="مثال: د. أحمد / نقابة الأطباء">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>التاريخ *</label>
+          <input type="date" id="f-date">
+        </div>
+        <div class="field">
+          <label>الوقت</label>
+          <input type="time" id="f-time">
+        </div>
+      </div>
+      <div class="field">
+        <label>المكان</label>
+        <input type="text" id="f-location" placeholder="مثال: قاعة الندوات">
+      </div>
+      <div class="field">
+        <label>الوحدات المعتمدة (CME Units)</label>
+        <input type="text" id="f-units" placeholder="مثال: 2 وحدات">
+      </div>
+      <button class="save-btn" id="saveActivityBtn">حفظ ونشر النشاط</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: REGISTER PARTICIPANT (BY ID ONLY) -->
+<div class="overlay" id="regModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>التسجيل في النشاط</h3>
+      <button class="modal-close" onclick="closeModal('regModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:var(--teal-soft); padding:12px; border-radius:10px; margin-bottom:6px;">
+        <span style="font-size:11.5px; color:var(--teal); font-weight:800; display:block;">النشاط التدريبي:</span>
+        <div id="regActivityTitle" style="font-weight:800; font-size:14px; color:var(--ink); margin-top:2px;"></div>
+      </div>
+      
+      <div class="field">
+        <label>أدخل الرقم الوظيفي (Employee ID) *</label>
+        <input type="text" id="r-id" inputmode="numeric" placeholder="مثال: 123" style="font-size:16px; font-weight:800; text-align:center;">
+        <div class="staff-suggest" id="r-suggest"></div>
+      </div>
+
+      <button class="save-btn" id="submitRegBtn">تأكيد التسجيل بالنشاط</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: VIEW REGISTRATIONS (ADMIN ONLY) -->
+<div class="overlay" id="viewRegModal">
+  <div class="modal" style="max-width:580px;">
+    <div class="modal-head">
+      <h3>قائمة المسجلين بالنشاط 🔒</h3>
+      <button class="modal-close" onclick="closeModal('viewRegModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="regListContent" style="font-size:13px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: UPLOAD SELF-LEARNING PDF -->
+<div class="overlay" id="pdfUploadModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>رفع مادة علمية / ملف PDF موثوق</h3>
+      <button class="modal-close" onclick="closeModal('pdfUploadModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>الاسم الكامل لمقدم الملف (الاسم الثلاثي) *</label>
+        <input type="text" id="up-name" placeholder="الاسم الثلاثي كما في الهوية">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>التخصص الدقيق *</label>
+          <input type="text" id="up-spec" placeholder="طبيب، صيدلاني، ممرض...">
+        </div>
+        <div class="field">
+          <label>القسم / وحدة العمل *</label>
+          <input type="text" id="up-dept" placeholder="الباطنية، الأورام...">
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>رقم الهاتف العراقي (11 رقماً يبدأ بـ 07) *</label>
+          <input type="tel" id="up-phone" placeholder="07xxxxxxxxx" maxlength="11">
+        </div>
+        <div class="field">
+          <label>البريد الإلكتروني الرسمي *</label>
+          <input type="email" id="up-email" placeholder="name@example.com">
+        </div>
+      </div>
+      
+      <div class="field">
+        <label>عنوان المادة العلمية / ملخص الموضوع *</label>
+        <input type="text" id="up-title" placeholder="مثال: بروتوكول علاج أورام الثدي المحدث">
+      </div>
+
+      <div class="field">
+        <label>اختيار ملف PDF من الجهاز (حجم أقصى 10MB) *</label>
+        <input type="file" id="up-file" accept="application/pdf">
+      </div>
+
+      <div class="disclosure-box">
+        <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer; font-weight:600;">
+          <input type="checkbox" id="up-disclosure" style="width:auto; margin-top:2px;">
+          <span>أتعهد بأن المادة المرفوعة ذات طابع تعليمي علمي بحت وخالية من أي مصلحة تجارية أو تسويقية أو محتوى غير لائق.</span>
+        </label>
+      </div>
+
+      <p id="upNotice" style="font-size:11.5px; color:var(--rose); margin:0; text-align:center; font-weight:700;">
+        يرجى إدخال كافة البيانات واختيار ملف PDF والتأشير على الإقرار
+      </p>
+
+      <button class="save-btn" id="savePdfBtn" disabled>رفع وحفظ الملف</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ADMIN — MANAGE STAFF CME POINTS -->
+<div class="overlay" id="staffPointsModal">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-head">
+      <h3>تسجيل نقاط / ساعات موظف 🔒</h3>
+      <button class="modal-close" onclick="closeModal('staffPointsModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>الرقم الوظيفي (Employee ID) *</label>
+        <input type="text" id="sp-id" inputmode="numeric" placeholder="مثال: 123">
+        <div class="staff-suggest" id="sp-suggest"></div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>عنوان النشاط *</label>
+          <input type="text" id="sp-activity" placeholder="مثال: محاضرة تحديث بروتوكول علاج الثدي">
+        </div>
+        <div class="field">
+          <label>التاريخ *</label>
+          <input type="date" id="sp-date">
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>الدور *</label>
+          <select id="sp-role">
+            <option value="lecturer">محاضر (Lecturer) — 2 نقطة</option>
+            <option value="participant">مشارك (Participant) — 0.5 نقطة</option>
+            <option value="other">أخرى / تحديد يدوي (Other / Manual)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>عدد النقاط *</label>
+          <input type="number" id="sp-points" step="0.5" min="0" value="2">
+        </div>
+      </div>
+      <button class="save-btn" id="saveStaffPointsBtn" style="background:var(--amber);">إضافة النقاط للسجل</button>
+
+      <div id="sp-existing" style="margin-top:6px;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ADMIN_PIN_HASH = "00d1b8900ca0ea0e80fcd7bba3d000e517567a4f5ea540acc683fece93af95a1";
+async function sha256Hex(text){
+  const data = new TextEncoder().encode(text);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+async function checkPin(pin){
+  if(!pin) return false;
+  const hash = await sha256Hex(pin);
+  return hash === ADMIN_PIN_HASH;
+}
+
+const SPECIALIZED_CATS = [
+  { key:'physicians',  ar:'الأطباء',           en:'Physicians', icon:'🩺', color:'teal' },
+  { key:'nurses',      ar:'الممرضين',          en:'Nurses', icon:'💉', color:'rose' },
+  { key:'pharmacists', ar:'الصيادلة',          en:'Pharmacists', icon:'💊', color:'violet' },
+  { key:'support',     ar:'الكادر الطبي المساعد', en:'Allied Health Staff', icon:'🧑‍⚕️', color:'blue' }
+];
+
+const MASTER_STAFF_RAW=[["702", "Safaa Kazem Mohammed", "صفاء كاظم محمد", "Medical Management Department", "Anesthesia Department", "Anesthesia", "Anesthesia Technologist"], ["606", "Abbas Shihab Ahmed", "عباس شهاب احمد", "Medical Management Department", "Anesthesia Department", "Anesthesia", "Anesthesia Technologist"], ["570", "Ali Moez Sabri", "علي معزز صبري", "Medical Management Department", "Anesthesia Department", "Anesthesia", "Anesthesia Technologist"], ["644", "Mohammed Sami", "محمد سامي محمد", "Medical Management Department", "Medical Management Department", "Medical Management Department", "Chief Medical Officer"], ["627", "Alaa Riyadh", "الاء رياض رزوقي محمد", "Pharmacy Department", "Clinical Pharmacy Section", "Inpatient Clinical Pharmacy", "Clinical Pharmacist"], ["121", "Diaa Al-Din Yasser Ghazi", "ضياء الدين ياسر غازي", "Pharmacy Department", "Clinical Pharmacy Section", "Inpatient Clinical Pharmacy", "Clinical Pharmacist"], ["124", "Abdul Rahman Al-Shurayqi Mohammed Al-Shurayqi", "عبد الرحمن الشربيني محمد الشربيني", "Pharmacy Department", "Clinical Pharmacy Section", "Inpatient Clinical Pharmacy", "Clinical Pharmacist"], ["120", "Mohammed Ibrahim Mohammed Mostafa", "محمد ابراهيم محمد مصطفى", "Pharmacy Department", "Clinical Pharmacy Section", "Inpatient Clinical Pharmacy", "Clinical Pharmacist"], ["243", "Mohammed Ridha Nahi Amin", "محمد رضا ناهي امين", "Pharmacy Department", "Clinical Pharmacy Section", "Inpatient Clinical Pharmacy", "Clinical Pharmacist"], ["662", "Mohammed Hani Amin Abdul Jassim", "محمد هاني امين عبد الجاسب", "Pharmacy Department", "Clinical Pharmacy Section", "Inpatient Clinical Pharmacy", "Clinical Pharmacist"], ["125", "Mostafa Mamdouh Mostafa Ibrahim", "مصطفى ممدوح مصطفى ابراهيم", "Pharmacy Department", "Clinical Pharmacy Section", "Inpatient Clinical Pharmacy", "Clinical Pharmacist"], ["128", "Hisham Hammad Ali Abdul Latif", "هشام حماد علي عبداللطيف", "Pharmacy Department", "Clinical Pharmacy Section", "Inpatient Clinical Pharmacy", "Clinical Pharmacist"], ["405", "Abu Talib Badr Abdullah Luaibi", "Abu Talib Badr Abdullah Luaibi", "Medical Management Department", "Surgery Department", "Surgical Oncology", "Consultant"], ["522", "Ahmed Mohamed Amer Sayed Mohamed", "Ahmed Mohamed Amer Sayed Mohamed", "Medical Management Department", "Surgery Department", "Surgical Oncology", "Consultant"], ["255", "Asem Ahmed Mohammed Mahmoud", "Asem Ahmed Mohammed Mahmoud", "Medical Management Department", "Surgery Department", "Surgical Oncology", "Consultant"], ["560", "Mohamed Taher Fouad Abdel-Azim", "Mohamed Taher Fouad Abdel-Azim", "Medical Management Department", "Surgery Department", "Surgical Oncology", "Consultant"], ["253", "Mohammed Ali Abdul Hamid Ali Atia", "Mohammed Ali Abdul Hamid Ali Atia", "Medical Management Department", "Surgery Department", "Surgical Oncology", "Consultant"], ["406", "Jassim Dagher Saoud Alwan", "Jassim Dagher Saoud Alwan", "Medical Management Department", "Surgery Department", "General Surgery", "Consultant"], ["201", "Osama Abbas Zaki Ajam", "اسامة عباس زكي عجم", "Medical Management Department", "Interventional Radiology Section", "Interventional Radiology", "Consultant"], ["589", "Salem Abdul Rahman", "سالم عبد الرحمن", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Consultant"], ["465", "Sawsan Saleh Mahmoud Ghanem", "سوسن صالح محود غانم", "Medical Management Department", "Laboratory Department", "Histopathology Unit", "Consultant"], ["608", "Sharif Muhammad Ali Khairallah", "شريف محمد علي خير الله", "Medical Management Department", "Surgery Department", "Surgical Oncology", "Consultant"], ["469", "Ali Dawood Abdulwahab Dawood", "علي داوود عبد الوهاب داوود", "Medical Management Department", "Gastroenterology & Endoscopy Section", "Gastroenterology & Endoscopy", "Consultant"], ["7", "Amr Ahmed El-Sayed Ali", "عمرو أحمد السيد علي", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Consultant"], ["635", "Kadhim Hassan Ali Hussein", "كاظم حسن علي حسين", "Medical Management Department", "Surgery Department", "General Surgery", "Consultant"], ["324", "Mohammed Abdul Wahid Mohammed Bayoumi", "محمد عبد الواحد محمد بيومي", "Medical Management Department", "Palliative Care Department", "Pain Management", "Consultant"], ["724", "Marwa Abdallah Hassan Abdallah", "مروة عبد الله حسن عبد الله", "Medical Management Department", "Nuclear Medicine Section", "Nuclear Medicine Section", "Consultant"], ["215", "Nayef Jaber Farhan Jabr", "نايف جابر فرحان جبر", "Medical Management Department", "Pediatric Hemato-Oncology", "Pediatric Hemato-Oncology", "Consultant"], ["199", "Wasan Hameed Saud Mraihij Humaidi", "وسن حميد سعود مريهج حميدي", "Medical Management Department", "Pediatric Hemato-Oncology", "Pediatric Hemato-Oncology", "Consultant"], ["203", "Dr. Ahmed Mansour Ahmed Mohammed", "د.احمد منصور احمد محمد", "Medical Management Department", "Anesthesia Department", "Anesthesia", "Head of Anesthesia"], ["296", "Abdulzahra Buraidi Ubaid Atiyah", "عبدالزهره بريدي عبيد عطيه", "Medical Management Department", "Laboratory Department", "Blood Bank", "Head of Blood Bank"], ["246", "Hala Rahim Mohammed Abdulhadi", "هالة رحيم محمد عبد الهادي", "Medical Management Department", "Laboratory Department", "Histopathology Unit", "Head Of Histopathology Unit"], ["592", "Ahmed Salman Suleiman Salman", "احمد سالمان سليمان سالمان", "Medical Management Department", "Intensive Care Unit", "Intensive Care Unit", "Head of Intensive Care Unit"], ["224", "Hussein Kamil Mahmoud Khalifa", "حسين كامل محمود خليفة", "Medical Management Department", "Laboratory Department", "Laboratory Department", "Head of Laboratory Department"], ["499", "Fatima Ahmed Abdul Fattah Al-Rikabi", "فاطمة احمد عبد الفتاح ركابي", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Head of Radiotherapy"], ["2", "Ali Sameer Atwan Al-Kinani", "علي سمير عطوان الكناني", "Hospital Management", "Hospital Management", "Hospital Management", "Hospital CEO"], ["372", "Duha Hamed Badr Jawad", "ضحى حامد بدر جواد", "Medical Management Department", "Medical Management Department", "Medical Management Department", "Inpatient & Wards Manager"], ["54", "Hassan Mohammed Abdulali Radhi", "حسن محمد عبدعلي راضي", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technician"], ["46", "Iktifaa Mohammed Alawi Jassim", "اكتفاء محمد عليوي جاسم", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["564", "Umm Al-Banin Jamil Hamoud Attia", "ام البنين جميل حمود عطية", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["562", "Ayat Maher Dawas Abdullah", "ايات ماهر دواس عبدلله", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["47", "Jwan Adnan Shabib Saleh", "جوان عدنان شبيب صالح", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["626", "Dalal Riyadh Jabbar Salman", "دلال رياض جبار سلمان", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["383", "Zainab Raed Yas Khudair", "زينب رائد ياس خضير", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["471", "Zainab Ali Sami Ghanem", "زينب علي سامي غانم", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["642", "Ali Mohammed Sakran Jabr", "علي محمد سكران جبر نعاس", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["691", "Fatima Abd Al Hadi Hamza", "فاطمة عبد الهادي حمزة المياحي", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["617", "Mujtaba Qaisar Atiya Hamid", "مجتبى قيصر عطية حميد", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["681", "Mohammed Fadel Mohammed Hassan", "محمد فاضل محمد حسن", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["688", "Manar Jawad Kadhim Matar", "منار جواد كاظم مطر", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["682", "Manar Ali Jawad Aneid", "منار علي جواد عنيد", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["616", "Nour Al-Huda Nizar Abdul Karim", "نور الهدى نزار عبد كريم", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["689", "Hajar Salah Ali Hussein", "هاجر صلاح علي حسين", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["53", "Hadi Saleh Mahdi Musharraf", "هادي صالح مهدي مشرف", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["384", "Hadeel Azzam Abdulhassan Shati Al-Jader", "هديل عزام عبدالحسن شاطي الجادر", "Medical Management Department", "Laboratory Department", "Laboratory", "Laboratory Technologist"], ["549", "Ayat Adnan Awda Fa'il", "ايات عدنان عودة فعيل", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["335", "Hassan Mahmoud Mohammed Al-Ghoul", "حسان محمود محمد علي الغول", "Nursing Department", "Nursing Department", "Adult Oncology (3B)", "Licensed Practical Nurse (LPN)"], ["482", "Raghida Fawaz Abouzeid", "راغدة فواز ابوزيد", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["710", "Abeer Ezzedine Abdullah", "عبير عزالدين محمود عبد الله", "Nursing Department", "Nursing Department", "Radiation Oncology", "Licensed Practical Nurse (LPN)"], ["697", "Ali Khalaf Jalib", "علي خلف جليب غويض", "Nursing Department", "Nursing Department", "Interventional Radiology", "Licensed Practical Nurse (LPN)"], ["87", "Omar Hussein Issa Hussein Al-Natour", "عمرحسين عيسى حسين الناطور", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["519", "Ghadir Houssein Moussawi", "غدير حسين علي محمد الموسوي", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["186", "Fayrouz Issam Arafat Daqmaq", "فيروز عصام عرفات دقماق", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["315", "Katia Qasim Mohammed Ahmed Raad", "كاتيا قاسم محمد احمد رعد", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["508", "Mohammad Haydar Ahmed Shmeiss", "محمد حيدر احمد محمود شميس", "Nursing Department", "Nursing Department", "Pediatric Oncology (2B)", "Licensed Practical Nurse (LPN)"], ["346", "Mohammed Ali Abd Abd Hassan Abdul Muati", "محمد علي عبد عبد حسن عبد المعطي", "Nursing Department", "Nursing Department", "Radiation Oncology", "Licensed Practical Nurse (LPN)"], ["103", "Mohammed Mansour Mohammed Hassan Hamoud", "محمد منصور محمد حسن حمود", "Nursing Department", "Nursing Department", "Adult Oncology (3B)", "Licensed Practical Nurse (LPN)"], ["666", "Mohammed Hashem Abir Abbas", "محمد هاشم عابر عباس", "Nursing Department", "Nursing Department", "Adult Oncology (3B)", "Licensed Practical Nurse (LPN)"], ["100", "Mohammed Youssef Hassan Khalil Mohammed Yaqoub", "محمد يوسف حسن خليل محمد يعقوب", "Nursing Department", "Nursing Department", "Adult Intensive Care Unit", "Licensed Practical Nurse (LPN)"], ["551", "Maryam Yahya Ghulam Mohammed", "مريم يحيى غلام محمد", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["517", "Mahdi Ahmad Harb", "مهدي احمد نايف عبدلله حرب", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["708", "Mahdi Hussein Diab", "مهدي حسين توفيق دياب", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["620", "Nour Shaker Alwan", "نور شاكر علوان", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["92", "Hadi Naeem Jameel Raghda", "هادي نعيم جميل رغدة", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["516", "Hiba Youshaa Raghda", "هبة يوشع جميل نعيم رغدا", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["554", "Hind Aswad Thuwaini Ghalib", "هند أسود ثويني غلب", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["339", "Youssef Ali Raja Zaaroura", "يوسف علي رجا زعروره", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Licensed Practical Nurse (LPN)"], ["132", "Islam Tarek Mahmoud Mostafa", "إسلام طارق محمود مصطفى", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Medical Physicist"], ["130", "Bilal Zakariya Hassan Hussein", "بلال زكريا حسن حسين", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Medical Physicist"], ["131", "Abdulrahman Sameer Mahmoud Muslim", "عبد الرحمن سمير محمود مسلم", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Medical Physicist"], ["133", "Mohammed Abdulmajeed Ibrahim Mohammed Khalil", "محمد عبدالمجيد ابراهيم محمد خليل", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Medical Physicist"], ["380", "Ibrahim Hussein Ali Hussein", "ابراهيم حسين علي حسين", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Medical Physicist Supervisor"], ["63", "Ahmed Razzaq Fadhel Wadi", "احمد رزاق فاضل وادي", "Medical Management Department", "Nuclear Medicine Section", "Nuclear Medicine Section", "Nuclear Medicine Physicist"], ["61", "Ahmed Awad Mohsen Shabout", "أحمد عواد محسن شبوط", "Medical Management Department", "Nuclear Medicine Section", "Nuclear Medicine Section", "Nuclear Medicine Physicist"], ["59", "Hussein Banai Fadhel Jabr", "حسين بناي فاضل جبر", "Medical Management Department", "Nuclear Medicine Section", "Nuclear Medicine Section", "Nuclear Medicine Physicist"], ["60", "Ammar Bazzar Zghair Bahi", "عمار بزار زغير بهي", "Medical Management Department", "Nuclear Medicine Section", "Nuclear Medicine Section", "Nuclear Medicine Physicist"], ["58", "Kamal Jihad Kadhim Mohammed", "كمال جهاد كاظم محمد", "Medical Management Department", "Nuclear Medicine Section", "Nuclear Medicine Section", "Nuclear Medicine Physicist"], ["375", "Mahmoud Ramadan Abduljawad Ali", "محمود رمضان عبدالجواد على", "Medical Management Department", "Nuclear Medicine Section", "Nuclear Medicine Section", "Nuclear Medicine Senior Technician"], ["720", "Umulbaneen Hussein Ali", "ام البنين حسين علي عبد الحسين", "Nursing Department", "Nursing Department", "Surgery (3C)", "Nurse Assistant"], ["722", "Batoul Jaber Kazem Mohsen", "بتول جابر كاظم محسن", "Nursing Department", "Nursing Department", "OR & CSSD", "Nurse Assistant"], ["552", "Tabarak Fares Talib Shanan", "تبارك فارس طالب شنان", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Nurse Assistant"], ["665", "Saja Sahal Sajit Abdul Sada", "سجى سهل ساجت عبد السادة", "Nursing Department", "Nursing Department", "Outpatient Department", "Nurse Assistant"], ["705", "Adheed Mohammed Jassim", "عضيد محمد كاظم سلمان مساعد", "Nursing Department", "Nursing Department", "OR & CSSD", "Nurse Assistant"], ["721", "Lujain Ali Abdulridha", "لجين علي عبد الرضا لفتة", "Nursing Department", "Nursing Department", "Adult Oncology (3B)", "Nurse Assistant"], ["305", "Maryam Amer Kati' Louti", "مريم عامر كاطع لوتي", "Nursing Department", "Nursing Department", "Outpatient Department", "Nurse Assistant"], ["525", "Nagham Radwan Zahruddin", "نغم رضوان زهر الدين", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Nurse Assistant"], ["96", "Jafar Abdul Majeed Deeb", "جعفر عبد المجيد ديب", "Nursing Department", "Nursing Supervisor", "Nursing Supervisory", "Nursing Supervisor"], ["73", "Hassan Rifaat Mohammed Hamza", "حسن رفعات محمد حمزة", "Nursing Department", "Nursing Supervisor", "Nursing Supervisory", "Nursing Supervisor"], ["223", "Dalia Rifaat Mohammed Hamza", "داليا رفعات محمد حمزة", "Nursing Department", "Nursing Supervisor", "Nursing Supervisory", "Nursing Supervisor"], ["178", "Ali Saadallah Sobhi Dorra", "علي سعد الله صبحي درة", "Nursing Department", "Nursing Supervisor", "Nursing Supervisory", "Nursing Supervisor"], ["67", "Ali Abbas Ali Khalifa", "علي عباس علي خليفة", "Nursing Department", "Nursing Supervisor", "Nursing Supervisory", "Nursing Supervisor"], ["302", "Heba Adnan Ahmed Brou", "هبة عدنان احمد برو", "Nursing Department", "Nursing Supervisor", "Nursing Supervisory", "Nursing Supervisor"], ["686", "Hussein Aqeel Dakhel Jabbar", "حسين عقيل داخل جبار", "Medical Management Department", "Laboratory Department", "Laboratory", "Officer"], ["524", "Iman Nayef Jaber", "ايمان نايف جابر فرحان", "Pharmacy Department", "Central Pharmacy Section", "Dispense Pharmacy", "Pharmacist"], ["328", "Hassan Abdullah Dhabab Mutlaq", "حسن عبدالله ضباب مطلك", "Pharmacy Department", "Chemotherapy and Intravenous Admixture Section", "Chemotherapy and Intravenous Admixture Section", "Pharmacist"], ["579", "Hussein Shaker Ajil", "حسين شاكر عجيل", "Pharmacy Department", "Central Pharmacy Section", "Dispense Pharmacy", "Pharmacist"], ["123", "Khaled Mohammed Ali Al-Zaablaawi", "خالد محمد علي الزعبلاوي", "Pharmacy Department", "Chemotherapy and Intravenous Admixture Section", "Chemotherapy and Intravenous Admixture Section", "Pharmacist"], ["334", "Rushd Khudair Abdul Qader Khudair", "رشد خضر عبد القادر خضر", "Pharmacy Department", "Central Pharmacy Section", "Dispense Pharmacy", "Pharmacist"], ["316", "Taybah Saad Ramadan Hameed", "طيبة سعد رمضان حميد", "Pharmacy Department", "Central Pharmacy Section", "Dispense Pharmacy", "Pharmacist"], ["244", "Abbas Saleem Jabr Bahar", "عباس سليم جبر بهار", "Pharmacy Department", "Chemotherapy and Intravenous Admixture Section", "Chemotherapy and Intravenous Admixture Section", "Pharmacist"], ["661", "Ali Jassim Rahma Ali", "علي جاسم رحمة علي", "Pharmacy Department", "Chemotherapy and Intravenous Admixture Section", "Chemotherapy and Intravenous Admixture Section", "Pharmacist"], ["663", "Mujtaba Mahmoud Shehab Ahmed", "مجتبى محمود شهاب احمد", "Pharmacy Department", "Central Pharmacy Section", "Dispense Pharmacy", "Pharmacist"], ["219", "Muqtada Hilal Atiyah Nahar", "مقتدى هلال عطيه نهار", "Pharmacy Department", "Central Pharmacy Section", "Dispense Pharmacy", "Pharmacist"], ["242", "Hisham Yaseen Abdul Samad Khalaf", "هشام ياسين عبدالصمد خلف", "Pharmacy Department", "Central Pharmacy Section", "Dispense Pharmacy", "Pharmacist"], ["127", "Mohammed Abdul Hassan Kadhim Hussein", "محمد عبد الحسن كاظم حسين", "Pharmacy Department", "Pharmacy Department", "Pharmacy", "Pharmacy Manager"], ["42", "Zainab Basheer Majeed Abboud", "زينب بشير مجيد عبود", "Medical Management Department", "Laboratory Department", "Phlebotomy Unit", "Phlebotomist"], ["55", "Nuha Mahmoud Aziz Ahmed", "نهى محمود عزيز احمد", "Medical Management Department", "Laboratory Department", "Phlebotomy Unit", "Phlebotomist"], ["664", "Ahmed Adel Al-Safi Suleiman", "احمد عادل الصافي سليمان", "Medical Management Department", "Palliative Care Department", "Rehabilitation", "Physiotherapist"], ["621", "Rawnaq Fawzi Muhammad Saeed", "رونق فوزي محمد سعيد", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Practitioner"], ["448", "Ahmed Sharif Ahmed Mohsen", "احمد شريف احمد محسن", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Radiation Therapist"], ["142", "Asmaa Talat Abdul Hamid Al-Rahawi", "اسماء طلعت عبد الحميد الرهاوي", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Radiation Therapist"], ["143", "Ayman Jamal Ibrahim Afifi Al-Rahawi", "ايمن جمال ابراهيم عفيفي الرهاوي", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Radiation Therapist"], ["136", "Ali Munir Hassan Mohsen", "علي منير حسن محسن", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Radiation Therapist"], ["447", "Maher Abdel Aaty Mohammed Atta", "ماهر عبد العاطي محمد عطا", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Radiation Therapist"], ["137", "Mujtaba Abdulhussein Mohsen Hazzaa", "مجتبى عبد الحسين محسن هزاع", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Radiation Therapist"], ["140", "Mahdi Jassim Jalil Abdulhilu", "مهدي جاسم جليل عبد الحلو", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Radiation Therapist"], ["138", "Noor Abdulhassan Atwan Hassan Zuwairi", "نور عبد الحسن عطوان حسن زويري", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Radiation Therapist"], ["139", "Yousif Hamdallah Banoun Badr", "يوسف حمدالله بعنون بدر", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Radiation Therapist"], ["134", "Yousef Fouad Abdul Hamid Al Sheikh", "يوسف فؤاد عبد الحميد الشيخ", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Radiation Therapist"], ["330", "Suleiman Ramzi Suleiman Jafar", "سليمان رمزي سليمان جعفر", "Medical Management Department", "Diagnostic Radiology Department", "Diagnostic Radiology", "Radiology Technician"], ["193", "Sulaiman Faisal Ahmed Najm", "سليمان فيصل احمد نجم", "Medical Management Department", "Diagnostic Radiology Department", "Diagnostic Radiology", "Radiology Technologist"], ["503", "Shahad Abdul Razzaq Mizal Hussein", "شهد عبد الرزاق مزعل حسين", "Medical Management Department", "Diagnostic Radiology Department", "Diagnostic Radiology", "Radiology Technologist"], ["371", "Maryam Muayyad Hassan Salman", "مريم مؤيد حسن سلمان", "Medical Management Department", "Diagnostic Radiology Department", "Diagnostic Radiology", "Radiology Technologist"], ["268", "Muamal Abduljabbar Waheed Hussein", "مؤمل عبد الجبار وحيد حسين", "Medical Management Department", "Diagnostic Radiology Department", "Diagnostic Radiology", "Radiology Technologist"], ["192", "Maisam Salem Jabbar Maki", "ميسم سالم جبار مكي", "Medical Management Department", "Diagnostic Radiology Department", "Diagnostic Radiology", "Radiology Technologist"], ["191", "Wadyan Salah Haider Shahab", "وديان صلاح حيدر شهاب", "Medical Management Department", "Diagnostic Radiology Department", "Diagnostic Radiology", "Radiology Technologist"], ["78", "Ibrahim Al-Khalil Mahmoud Al-Sitt", "ابراهيم الخليل محمود الست", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["426", "Ahmed Yousri Al-Sayyid Seraj", "احمد يسري السيد سراج", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["449", "Esraa Hussein Abd Salman", "اسراء حسين عبد سلمان", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["520", "Amani Adel Ahmed Mishek", "اماني عادل احمد عجاج مشيك", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["699", "Ayat Jamil Safar", "ايات جميل صفر نوروز", "Nursing Department", "Nursing Department", "Interventional Radiology", "Registered Nurse (RN)"], ["166", "Aya Hassan Sami Al-Sharqawi", "اية حسن سامي الشرقاوي", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["167", "Ayman Ahmed Mohammed Mahmoud Al-Halani", "أيمن أحمد محمد محمود الحلاني", "Nursing Department", "Nursing Department", "Radiation Oncology", "Registered Nurse (RN)"], ["97", "Aya Reda Mohammed Deeb", "آية رضا محمد ديب", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["180", "Hassan Essam Mahmoud Abdul Sater", "حسن عصام محمود عبد الساتر", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["398", "Hassan Mohammed Hassan Mohammed", "حسن محمد حسن محمد", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["220", "Hassan Mohammed Hani Abdul Ali", "حسن محمد هاني عبد علي", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["486", "Hassan Nourse Darwish", "حسن نورس درويش", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["104", "Hussein Tariq Yassin", "حسين طارق ياسين", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["71", "Hussein Abbas Mohammed Shukr", "حسين عباس محمد شكر", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["345", "Hussein Ali Hassan Hussein Al-Mousawi", "حسين علي حسن حسين الموسوي", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["171", "Hussein Mahmoud Ali Ibrahim", "حسين محمود علي ابراهيم", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["99", "Hussein Youssef Mohammed Ali Al-Sayyid", "حسين يوسف محمد علي السيد", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["707", "Hanin Ali Almazbouh", "حنين علي المذبوح", "Nursing Department", "Nursing Department", "Adult Day Care", "Registered Nurse (RN)"], ["555", "Haider Mahmoud Shaker Mutok", "حيدر محمود شاكر معتوك", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["479", "Khadija Housein Awde", "خديجة حسين عودة", "Nursing Department", "Nursing Department", "Pediatric Oncology (2B)", "Registered Nurse (RN)"], ["709", "Rida abd almawla Almasri", "رضا عبد المولى المصري", "Nursing Department", "Nursing Department", "Emergency Department", "Registered Nurse (RN)"], ["671", "Redha Ali Radhi Sultan", "رضا علي راضي سلطان", "Nursing Department", "Nursing Department", "OR & CSSD", "Registered Nurse (RN)"], ["86", "Ramla Hussein Mustafa Raya", "رملة حسين مصطفى  ريا", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["393", "Rawda Hani Ahmed", "روضة هاني احمد", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["510", "Rayan Adham Mohammad Khafaja", "ريان أدهم محمد توفيق خفاجة", "Nursing Department", "Nursing Department", "Pediatric Oncology (2B)", "Registered Nurse (RN)"], ["331", "Zahraa Mazen Shweikh Shamkhi", "زهراء مازن شويخ شمخي", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["85", "Sara Ahmed Ibrahim Al-Miqdad", "سارة أحمد ابراهيم  المقداد", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["350", "Saeed Fadhel Saeed Mohammed", "سعيد فاضل سعيد محمد", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["553", "Sanaa Nader Amer", "سناء نادر عامر", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["308", "Shahinda Ahmed Mohammed Ibrahim", "شاهندا احمد محمد ابراهيم", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["668", "Sabiha Najm Abdul Hussein Jassim", "صبيحة نجم عبد الحسين جاسم", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["76", "Abbas Hussein Ali Alwa", "عباس حسين علي علوه", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["513", "Abbass Mohammad Abbass Ibrahim", "عباس محمد عباس ابراهيم", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["69", "Ali Ahmed Ali Mattar", "علي أحمد علي مطر", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["669", "Ali Jalil Fadhil Yasser", "علي جليل فضيل ياسر", "Nursing Department", "Nursing Department", "Interventional Radiology", "Registered Nurse (RN)"], ["182", "Ali Jihad Mahdi Nasrallah", "علي جهاد مهدي نصرالله", "Nursing Department", "Nursing Department", "Adult Oncology (3B)", "Registered Nurse (RN)"], ["313", "Ali Khader Tawfiq Farhat", "علي خضر توفيق فرحات", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["304", "Ali Suleiman Ali Ismail Al-Ghoul", "علي سليمان علي اسماعيل الغول", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["190", "Ali Tariq Abdullah Jumaa", "علي طارق عبدالله جمعة", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["514", "Ali Issam Deeb Hammoud", "علي عصام ديب محمود حمود", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["194", "Ali Issa Mohammed Muzahim", "علي عيسى محمد  مزاحم", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["511", "Ali Nazih Ali Shamas", "علي نزيه علي حسن شمص", "Nursing Department", "Nursing Department", "Pediatric Oncology (2B)", "Registered Nurse (RN)"], ["425", "Ghada Yousri Ahmed Al-Ghandour", "غادة يسري احمد الغندور", "Nursing Department", "Nursing Department", "Interventional Radiology", "Registered Nurse (RN)"], ["512", "Faten Hussein Ali Hussein", "فاتن حسين علي حسين", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["396", "Fatima Hassan Maatouq", "فاطمة حسن معتوق", "Nursing Department", "Nursing Department", "Adult Oncology (3B)", "Registered Nurse (RN)"], ["351", "Fatima Qasim Hilal Al-Khudhair", "فاطمة قاسم هلال الخضير", "Nursing Department", "Nursing Department", "Nuclear Medicine", "Registered Nurse (RN)"], ["700", "Fatima Mohammed Munawwar", "فاطمة محمد منور شهيب", "Nursing Department", "Nursing Department", "Adult Intensive Care Unit", "Registered Nurse (RN)"], ["667", "Qatr Al-Nada Hassan Ali Abdul Jalil", "قطر الندى حسن علي عبد الجليل", "Nursing Department", "Nursing Department", "Surgery (3C)", "Registered Nurse (RN)"], ["557", "Mohammad Hasan Fawaz", "محمد حسن علي نعمة فواز", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["703", "Mohammed Reda", "محمد رضا احمد حاتم", "Nursing Department", "Nursing Department", "Emergency Department", "Registered Nurse (RN)"], ["394", "Mohammed Tariq Mohammed Al-Husseini Al-Dabaa", "محمد طارق محمد الحسيني الضبع", "Nursing Department", "Nursing Department", "OR & CSSD", "Registered Nurse (RN)"], ["163", "Mohammed Mustafa Ali Akhdar", "محمد مصطفى علي أخضر", "Nursing Department", "Nursing Department", "Surgery (3C)", "Registered Nurse (RN)"], ["704", "Marwa Abdul Karim Sadiq Yaqoub", "مروة عبد الكريم صادق يعقوب", "Nursing Department", "Nursing Department", "Nuclear Medicine", "Registered Nurse (RN)"], ["300", "Maryam Talal Mohammed Marai", "مريم طلال محمد مرعي", "Nursing Department", "Nursing Department", "Emergency Department", "Registered Nurse (RN)"], ["701", "Maryam Abdul Karim Abdul Razzaq", "مريم عبد الكريم عبد الرزاق صالح", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["410", "Maryam Kamal Mahmoud Hteit", "مريم كمال محمود حطيط", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["695", "Mustafa Saad Abdul", "مصطفى سعد عبد سعد", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["348", "Mahdi Abbas Hassan Ibrahim Khalifa", "مهدي عباس حسن ابراهيم خليفه", "Nursing Department", "Nursing Department", "Surgery (3C)", "Registered Nurse (RN)"], ["696", "Mayamin Abdul Hafez Abdul Jabbar", "ميامين عبد الحافظ عبد الجبار", "Nursing Department", "Nursing Department", "Adult Oncology (3B)", "Registered Nurse (RN)"], ["366", "Nadia Aswad Thuwayni Ghalib", "ناديه أسود ثويني غلب", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["336", "Nadine Hassan Ali Hanino", "ندين حسن علي حنينو", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["183", "Noor Al-Huda Qasim Mishik", "نور الهدى قاسم مشيك", "Nursing Department", "Nursing Department", "Emergency Department", "Registered Nurse (RN)"], ["298", "Noor Sameer Mohammed Ahmed Al-Asmar", "نور سمير محمد احمد الاسمر", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["179", "Nevine Adel Suleiman Suleiman", "نيفين عادل سليمان سليمان", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["411", "Hadi Ahmed Hussein Shukr", "هادي احمد حسين شكر", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["397", "Heba Ramadan Mohammed Mohammed Deeb", "هبة رمضان محمد محمد ديب", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["698", "Huda Muslim Malih", "هدى مسلم مالح ناصر", "Nursing Department", "Nursing Department", "Surgery (3C)", "Registered Nurse (RN)"], ["341", "Hadeel Mohammed Amhaz", "هديل محمد ملحم امهز", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["437", "Yasmin Mustafa Khalil Hussein Al-Kurdiyah", "ياسمين مصطفى خليل حسين الكرديه", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Registered Nurse (RN)"], ["460", "Adyan Tawfiq Hameed Abdul Hussein", "اديان توفيق حميد عبد الحسين", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["660", "Amir Abbas Malallah Hassan", "امير عباس مال الله حسن", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["655", "Tabarak Basem Mohammed Ali Hamid", "تبارك باسم محمد علي حميد", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["630", "Tabarak Mahmoud Hafez Ahmed", "تبارك محمود حافظ احمد", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["631", "Rand Ali Muhi Al-Din Abdul-Subhan", "رند علي محي الدين عبد السبحان", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["624", "Rima Ibrahim Falih Nouri", "ريما ابراهيم فالح نوري السبيعي", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["618", "Zahraa Ayad Hussein", "زهراء اياد حسين حميد", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["692", "Zainab Adel Ali Mutashar", "زينب عادل علي مطشر", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["370", "Sura Mansour Yassin Nasser", "سرى منصور ياسين ناصر العطبي", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["571", "Ali Hamed Abbas", "علي حامد عباس", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["612", "Ali Dawood Salman Shayaa", "علي داود سلمان شياع", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["154", "Ali Safaa Abdul-Qader", "علي صفاء عبد القادر", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["568", "Mohammed Hossam Abdullah", "محمد حسام عبدلله", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["659", "Mohammed Abbas Mahjar Yaqoub", "محمد عباس مهجر يعكوب", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["148", "Mohammed Ali Sabbar Abdul-Ridha", "محمد علي صبار عبد الرضا", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["628", "Muhammad Ali Abdul Muhi", "محمد علي عبد محي", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["625", "Muhammad Karim Abdul-Rakhis", "محمد كريم عبد رخيص الحكيمي", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["610", "Murtada Haider Ta'Ma Saleh", "مرتضى حيدر طعمة صالح", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["611", "Maryam Ahmed Fadel Basri Al-Eidani", "مريم احمد فاضل بصري العيداني", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["401", "Muqtada Abdul Hussein Ali Kassar", "مقتدر عبدالحسين علي كسار", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["656", "Naba Abdul-Nasser Hussein Abdullah", "نبأ عبد الناصر حسين عبدلله", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["629", "Narjis Maitham Shahib Hamidi", "نرجس ميثم شهيب حميدي", "Medical Management Department", "Residency Department", "Residency Department", "Resident"], ["57", "Yousif Issa Abdulridha Kadhim Jari", "يوسف عيسى عبد الرضا كاظم جري", "Medical Management Department", "Laboratory Department", "Laboratory", "Senior Laboratory Technologist"], ["141", "Ramadan Ayoub Ammar Mohammed", "رمضان ايوب عمار محمد", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Senior Radiation Therapist"], ["412", "Karrar Ali Zughair Jabbar", "Karrar Ali Zughair Jabbar", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["632", "Bassam Saad Yassin Taha", "بسام سعد ياسين طه", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["415", "Tawfiq Haider Tawfiq Hameed", "توفيق حيدر توفيق حميد", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["433", "Haneen Haider Abdul Abbas", "حنين حيدر عبد عباس", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["429", "Doaa Majed Abdul Latif Sabhan", "دعاء ماجد عبد اللطيف سبهان", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["674", "Zahraa Mohammed", "زهراء محمد منصور السهلاني", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["653", "Sajjad Niama Nasser", "سجاد نعمه ناصر", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["149", "Abdullah Qusai Salem Abbas", "عبدالله قصي سالم عباس", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["432", "Ali Qasim Abdullah Hussein", "علي قاسم عبدالله حسين", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["430", "Ghadeer Ibrahim Abdulali Taher", "غدير ابراهيم عبدعلي طاهر", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["651", "Karrar Rahim Niama", "كرار رحيم نعمة", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["408", "Mohammed Saadi Abdulaziz Gazar", "محمد سعدي عبد العزيز گزار", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["403", "Mohammed Adel Mohammed Hassan", "محمد عادل محمد حسن", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["427", "Mohammed Hashem Khudair Hamza", "محمد هاشم خضير حمزه", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["680", "Mustafa Kamil Ali Karim", "مصطفى كامل علي كريم", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["431", "Mustafa Mohammed Ali Mohammed", "مصطفى محمد علي محمد", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["409", "Muhannad Taha Salama Helles", "مهند طه سلامة حلس", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["652", "Yasser Yass Khodair", "ياسر ياس خضير", "Medical Management Department", "Residency Department", "Residency Department", "Senior Resident"], ["637", "Ibrahim Mahjar Ta'Ma", "ابراهيم مهجر طعمة رومي", "Medical Management Department", "Surgery Department", "Onco-Urology", "Senior Specialist"], ["249", "Ahmed Qasim Hadi Abbas", "أحمد قاسم هادي عباس", "Medical Management Department", "Adult Oncology", "Adult Oncology", "Senior Specialist"], ["467", "Mustafa Adnan Maatouq Dawood", "مصطفى عدنان معتوق داوود", "Medical Management Department", "Surgery Department", "Surgical Oncology", "Senior Specialist"], ["374", "Nu'Man Abdulrazzaq Abdulqader Ali", "نعمان عبد الرزاق عبد القادر علي", "Medical Management Department", "Adult Oncology", "Adult Oncology", "Senior Specialist"], ["385", "Musa Mohammed Hussein Al-Ali", "Musa Mohammed Hussein Al-Ali", "Medical Management Department", "Adult Oncology", "Adult Oncology", "Specialist"], ["325", " Ola Ali Salman Al-Asmar", " Ola Ali Salman Al-Asmar", "Medical Management Department", "Adult Oncology", "Adult Oncology", "Specialist"], ["451", "Sary Tariq Abdul Sayyid", "Sary Tariq Abdul Sayyid", "Medical Management Department", "Laboratory Department", "Microbiology Unit", "Specialist"], ["327", "Ahmed Mardan Hamoud Jasim", "احمد مردان حمود جاسم", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Specialist"], ["261", "Al-Zahraa Ahmed Jassim Abd Shah", "الزهراء احمد جاسم عبد شاه", "Medical Management Department", "Pediatric Oncology Department", "Pediatric Oncology", "Specialist"], ["254", "Elias Fahd Elias Al-Rahal", "الياس فهد الياس الرحال", "Medical Management Department", "Intensive Care Unit", "Intensive Care Unit", "Specialist"], ["634", "Inas Khudair Abbas", "ايناس خضير عباس رحيمة", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Specialist"], ["259", "Asmaa Tariq Khalis Abdul Majeed", "أسماء طارق خالص عبد المجيد", "Medical Management Department", "Pediatric Oncology Department", "Pediatric Oncology", "Specialist"], ["378", "Hayat Yahya Shubbar Ali", "حياة يحيى شبر علي", "Medical Management Department", "Outpatient Department", "Family Medicine", "Specialist"], ["468", "Khalid Shaker Abdulkarim Shukr", "خالد شاكر عبدالكريم شكر", "Medical Management Department", "Gastroenterology & Endoscopy Section", "Gastroenterology & Endoscopy", "Specialist"], ["326", "Dr. Ahmed Rifaat Youssef Ghabour", "د.احمد رفعت يوسف غيبور", "Medical Management Department", "Intensive Care Unit", "Intensive Care Unit", "Specialist"], ["506", "Rafid Riyadh Mohsen Naas", "رافد رياض محسن نعاس", "Medical Management Department", "Nuclear Medicine Section", "Nuclear Medicine Section", "Specialist"], ["252", "Raghad Nabil Abdul Latif Ibrahim", "رغد نبيل عبداللطيف ابراهيم", "Medical Management Department", "Adult Oncology", "Adult Oncology", "Specialist"], ["379", "Zainab Kamil Dhahi Trechi", "زينب كامل ضاحي تريچي", "Medical Management Department", "Outpatient Department", "Family Medicine", "Specialist"], ["250", "Zainab Mudhar Mohammed Hashim", "زينب مضر محمد هاشم", "Medical Management Department", "Palliative Care Department", "Pain Management", "Specialist"], ["377", "Zeina Abdul Rahman Tawfiq Abdul Rahman", "زينة عبد الرحمن توفيق عبدالرحمن", "Medical Management Department", "Diagnostic Radiology Department", "Diagnostic Radiology", "Specialist"], ["523", "Sajid Jabbar Hassan Salman", "ساجد جبار حسن سلمان", "Medical Management Department", "Adult Oncology", "Adult Oncology", "Specialist"], ["247", "Samer Mahmoud Sharif Bin Khadraa", "سامر محمود شريف بن خضراء", "Medical Management Department", "Anesthesia Department", "Anesthesia", "Specialist"], ["712", "Samar Fadi Hammoud Haidar", "سمر فادي يوسف حمود حيدر", "Medical Management Department", "Intensive Care Unit", "Intensive Care Unit", "Specialist"], ["643", "Shahd Khaled Abdel Qader Abdullah", "شهد خالد عبد القادر عبدلله", "Medical Management Department", "Laboratory Department", "Histopathology Unit", "Specialist"], ["251", "Salah Al-Din Mehdi Mohammed Jawad", "صلاح الدين مهدي محمد جواد", "Medical Management Department", "Surgery Department", "Surgical Oncology", "Specialist"], ["274", "Uday Abdul Hussein Abbas Jaber", "عدي عبد الحسين عباس جابر", "Medical Management Department", "Surgery Department", "Neurosurgery", "Specialist"], ["258", "Farah Mohammed Habib Barakat Al-Jumaa", "فرح محمد حبيب بركات الجمعة", "Medical Management Department", "Pediatric Oncology Department", "Pediatric Oncology", "Specialist"], ["633", "Qusay Jumaa Lazem", "قصي جمعة لازم السعد", "Medical Management Department", "Surgery Department", "Thoracic and Vascular Surgery", "Specialist"], ["48", "Lara Muzher Jasim Mohsen", "لارا مزهر جاسم محسن", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Specialist"], ["649", "Laith Mohammed Latif", "ليث محمد لطيف", "Medical Management Department", "Surgery Department", "Oral and Maxillofacial Surgery", "Specialist"], ["690", "Mahmoud Fouad Mahmoud Mohammed", "محمود فؤاد محمود محمد", "Medical Management Department", "Outpatient Department", "Respiratory", "Specialist"], ["357", "Moataz Abdulhadi Omair Mutlaq Al-Ibrahimi", "معتز عبد هادي عمير مطلق الإبراهيمي", "Medical Management Department", "Laboratory Department", "Histopathology Unit", "Specialist"], ["650", "Muntazer Shaker Hula", "منتظر شاكر هولة سابط جايد", "Medical Management Department", "Diagnostic Radiology Department", "Diagnostic Radiology", "Specialist"], ["404", "Muayyad Abdul Latif Hassan Mohammed", "مؤيد عبداللطيف حسن محمد", "Medical Management Department", "Surgery Department", "Pediatric Oncology Surgery", "Specialist"], ["269", "Nebras Riyadh Mohsen Naas Hamadi", "نبراس رياض محسن نعاس حمادي", "Medical Management Department", "Interventional Radiology Section", "Interventional Radiology", "Specialist"], ["356", "Nora Waleed Abdulwahab Mohammed", "نورا وليد عبدالوهاب محمد", "Medical Management Department", "Pediatric Oncology Department", "Pediatric Oncology", "Specialist"], ["639", "Hiba Hamed Rashad", "هبة حامد رشاد محمد", "Medical Management Department", "Radiation Oncology Section", "Radiation Oncology", "Specialist"], ["601", "Huda Riyadh Abdul Amir Hussein Al-Halfi", "هدى رياض عبدالامير حسين الحلفي", "Medical Management Department", "Diagnostic Radiology Department", "Diagnostic Radiology", "Specialist"], ["574", "Hoda Mohammed Hadi Ibrahim", "هدى محمد هادي ابراهيم", "Medical Management Department", "Anesthesia Department", "Anesthesia", "Specialist"], ["72", "Hussein Mahmoud Ali Hussein Sawan", "حسين محمود علي حسين صوان", "Nursing Department", "Nursing Department", "Emergency Department", "Unit Head Nurse"], ["189", "Zahraa Youssef Ahmed Assaf", "زهراء يوسف احمد عساف", "Nursing Department", "Nursing Department", "Surgery (3C)", "Unit Head Nurse"], ["74", "Abbas Mohammed Kamil Shaheemi", "عباس محمد كامل شحيمي", "Nursing Department", "Nursing Department", "Adult Oncology (3B)", "Unit Head Nurse"], ["80", "Ali Al-Hadi Mohammed Asaad Hamoud", "علي الهادي محمد اسعد حمود", "Nursing Department", "Nursing Department", "Pediatric Oncology (2B)", "Unit Head Nurse"], ["311", "Issa Mohammed Ali Nassar", "عيسى محمد علي نصار", "Nursing Department", "Nursing Department", "Adult Intensive Care Unit", "Unit Head Nurse"], ["83", "Fatima Ali Mohammed Ouda", "فاطمة علي محمد عودة", "Nursing Department", "Nursing Department", "Outpatient Department", "Unit Head Nurse"], ["84", "Layal Ali Ahmed Bazzal", "ليال علي احمد بزال", "Nursing Department", "Nursing Department", "Adult Oncology (3B)", "Unit Head Nurse"], ["94", "Mohsen Ali Nazih Al-Madhbouh", "محسن علي نزيه المذبوح", "Nursing Department", "Nursing Department", "Radiation Oncology", "Unit Head Nurse"], ["185", "Mohammed Hassan Youssef Huzaymah", "محمد حسن يوسف هزيمة", "Nursing Department", "Nursing Department", "Pediatric Oncology (2C)", "Unit Head Nurse"], ["337", "Mohammed Adnan Mohammed Shahada Taama", "محمد عدنان محمد شحاده طعمة", "Nursing Department", "Nursing Department", "Pediatric Oncology (2B)", "Unit Head Nurse"]];
+const MASTER_STAFF = MASTER_STAFF_RAW.map(r=>({id:r[0],nameEn:r[1],nameAr:r[2],dept:r[3],section:r[4],unit:r[5],title:r[6]}));
+const MASTER_STAFF_BY_ID = {}; MASTER_STAFF.forEach(s=>{ MASTER_STAFF_BY_ID[s.id]=s; });
+
+let appData = {
+  physicians: [],
+  nurses: [],
+  pharmacists: [],
+  support: [],
+  general: [],
+  external: [],
+  pdfs: [],
+  excels: [],
+  registrations: {},
+  staffPoints: {}
+};
+
+let currentCategory = null;
+let currentActivityId = null;
+
+async function loadData(){
+  try{
+    const r = await fetch('/api/data');
+    if(r.ok){
+      appData = await r.json();
+      if(!appData.staffPoints) appData.staffPoints = {};
+      if(!appData.registrations) appData.registrations = {};
+    }
+  }catch(e){
+    console.error('تعذر تحميل البيانات من الخادم', e);
+    showToast('تعذر الاتصال بالخادم — تحقق من الإنترنت');
+  }
+  document.getElementById('loadingOverlay').style.display = 'none';
+  renderAll();
+}
+
+async function saveData(){
+  renderAll();
+  try{
+    const r = await fetch('/api/data', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(appData)
+    });
+    if(!r.ok) throw new Error('save failed');
+  }catch(e){
+    console.error('تعذر حفظ البيانات على الخادم', e);
+    showToast('تعذر حفظ التغييرات — تحقق من الإنترنت وحاول مجدداً');
+  }
+}
+
+function renderAll(){
+  renderProgramBoxes();
+  renderSpecialized();
+  renderGeneral();
+  renderExternal();
+  renderPDFs();
+  refreshLookupIfShown();
+}
+
+function renderSpecialized(){
+  const grid = document.getElementById('gridSpecialized');
+  grid.innerHTML = '';
+
+  const seen = new Map();
+  SPECIALIZED_CATS.forEach(cat => {
+    const items = appData[cat.key] || [];
+    items.forEach(it => {
+      if(!seen.has(it.id)){
+        seen.set(it.id, { ...it, _catKeys: (it.categories && it.categories.length ? it.categories : [cat.key]) });
+      }
+    });
+  });
+  const merged = Array.from(seen.values());
+
+  const filterChips = SPECIALIZED_CATS.map(cat =>
+    `<button type="button" class="cat-filter-chip cat-${cat.color}" data-cat="${cat.key}" onclick="toggleCatFilter(this)">${cat.icon} ${cat.ar}</button>`
+  ).join('');
+
+  const card = document.createElement('div');
+  card.className = 'card specialized-merged';
+  card.innerHTML = `
+    <div class="cat-filter-row">${filterChips}</div>
+    <div class="list" id="specializedList">${renderItemsHtml(merged, 'specialized')}</div>
+    <div class="add-row">
+      <button class="add-btn" onclick="openAddModal('specialized', 'نشاط تخصصي')">+ إضافة نشاط تخصصي جديد</button>
+    </div>
+  `;
+  grid.appendChild(card);
+  window._mergedSpecialized = merged;
+}
+
+let activeCatFilters = new Set();
+function toggleCatFilter(btn){
+  const cat = btn.getAttribute('data-cat');
+  if(activeCatFilters.has(cat)){
+    activeCatFilters.delete(cat);
+    btn.classList.remove('active');
+  } else {
+    activeCatFilters.add(cat);
+    btn.classList.add('active');
+  }
+  const merged = window._mergedSpecialized || [];
+  const filtered = activeCatFilters.size === 0 ? merged : merged.filter(it => it._catKeys.some(ck => activeCatFilters.has(ck)));
+  document.getElementById('specializedList').innerHTML = renderItemsHtml(filtered, 'specialized');
+}
+
+function renderGeneral(){
+  const container = document.getElementById('gridGeneral');
+  const items = appData.general || [];
+  container.innerHTML = `
+    <div class="card general-all">
+      <div class="card-head">
+        <div class="card-titles">
+          <h3>أنشطة وورش عامة وغير تخصصية<span class="en">General & Non-Specialized CME Activities</span></h3>
+        </div>
+      </div>
+      <div class="list">${renderItemsHtml(items, 'general')}</div>
+      <div class="add-row">
+        <button class="add-btn" onclick="openAddModal('general', 'الأنشطة العامة')">+ إضافة نشاط عام جديد</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderExternal(){
+  const list = document.getElementById('externalList');
+  const items = appData.external || [];
+  list.innerHTML = renderItemsHtml(items, 'external');
+}
+
+function renderPDFs(){
+  const list = document.getElementById('pdfList');
+  const items = appData.pdfs || [];
+  if(items.length === 0){
+    list.innerHTML = '<div class="empty">لا توجد ملفات مرفوعة بعد</div>';
+    return;
+  }
+  list.innerHTML = items.map(p => `
+    <div class="pdf-item">
+      <div class="pdf-info">
+        <div class="pdf-icon" style="background:var(--rose-soft); color:var(--rose);">📄</div>
+        <div>
+          <div class="pdf-title">${p.title}</div>
+          <div class="pdf-sub">تاريخ النشر: ${p.date || 'معتمد'}</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:6px; align-items:center;">
+        <button class="view-reg-btn" onclick="viewUploaderInfo('${p.id}')" style="background:var(--rose-soft); color:var(--rose); padding:6px 10px; border-radius:8px; border:none; cursor:pointer; font-weight:700;">🔒 بيانات الرافع</button>
+        <a href="${p.fileData}" download="${p.title}.pdf" target="_blank" class="pdf-download-btn" style="background:var(--rose-soft); color:var(--rose);">فتح / تحميل PDF</a>
+        <button class="del-btn" style="border:none; background:#F4F5F4;" onclick="deletePdf('${p.id}')">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function viewUploaderInfo(pdfId){
+  const pin = prompt('أدخل رمز المسؤول لعرض بيانات صاحب الملف:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+
+  const fileItem = (appData.pdfs || []).find(p => p.id === pdfId);
+  if(!fileItem) return;
+
+  const content = document.getElementById('regListContent');
+  content.innerHTML = `
+    <div style="line-height:2.2; font-size:13.5px; text-align:right;">
+      <h4 style="margin:0 0 10px; color:var(--teal);">📄 معلومات المادة العلمية ومقدمها</h4>
+      <div><b>عنوان الملف:</b> ${fileItem.title}</div>
+      <div><b>الاسم الكامل:</b> ${fileItem.uploaderName}</div>
+      <div><b>التخصص:</b> ${fileItem.uploaderSpec}</div>
+      <div><b>القسم / وحدة العمل:</b> ${fileItem.uploaderDept}</div>
+      <div><b>رقم الهاتف:</b> <span dir="ltr">${fileItem.uploaderPhone}</span></div>
+      <div><b>البريد الإلكتروني:</b> ${fileItem.uploaderEmail}</div>
+      <div><b>تاريخ الرفع:</b> ${fileItem.date}</div>
+    </div>
+  `;
+  document.getElementById('viewRegModal').classList.add('open');
+}
+
+const ROLE_LABELS = {
+  lecturer:   { ar:'محاضر',  en:'Lecturer',    cls:'lecturer' },
+  participant:{ ar:'مشارك',  en:'Participant', cls:'participant' },
+  other:      { ar:'أخرى',   en:'Other',       cls:'other' }
+};
+
+function staffEntries(id){
+  return (appData.staffPoints && appData.staffPoints[id]) ? appData.staffPoints[id] : [];
+}
+
+function staffTotal(id){
+  return staffEntries(id).reduce((sum, e) => sum + (Number(e.points) || 0), 0);
+}
+
+function renderEntryRows(id, adminMode){
+  const entries = staffEntries(id).slice().sort((a,b) => (b.date||'').localeCompare(a.date||''));
+  if(entries.length === 0){
+    return '<div class="empty">لا توجد أنشطة مسجلة بعد لهذا الرقم الوظيفي</div>';
+  }
+  return `
+    <table class="entry-table">
+      <thead><tr><th>النشاط</th><th>الدور</th><th>النقاط</th><th>التاريخ</th>${adminMode ? '<th></th>' : ''}</tr></thead>
+      <tbody>
+        ${entries.map(e => {
+          const role = ROLE_LABELS[e.role] || ROLE_LABELS.other;
+          return `<tr>
+            <td>${e.activity || '-'}</td>
+            <td><span class="role-tag ${role.cls}">${role.ar}</span></td>
+            <td>${Number(e.points) || 0}</td>
+            <td>${e.date || '-'}</td>
+            ${adminMode ? `<td><button class="del-btn" style="border:none;" onclick="deleteStaffPoint('${id}','${e.id}')">🗑️</button></td>` : ''}
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function doLookup(){
+  const id = document.getElementById('lookupIdInput').value.trim();
+  const result = document.getElementById('lookupResult');
+  if(!id){ result.innerHTML = ''; return; }
+
+  const staff = MASTER_STAFF_BY_ID[id];
+  if(!staff){
+    result.innerHTML = `<div class="empty">⚠️ لم يتم العثور على موظف بهذا الرقم الوظيفي. تأكد من الرقم وحاول مجدداً.<div class="en" style="margin-top:4px;">No staff member found with this Employee ID.</div></div>`;
+    return;
+  }
+
+  const total = staffTotal(id);
+  result.innerHTML = `
+    <div class="lookup-card">
+      <div class="lookup-name">${staff.nameAr} <span class="en" style="font-weight:600; color:var(--muted);">— ${staff.nameEn}</span></div>
+      <div class="lookup-sub">${staff.title} · ${staff.dept}${staff.unit && staff.unit !== staff.dept ? ' · ' + staff.unit : ''}</div>
+      <div class="lookup-total">${total} نقطة/ساعة <span class="en">points/hrs</span></div>
+      ${renderEntryRows(id)}
+    </div>
+  `;
+}
+
+document.getElementById('lookupIdBtn').addEventListener('click', doLookup);
+document.getElementById('lookupIdInput').addEventListener('keydown', (e) => {
+  if(e.key === 'Enter') doLookup();
+});
+
+function refreshLookupIfShown(){
+  const input = document.getElementById('lookupIdInput');
+  if(input && input.value.trim()) doLookup();
+}
+
+function normalizeRole(raw){
+  const v = String(raw || '').trim().toLowerCase();
+  if(!v) return 'other';
+  if(v.includes('lectur') || v.includes('محاضر')) return 'lecturer';
+  if(v.includes('particip') || v.includes('مشارك')) return 'participant';
+  return 'other';
+}
+
+function findCol(headers, candidates){
+  const lower = headers.map(h => String(h || '').trim().toLowerCase());
+  for(const cand of candidates){
+    const idx = lower.indexOf(cand);
+    if(idx !== -1) return idx;
+  }
+  return -1;
+}
+
+function excelDateToStr(v){
+  if(v instanceof Date) return v.toISOString().slice(0,10);
+  if(typeof v === 'number'){
+    const d = new Date(Math.round((v - 25569) * 86400 * 1000));
+    return d.toISOString().slice(0,10);
+  }
+  return String(v || '').trim();
+}
+
+document.getElementById('downloadTemplateBtn').addEventListener('click', async () => {
+  const pin = prompt('أدخل رمز المسؤول لتنزيل قالب النقاط:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+
+  const ws = XLSX.utils.aoa_to_sheet([
+    ['Employee ID', 'Name', 'Activity', 'Role', 'Points', 'Date'],
+    ['123', '(اختياري - للقراءة فقط)', 'محاضرة تحديث بروتوكول علاج الثدي', 'Lecturer', 2, '2026-08-22'],
+    ['145', '(اختياري - للقراءة فقط)', 'محاضرة تحديث بروتوكول علاج الثدي', 'Participant', 0.5, '2026-08-22']
+  ]);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'CME Points');
+  XLSX.writeFile(wb, 'قالب_نقاط_التعليم_الطبي_المستمر.xlsx');
+});
+
+document.getElementById('downloadCurrentBtn').addEventListener('click', async () => {
+  const pin = prompt('أدخل رمز المسؤول لتنزيل الشيت الحالي:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+
+  const rows = [['Employee ID', 'Name', 'Activities', 'Number of Activities', 'Total Points']];
+  const ids = Object.keys(appData.staffPoints || {}).sort((a,b) => Number(a) - Number(b));
+  ids.forEach(id => {
+    const staff = MASTER_STAFF_BY_ID[id];
+    const name = staff ? (staff.nameAr + ' / ' + staff.nameEn) : '';
+    const entries = appData.staffPoints[id] || [];
+    if(entries.length === 0) return;
+
+    const activitiesList = entries.map(en => {
+      const role = ROLE_LABELS[en.role] || ROLE_LABELS.other;
+      const pts = en.points || 0;
+      const date = en.date || '';
+      return `${en.activity || ''} (${role.en}, ${pts} pts, ${date})`;
+    }).join(' | ');
+
+    const totalPoints = entries.reduce((sum, en) => sum + (Number(en.points) || 0), 0);
+
+    rows.push([id, name, activitiesList, entries.length, totalPoints]);
+  });
+
+  if(rows.length === 1){
+    showToast('لا توجد بيانات محفوظة بعد لتنزيلها');
+    return;
+  }
+
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [
+    { wch: 12 },  // Employee ID
+    { wch: 30 },  // Name
+    { wch: 90 },  // Activities
+    { wch: 18 },  // Number of Activities
+    { wch: 12 }   // Total Points
+  ];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'CME Points');
+  XLSX.writeFile(wb, 'نقاط_التعليم_الطبي_المستمر_الحالية.xlsx');
+});
+
+document.getElementById('uploadExcelPointsBtn').addEventListener('click', () => {
+  document.getElementById('excelPointsFileInput').click();
+});
+
+document.getElementById('excelPointsFileInput').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  e.target.value = '';
+  if(!file) return;
+
+  const status = document.getElementById('excelImportStatus');
+  const pin = prompt('أدخل رمز المسؤول لرفع الشيت:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+
+  status.textContent = 'جارٍ قراءة الملف...';
+
+  try{
+    const buf = await file.arrayBuffer();
+    const wb = XLSX.read(buf, { type: 'array', cellDates: true });
+    const sheet = wb.Sheets[wb.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, defval: '' });
+
+    if(rows.length < 2){
+      status.textContent = '⚠️ الملف فارغ أو لا يحتوي بيانات';
+      return;
+    }
+
+    const headers = rows[0];
+    const idCol     = findCol(headers, ['employee id', 'id', 'الرقم الوظيفي', 'رقم وظيفي']);
+    const actCol    = findCol(headers, ['activity', 'النشاط']);
+    const roleCol   = findCol(headers, ['role', 'الدور']);
+    const pointsCol = findCol(headers, ['points', 'النقاط']);
+    const dateCol   = findCol(headers, ['date', 'التاريخ']);
+
+    if(idCol === -1 || actCol === -1){
+      status.textContent = '⚠️ لم يتم العثور على عمود "Employee ID" أو "Activity" — تأكدي من رؤوس الأعمدة';
+      return;
+    }
+
+    if(!appData.staffPoints) appData.staffPoints = {};
+
+    let imported = 0, skipped = 0;
+    for(let i = 1; i < rows.length; i++){
+      const row = rows[i];
+      const id = String(row[idCol] || '').trim();
+      const activity = String(row[actCol] || '').trim();
+      if(!id || !activity) { if(row.some(c => String(c||'').trim())) skipped++; continue; }
+
+      const role = roleCol !== -1 ? normalizeRole(row[roleCol]) : 'other';
+      let points = pointsCol !== -1 && row[pointsCol] !== '' ? Number(row[pointsCol]) : NaN;
+      if(isNaN(points)) points = role === 'lecturer' ? 2 : (role === 'participant' ? 0.5 : 0);
+      const date = dateCol !== -1 && row[dateCol] !== '' ? excelDateToStr(row[dateCol]) : '';
+
+      if(!appData.staffPoints[id]) appData.staffPoints[id] = [];
+      appData.staffPoints[id].push({
+        id: 'sp_' + Date.now() + '_' + i,
+        activity, role, date, points
+      });
+      imported++;
+    }
+
+    await saveData();
+    status.textContent = `✅ تمت إضافة ${imported} سجل نقاط بنجاح${skipped ? ' — تم تجاوز ' + skipped + ' سطر غير مكتمل' : ''}`;
+    showToast('تم تحديث بيانات النقاط بنجاح');
+  }catch(err){
+    console.error(err);
+    status.textContent = '⚠️ تعذر قراءة الملف — تأكدي أنه بصيغة Excel صحيحة';
+  }
+});
+
+const ROLE_DEFAULT_POINTS = { lecturer: 2, participant: 0.5, other: '' };
+
+document.getElementById('addStaffPointsBtn').addEventListener('click', async () => {
+  const pin = prompt('أدخل رمز المسؤول لتسجيل نقاط موظف:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+  document.getElementById('sp-id').value = '';
+  document.getElementById('sp-activity').value = '';
+  document.getElementById('sp-date').value = new Date().toISOString().slice(0,10);
+  document.getElementById('sp-role').value = 'lecturer';
+  document.getElementById('sp-points').value = 2;
+  document.getElementById('sp-suggest').textContent = '';
+  document.getElementById('sp-existing').innerHTML = '';
+  document.getElementById('staffPointsModal').classList.add('open');
+});
+
+document.getElementById('sp-id').addEventListener('input', () => {
+  const id = document.getElementById('sp-id').value.trim();
+  const suggest = document.getElementById('sp-suggest');
+  const existing = document.getElementById('sp-existing');
+  if(!id){ suggest.textContent = ''; suggest.className = 'staff-suggest'; existing.innerHTML = ''; return; }
+  const staff = MASTER_STAFF_BY_ID[id];
+  if(staff){
+    suggest.className = 'staff-suggest match';
+    suggest.textContent = `✓ ${staff.nameAr} — ${staff.title} (${staff.dept})`;
+    existing.innerHTML = `<div class="section-divider" style="margin:14px 0 4px; padding:10px 0 0;"><span class="lbl">السجل الحالي (${staffTotal(id)} نقطة)</span></div>` + renderEntryRows(id, true);
+  } else {
+    suggest.className = 'staff-suggest nomatch';
+    suggest.textContent = '⚠️ لا يوجد موظف بهذا الرقم في القائمة الرئيسية — سيتم الحفظ بالرقم كما هو';
+    existing.innerHTML = '';
+  }
+});
+
+document.getElementById('sp-role').addEventListener('change', () => {
+  const role = document.getElementById('sp-role').value;
+  const def = ROLE_DEFAULT_POINTS[role];
+  if(def !== '') document.getElementById('sp-points').value = def;
+});
+
+document.getElementById('saveStaffPointsBtn').addEventListener('click', () => {
+  const id = document.getElementById('sp-id').value.trim();
+  const activity = document.getElementById('sp-activity').value.trim();
+  const date = document.getElementById('sp-date').value;
+  const role = document.getElementById('sp-role').value;
+  const points = document.getElementById('sp-points').value;
+
+  if(!id || !activity || !date || points === ''){ showToast('يرجى تعبئة جميع الحقول المطلوبة'); return; }
+
+  if(!appData.staffPoints) appData.staffPoints = {};
+  if(!appData.staffPoints[id]) appData.staffPoints[id] = [];
+  appData.staffPoints[id].push({
+    id: 'sp_' + Date.now(),
+    activity, role, date,
+    points: Number(points),
+    source: 'manual'
+  });
+  saveData();
+  showToast('تم تسجيل النقاط بنجاح');
+
+  document.getElementById('sp-id').dispatchEvent(new Event('input'));
+  document.getElementById('sp-activity').value = '';
+});
+
+async function deleteStaffPoint(id, entryId){
+  const pin = prompt('أدخل رمز المسؤول لحذف هذا السجل:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+  appData.staffPoints[id] = (appData.staffPoints[id] || []).filter(e => e.id !== entryId);
+  saveData();
+  document.getElementById('sp-id').dispatchEvent(new Event('input'));
+  showToast('تم حذف السجل');
+}
+
+document.getElementById('addExternalBtn').addEventListener('click', () => {
+  openAddModal('external', 'قسم الأنشطة الخارجية');
+});
+
+function isPastActivity(dateStr, timeStr){
+  if(!dateStr) return false;
+  try{
+    const timeVal = timeStr ? timeStr.trim() : '23:59';
+    const actDateTime = new Date(`${dateStr}T${timeVal.length === 5 ? timeVal : '23:59'}:00`);
+    return actDateTime < new Date();
+  }catch(e){
+    return false;
+  }
+}
+
+// فحص هل النص إنجليزي لضبط العنوان والاتجاه
+function isEnglishText(text){
+  if(!text) return false;
+  const latinCount = (text.match(/[a-zA-Z]/g) || []).length;
+  const arabicCount = (text.match(/[\u0600-\u06FF]/g) || []).length;
+  return latinCount > arabicCount;
+}
+
+// معالجة نصوص الوصف Markdown
+function formatDescriptionText(text){
+  if(!text) return '';
+  let safe = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  
+  safe = safe.replace(/^###\s+(.*$)/gim, '<div class="desc-head">$1</div>');
+  safe = safe.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+  safe = safe.replace(/_(.*?)_/g, '<i>$1</i>');
+  safe = safe.replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '<i>$1</i>');
+  safe = safe.replace(/^[-\*]\s+(.*$)/gim, '<div class="desc-li">• $1</div>');
+  
+  return safe.replace(/\n/g, '<br>');
+}
+
+function insertFormat(startTag, endTag){
+  const textarea = document.getElementById('f-desc');
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const text = textarea.value;
+  const selectedText = text.substring(start, end) || 'Text';
+  const replacement = startTag + selectedText + endTag;
+  textarea.value = text.substring(0, start) + replacement + text.substring(end);
+  textarea.focus();
+  textarea.setSelectionRange(start + startTag.length, start + startTag.length + selectedText.length);
+}
+
+function renderItemsHtml(items, catKey){
+  if(items.length === 0) return '<div class="empty">لا توجد أنشطة معلنة حالياً</div>';
+
+  const upcoming = [];
+  const past = [];
+  
+  items.forEach(it => {
+    if(isPastActivity(it.date, it.time)){
+      past.push(it);
+    } else {
+      upcoming.push(it);
+    }
+  });
+
+  upcoming.sort((a,b) => {
+    const da = (a.date || '') + 'T' + (a.time || '00:00');
+    const db = (b.date || '') + 'T' + (b.time || '00:00');
+    return da.localeCompare(db);
+  });
+
+  past.sort((a,b) => {
+    const da = (a.date || '') + 'T' + (a.time || '00:00');
+    const db = (b.date || '') + 'T' + (b.time || '00:00');
+    return db.localeCompare(da);
+  });
+
+  const sortedItems = [...upcoming, ...past];
+
+  return sortedItems.map(it => {
+    const isPast = isPastActivity(it.date, it.time);
+    const itemCatKey = catKey === null ? 'specialized' : catKey;
+    const regs = (appData.registrations && appData.registrations[it.id]) ? appData.registrations[it.id] : [];
+    const catTags = it.categories && it.categories.length
+      ? it.categories.map(ck => {
+          const catDef = SPECIALIZED_CATS.find(c => c.key === ck);
+          return catDef ? `<span class="cat-tag cat-${catDef.color}">${catDef.icon} ${catDef.ar}</span>` : '';
+        }).join(' ')
+      : (it._catKeys ? it._catKeys.map(ck => {
+          const catDef = SPECIALIZED_CATS.find(c => c.key === ck);
+          return catDef ? `<span class="cat-tag cat-${catDef.color}">${catDef.icon} ${catDef.ar}</span>` : '';
+        }).join(' ') : '');
+
+    const isEn = isEnglishText(it.desc || it.title);
+    const descHeaderTitle = isEn ? '🎯 Objectives, Topics & Details' : '🎯 الأهداف والمحاور والتفاصيل';
+    const readMoreText = isEn ? '🔽 Show Full Details' : '🔽 عرض باقي التفاصيل الكاملة';
+
+    return `
+      <div class="item ${isPast ? 'past-item' : ''}">
+        <div class="item-content-wrapper">
+          <div class="date-pill" style="${isPast ? 'background:#E2E8F0; color:#64748B;' : ''}">
+            <span class="d">${it.date ? it.date.split('-')[2] : '--'}</span>
+            <span class="m">${it.date ? it.date.split('-')[1] : ''}</span>
+          </div>
+          <div class="item-body">
+            ${catTags ? `<div>${catTags}</div>` : ''}
+            <div class="item-title">
+              ${it.title}
+              ${it.units ? `<span style="font-size:11.5px; background:var(--amber-soft); color:var(--amber); padding:2px 8px; border-radius:4px; font-weight:800;">${it.units}</span>` : ''}
+              ${isPast ? '<span class="past-badge">منتهي (Ended)</span>' : ''}
+            </div>
+            <div class="item-meta">
+              ${it.speaker ? `<span>👤 ${it.speaker}</span>` : ''}
+              ${it.time ? `<span>🕒 ${it.time}</span>` : ''}
+              ${it.location ? `<span>📍 ${it.location}</span>` : ''}
+            </div>
+            
+            ${it.desc ? `
+            <div class="item-desc-box">
+              <div class="item-desc-title">${descHeaderTitle}</div>
+              <div class="item-desc-content ${isEn ? 'is-en' : ''}" id="desc_${it.id}">
+                ${formatDescriptionText(it.desc)}
+              </div>
+              <button type="button" class="desc-readmore-btn" onclick="toggleDescClamp('${it.id}', this, ${isEn})">${readMoreText}</button>
+            </div>` : ''}
+
+            <div class="item-bottom-actions">
+              ${!isPast ? `<button class="reg-btn" onclick="openRegModal('${it.id}', '${encodeURIComponent(it.title)}')">📝 تسجيل بالنشاط</button>` : '<span style="font-size:11.5px; color:var(--muted); font-weight:700;">🔒 انتهى وقت التسجيل</span>'}
+              <button class="view-reg-btn" onclick="viewRegistrations('${it.id}')">🔒 المسجلين (${regs.length})</button>
+            </div>
+          </div>
+        </div>
+        <div class="item-actions-left">
+          <button class="edit-btn" title="تعديل النشاط" onclick="openEditModal('${itemCatKey}', '${it.id}')">✏️</button>
+          <button class="del-btn" title="حذف النشاط" onclick="deleteItem('${itemCatKey}', '${it.id}')">🗑️</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleDescClamp(id, btn, isEn){
+  const el = document.getElementById('desc_' + id);
+  if(el.classList.contains('expanded')){
+    el.classList.remove('expanded');
+    btn.innerHTML = isEn ? '🔽 Show Full Details' : '🔽 عرض باقي التفاصيل الكاملة';
+  } else {
+    el.classList.add('expanded');
+    btn.innerHTML = isEn ? '🔼 Hide Details' : '🔼 إخفاء التفاصيل الإضافية';
+  }
+}
+
+function openRegModal(id, title){
+  currentActivityId = id;
+  document.getElementById('regActivityTitle').textContent = decodeURIComponent(title);
+  const input = document.getElementById('r-id');
+  input.value = '';
+  const suggest = document.getElementById('r-suggest');
+  suggest.textContent = '';
+  suggest.className = 'staff-suggest';
+  document.getElementById('regModal').classList.add('open');
+  setTimeout(() => input.focus(), 150);
+}
+
+document.getElementById('r-id').addEventListener('input', () => {
+  const id = document.getElementById('r-id').value.trim();
+  const suggest = document.getElementById('r-suggest');
+  if(!id){
+    suggest.textContent = '';
+    suggest.className = 'staff-suggest';
+    return;
+  }
+  const staff = MASTER_STAFF_BY_ID[id];
+  if(staff){
+    suggest.className = 'staff-suggest match';
+    suggest.textContent = `✓ تم التحقق: ${staff.nameAr} (${staff.title} - ${staff.dept})`;
+  } else {
+    suggest.className = 'staff-suggest nomatch';
+    suggest.textContent = '⚠️ لم يتم العثور على هذا الرقم الوظيفي في النظام';
+  }
+});
+
+document.getElementById('submitRegBtn').addEventListener('click', () => {
+  const empId = document.getElementById('r-id').value.trim();
+  if(!empId){
+    showToast('يرجى إدخال الرقم الوظيفي');
+    return;
+  }
+
+  const staff = MASTER_STAFF_BY_ID[empId];
+  if(!staff){
+    showToast('الرقم الوظيفي غير موجود بقاعدة البيانات');
+    return;
+  }
+
+  if(!appData.registrations) appData.registrations = {};
+  if(!appData.registrations[currentActivityId]) appData.registrations[currentActivityId] = [];
+
+  const alreadyReg = appData.registrations[currentActivityId].some(r => r.empId === empId);
+  if(alreadyReg){
+    showToast('⚠️ لقد تم تسجيلك في هذا النشاط مسبقاً!');
+    return;
+  }
+
+  appData.registrations[currentActivityId].push({
+    empId: staff.id,
+    name: staff.nameAr,
+    nameEn: staff.nameEn,
+    dept: staff.dept + (staff.unit && staff.unit !== staff.dept ? ' - ' + staff.unit : ''),
+    title: staff.title,
+    time: new Date().toLocaleString('ar-IQ')
+  });
+
+  saveData();
+  closeModal('regModal');
+  showToast(`✅ تم تسجيل ${staff.nameAr} بالنشاط بنجاح!`);
+});
+
+async function viewRegistrations(activityId){
+  const pin = prompt('أدخل رمز المسؤول لعرض قائمة المسجلين:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+
+  const regs = (appData.registrations && appData.registrations[activityId]) ? appData.registrations[activityId] : [];
+  const content = document.getElementById('regListContent');
+  if(regs.length === 0){
+    content.innerHTML = '<p style="text-align:center; color:var(--muted); padding:16px;">لا يوجد مسجلين حتى الآن في هذا النشاط.</p>';
+  } else {
+    content.innerHTML = `
+      <div style="margin-bottom:10px; font-weight:800; color:var(--teal);">إجمالي المسجلين: ${regs.length}</div>
+      <table style="width:100%; border-collapse:collapse; text-align:right;">
+        <thead>
+          <tr style="border-bottom:2px solid var(--line); font-size:12px; color:var(--muted);">
+            <th style="padding:6px;">الرقم (ID)</th>
+            <th style="padding:6px;">الاسم</th>
+            <th style="padding:6px;">القسم / العنوان</th>
+            <th style="padding:6px;">وقت التسجيل</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${regs.map(r => `
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:6px; font-weight:800; color:var(--amber);">${r.empId || '-'}</td>
+              <td style="padding:6px; font-weight:800;">${r.name}</td>
+              <td style="padding:6px; font-size:12px;">${r.dept || r.title || '-'}</td>
+              <td style="padding:6px; font-size:11px; color:var(--muted);">${r.time || ''}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  }
+  document.getElementById('viewRegModal').classList.add('open');
+}
+
+let editingItemId = null;
+let editingOriginalCatKey = null;
+
+async function openAddModal(catKey, catName){
+  const pin = prompt('أدخل رمز المسؤول للنشر:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+  currentCategory = catKey;
+  editingItemId = null;
+  editingOriginalCatKey = null;
+  
+  const catWrap = document.getElementById('categoryFieldWrap');
+  if(catKey === 'specialized' || catKey === 'general'){
+    catWrap.style.display = '';
+    document.querySelectorAll('.f-cat-checkbox').forEach(cb => cb.checked = false);
+  } else {
+    catWrap.style.display = 'none';
+  }
+
+  document.getElementById('modalTitle').textContent = `إضافة نشاط — ${catName}`;
+  document.getElementById('f-title').value = '';
+  document.getElementById('f-desc').value = '';
+  document.getElementById('f-speaker').value = '';
+  document.getElementById('f-date').value = '';
+  document.getElementById('f-time').value = '';
+  document.getElementById('f-location').value = '';
+  document.getElementById('f-units').value = '';
+  document.getElementById('saveActivityBtn').textContent = 'حفظ ونشر النشاط';
+  document.getElementById('activityModal').classList.add('open');
+}
+
+async function openEditModal(catKey, id){
+  const pin = prompt('أدخل رمز المسؤول للتعديل:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+
+  let item = null;
+  if(catKey === 'specialized'){
+    for(const cat of SPECIALIZED_CATS){
+      const found = (appData[cat.key] || []).find(i => i.id === id);
+      if(found){ item = found; break; }
+    }
+  } else {
+    item = (appData[catKey] || []).find(i => i.id === id);
+  }
+  if(!item){ showToast('تعذر العثور على النشاط'); return; }
+
+  currentCategory = catKey;
+  editingItemId = id;
+  editingOriginalCatKey = catKey === 'specialized' ? null : catKey;
+
+  const catWrap = document.getElementById('categoryFieldWrap');
+  if(catKey === 'specialized' || catKey === 'general'){
+    catWrap.style.display = '';
+    const selected = item.categories && item.categories.length ? item.categories : (item._catKeys || []);
+    document.querySelectorAll('.f-cat-checkbox').forEach(cb => {
+      cb.checked = selected.includes(cb.value);
+    });
+  } else {
+    catWrap.style.display = 'none';
+  }
+
+  document.getElementById('modalTitle').textContent = 'تعديل بيانات النشاط';
+  document.getElementById('f-title').value = item.title || '';
+  document.getElementById('f-desc').value = item.desc || '';
+  document.getElementById('f-speaker').value = item.speaker || '';
+  document.getElementById('f-date').value = item.date || '';
+  document.getElementById('f-time').value = item.time || '';
+  document.getElementById('f-location').value = item.location || '';
+  document.getElementById('f-units').value = item.units || '';
+  document.getElementById('saveActivityBtn').textContent = 'حفظ التعديلات';
+  document.getElementById('activityModal').classList.add('open');
+}
+
+document.getElementById('saveActivityBtn').addEventListener('click', () => {
+  const title = document.getElementById('f-title').value.trim();
+  const desc = document.getElementById('f-desc').value.trim();
+  const speaker = document.getElementById('f-speaker').value.trim();
+  const date = document.getElementById('f-date').value;
+  const time = document.getElementById('f-time').value;
+  const location = document.getElementById('f-location').value.trim();
+  const units = document.getElementById('f-units').value.trim();
+
+  if(!title || !date){ showToast('يرجى إدخال العنوان والتاريخ'); return; }
+
+  const checked = Array.from(document.querySelectorAll('.f-cat-checkbox:checked')).map(cb => cb.value);
+
+  if(currentCategory === 'specialized'){
+    if(checked.length === 0){ showToast('يرجى اختيار فئة مستهدفة واحدة على الأقل'); return; }
+
+    const id = editingItemId || ('act_' + Date.now());
+    if(editingItemId){ deleteSpecializedEverywhere(editingItemId); }
+    
+    checked.forEach(catKey => {
+      if(!appData[catKey]) appData[catKey] = [];
+      appData[catKey].push({ id, title, desc, speaker, date, time, location, units, categories: checked });
+    });
+  } else {
+    const targetCategory = editingItemId ? editingOriginalCatKey : currentCategory;
+    const newItem = { 
+      id: editingItemId || ('act_' + Date.now()), 
+      title, desc, speaker, date, time, location, units, 
+      categories: checked 
+    };
+    if(!appData[targetCategory]) appData[targetCategory] = [];
+    if(editingItemId){
+      const idx = appData[targetCategory].findIndex(i => i.id === editingItemId);
+      if(idx > -1) appData[targetCategory][idx] = newItem;
+      else appData[targetCategory].push(newItem);
+    } else {
+      appData[targetCategory].push(newItem);
+    }
+  }
+
+  saveData();
+  closeModal('activityModal');
+  showToast(editingItemId ? 'تم حفظ التعديلات بنجاح' : 'تم نشر النشاط بنجاح');
+  editingItemId = null;
+  editingOriginalCatKey = null;
+});
+
+function validatePdfStrict(){
+  const name = document.getElementById('up-name').value.trim();
+  const spec = document.getElementById('up-spec').value.trim();
+  const dept = document.getElementById('up-dept').value.trim();
+  const phone = document.getElementById('up-phone').value.trim();
+  const email = document.getElementById('up-email').value.trim();
+  const title = document.getElementById('up-title').value.trim();
+  const fileInput = document.getElementById('up-file');
+  const agreed = document.getElementById('up-disclosure').checked;
+
+  const isNameValid = name.split(/\s+/).length >= 3;
+  const isPhoneValid = /^07\d{9}$/.test(phone);
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isFileSelected = fileInput.files.length > 0 && fileInput.files[0].type === "application/pdf";
+
+  const allValid = isNameValid && spec !== '' && dept !== '' && isPhoneValid && isEmailValid && title !== '' && isFileSelected && agreed;
+
+  document.getElementById('savePdfBtn').disabled = !allValid;
+  document.getElementById('upNotice').style.display = allValid ? 'none' : 'block';
+  return allValid;
+}
+
+['up-name','up-spec','up-dept','up-phone','up-email','up-title','up-file','up-disclosure'].forEach(id => {
+  const el = document.getElementById(id);
+  if(el){
+    el.addEventListener('input', validatePdfStrict);
+    el.addEventListener('change', validatePdfStrict);
+  }
+});
+
+document.getElementById('addPdfBtn').addEventListener('click', () => {
+  ['up-name','up-spec','up-dept','up-phone','up-email','up-title'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('up-file').value = '';
+  document.getElementById('up-disclosure').checked = false;
+  validatePdfStrict();
+  document.getElementById('pdfUploadModal').classList.add('open');
+});
+
+document.getElementById('savePdfBtn').addEventListener('click', () => {
+  if(!validatePdfStrict()) return;
+
+  const file = document.getElementById('up-file').files[0];
+  if(file.size > 10 * 1024 * 1024){
+    showToast('حجم الملف كبير جداً (الأقصى 10 ميجابايت)');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const newPdf = {
+      id: 'pdf_' + Date.now(),
+      uploaderName: document.getElementById('up-name').value.trim(),
+      uploaderSpec: document.getElementById('up-spec').value.trim(),
+      uploaderDept: document.getElementById('up-dept').value.trim(),
+      uploaderPhone: document.getElementById('up-phone').value.trim(),
+      uploaderEmail: document.getElementById('up-email').value.trim(),
+      title: document.getElementById('up-title').value.trim(),
+      fileData: e.target.result,
+      date: new Date().toLocaleDateString('ar-IQ')
+    };
+
+    if(!appData.pdfs) appData.pdfs = [];
+    appData.pdfs.push(newPdf);
+    saveData();
+    closeModal('pdfUploadModal');
+    showToast('تم رفع الملف بنجاح وتوثيق بياناتك');
+  };
+  reader.readAsDataURL(file);
+});
+
+async function deletePdf(id){
+  const pin = prompt('أدخل رمز المسؤول لحذف الملف:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return; }
+  appData.pdfs = appData.pdfs.filter(p => p.id !== id);
+  saveData();
+  showToast('تم حذف الملف');
+}
+
+async function deleteItem(catKey, id){
+  const pin = prompt('أدخل رمز المسؤول للحذف:');
+  if(!(await checkPin(pin))){ showToast('رمز غير صحيح'); return; }
+  if(catKey === 'specialized'){
+    SPECIALIZED_CATS.forEach(cat => {
+      if(appData[cat.key]) appData[cat.key] = appData[cat.key].filter(i => i.id !== id);
+    });
+  } else {
+    appData[catKey] = appData[catKey].filter(i => i.id !== id);
+  }
+  if(appData.registrations && appData.registrations[id]){
+    delete appData.registrations[id];
+  }
+  saveData();
+  showToast('تم الحذف');
+}
+
+function deleteSpecializedEverywhere(id){
+  SPECIALIZED_CATS.forEach(cat => {
+    if(appData[cat.key]) appData[cat.key] = appData[cat.key].filter(i => i.id !== id);
+  });
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+
+/* ==========================================================================
+   البوكسات الخاصة (Men's Health + برنامج PEP Level 1)
+
+   كيف تتعدل البيانات (طريقتين):
+
+   (1) من الموقع نفسه (الأسهل) — بدون GitHub:
+       افتحي البوكس، وراح تلكين أزرار:
+       ✏️ تعديل   🗑️ حذف   ▲▼ ترتيب   + إضافة جلسة/وحدة   (+ إضافة سلسلة بـ Men's Health)
+       كلها تطلب رمز المسؤول (PIN) وتنحفظ مباشرة وتظهر للكل.
+
+   (2) من هذا الملف (الكتل تحت):
+       - تحتوي نصوص الواجهة (العناوين، الشعار، الشارات، النظرة العامة، معلومات الاختبار...)
+         وهذي تتعدل من الملف فقط.
+       - وتحتوي السلاسل والجلسات (أو الوحدات) كبيانات "أولية". أول ما تعدلين أي شي منها من الموقع،
+         تنحفظ نسخة بقاعدة البيانات وتصير هي المعتمدة، وبعدها أي تغيير تسوينه عليها داخل الملف ما يظهر.
+       - إذا تريدين ترجعين للبيانات الأولية بالملف: رابط "↺ استعادة البيانات الأولية" بأسفل كل بوكس.
+
+   قواعد الكتابة داخل الملف:
+   - غيري النص بين علامات التنصيص '...' أو "..." (لا تحذفين الفوارز , ولا الأقواس).
+   - التاريخ 'YYYY-MM-DD' مثل '2026-11-10'، والوقت 24 ساعة مثل '14:00'.
+   - الوصف (desc) يدعم: **غامق**  *مائل*  وسطر يبدأ بـ - للنقاط  و ### لعنوان فرعي، وللسطر الجديد اكتبي \n
+   - إذا طلعت علامة ' داخل نص مكتوب بين '...' اكتبيها هيج \'  أو استخدمي "..." بدالها.
+   - لا تغيرين الـ id لجلسة/وحدة بعد ما يبدي الناس يسجلون بيها (التسجيلات مربوطة بالـ id).
+   ========================================================================== */
+
+/* ===================== 1) MEN'S HEALTH — نوفمبر 2026 ===================== */
+const MENS_HEALTH = {
+  show: true,               // false = إخفاء البوكس كله
+
+  // ---- الواجهة الرئيسية للبوكس ----
+  eyebrowAr: 'الأنشطة التعليمية | تشرين الثاني 2026',
+  eyebrowEn: 'Educational Activities · November 2026',
+  title: "MEN'S HEALTH",
+  tagline: 'Beyond Awareness: From Early Detection to Survivorship',
+  subtitle: "Men's Health Awareness & Prostate and Testicular Cancer Education Campaign | November 2026",
+  badges: ['Open to all healthcare professionals'],   // شارات إضافية (يضاف لها تلقائياً عدد السلاسل)
+  logo: 'ribbon',           // شعار الشريط الأزرق مع الشارب. اتركيها '' (فارغة) إذا تريدين تخفينه
+  ctaShow: 'عرض الأنشطة / View Activities',
+  ctaHide: 'إخفاء الأنشطة / Hide Activities',
+
+  // ---- المسار ----
+  trackEn: 'Healthcare Professionals Track',
+  unitLabel: 'Session',     // اسم الوحدة الصغيرة بالبطاقات (Session 1, Session 2...)
+
+  // ---- السلاسل والجلسات (بيانات أولية) ----
+  series: [
+    {
+      id: 'prostate',
+      title: 'The Patient Journey: Prostate Cancer',
+      titleAr: 'رحلة المريض: سرطان البروستات',
+      intro: '',            // وصف قصير للسلسلة (اختياري)
+      hidden: false,
+      sessions: [
+        // ↓↓↓ عناوين مقترحة كبداية، بدليها بكيفج ↓↓↓
+        { id: 'prostate-1', title: 'Risk Factors & Screening',            date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'prostate-2', title: 'Diagnosis & Staging',                 date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'prostate-3', title: 'Treatment Options',                   date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'prostate-4', title: 'Managing Side Effects & Supportive Care', date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'prostate-5', title: 'Survivorship & Follow-up',            date: '', time: '', speaker: '', location: '', units: '', desc: '' }
+      ]
+    },
+    {
+      id: 'testicular',
+      title: 'The Patient Journey: Testicular Cancer',
+      titleAr: 'رحلة المريض: سرطان الخصية',
+      intro: '',
+      hidden: false,
+      sessions: [
+        { id: 'testicular-1', title: 'Risk Factors, Awareness & Early Detection', date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'testicular-2', title: 'Diagnosis & Staging',                       date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'testicular-3', title: 'Treatment Options',                         date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'testicular-4', title: 'Fertility Preservation & Survivorship',     date: '', time: '', speaker: '', location: '', units: '', desc: '' }
+      ]
+    }
+  ]
+};
+
+/* ===================== 2) PEP — Pharmacy Education Program, Level 1 ===================== */
+const PEP_LEVEL1 = {
+  show: true,               // false = إخفاء البوكس كله
+  theme: 'violet',          // لون البوكس (بنفسجي مثل قسم الصيادلة)
+  flat: true,               // true = قائمة وحدات مباشرة بدون سلاسل
+
+  // ---- الواجهة الرئيسية للبوكس ----
+  eyebrowAr: 'برنامج التعليم الصيدلاني | المستوى الأول',
+  eyebrowEn: 'Pharmacy Education Program · Level 1',
+  title: 'PEP — LEVEL 1',
+  tagline: 'The foundational clinical gateway for Al-Thaqalyn Oncology Hospital',
+  subtitle: 'Clinical Pharmacist Preparation Program',
+  badges: ['Pharmacists'],
+  logo: 'pill',
+  ctaShow: 'عرض البرنامج / View Program',
+  ctaHide: 'إخفاء البرنامج / Hide Program',
+  unitLabel: 'Module',
+
+  // ---- Executive Overview (كل فقرة بين علامتين) ----
+  overviewTitle: 'Executive Overview',
+  overview: [
+    'The Pharmacy Education Program (PEP) – Level 1 provides foundational clinical training for dispensing pharmacists and newly recruited pharmacy staff at Al-Thaqalayn Oncology Hospital.',
+    'It focuses on practical clinical competencies, including medication safety, clinical calculations, oncology supportive care, error prevention, and patient counselling, ensuring pharmacists deliver safe and effective pharmaceutical care before transitioning to independent clinical practice.'
+  ],
+
+  // ---- Detailed Module Curriculum ----
+  curriculumTitle: 'Detailed Module Curriculum',
+  series: [
+    {
+      id: 'curriculum',
+      title: 'Detailed Module Curriculum',
+      titleAr: '',
+      intro: '',
+      hidden: false,
+      sessions: [
+        { id: 'pep-m1', title: 'Introduction to Oncology — Part 1 /2',                                      date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'pep-m2', title: 'Clinical Drug Calculations Workshop',                                       date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'pep-m3', title: 'Types and Calculation of patient hydration requirements.',                  date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'pep-m4', title: 'Electrolytes Dosing and infusion Rates',                                    date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'pep-m5', title: 'Infectious Diseases in Oncology',                                           date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'pep-m6', title: 'Order Review Essentials & High-Alert Safety & Counter Counseling',         date: '', time: '', speaker: '', location: '', units: '', desc: '' }
+      ]
+    }
+  ],
+
+  // ---- Level 1 Exit Exam ----
+  examTitle: 'Level 1 Exit Exam & Competency Evaluation',
+  exam: [
+    { label: 'Exit Exam',         value: '50 Clinical MCQs' },
+    { label: 'Passing Threshold', value: '≥ 80 % overall' }
+  ]
+};
+/* ======================= نهاية منطقة التعديل ======================= */
+
+
+/* ---------- كود عرض البوكسات والتعديل (ما تحتاجين تعدلين تحت هذا الخط) ---------- */
+// مفاتيح داخلية: dataKey = مكان الحفظ بقاعدة البيانات، regPrefix = بادئة مفتاح التسجيل. لا تغيريها.
+const PG_BOXES = {
+  mh:  { cfg: MENS_HEALTH, dataKey: 'mensHealth', regPrefix: 'mh-' },
+  pep: { cfg: PEP_LEVEL1,  dataKey: 'pepLevel1',  regPrefix: 'pep-' }
+};
+const pgState = {
+  adminUntil: 0,
+  boxes: { mh: { boxOpen: false, openSeries: new Set() }, pep: { boxOpen: false, openSeries: new Set() } }
+};
+
+const PG_LOGOS = {
+  // الشريط الأزرق لتوعية سرطان البروستات + الشارب
+  ribbon: `
+<svg class="mh-logo" viewBox="0 0 120 150" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="mhRib" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8AD3F5"/><stop offset="1" stop-color="#2A98DA"/></linearGradient>
+    <linearGradient id="mhStache" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B2B2B"/><stop offset="1" stop-color="#0E0E0E"/></linearGradient>
+  </defs>
+  <path d="M26 144 L60 86 C80 56 92 34 78 16 C66 2 36 6 34 28 C32 50 48 66 62 84 L98 144" fill="none" stroke="url(#mhRib)" stroke-width="20"/>
+  <path d="M46 63 C51 71 56 77 62 84 L98 144" fill="none" stroke="#1B6FA3" stroke-opacity=".28" stroke-width="23"/>
+  <path d="M46 63 C51 71 56 77 62 84 L98 144" fill="none" stroke="url(#mhRib)" stroke-width="20"/>
+  <path d="M60 80 C54 70 40 68 27 76 C18 81 11 89 7 96 C16 92 24 94 33 94 C43 93 52 90 60 96 C68 90 77 93 87 94 C96 94 104 92 113 96 C109 89 102 81 93 76 C80 68 66 70 60 80 Z" fill="url(#mhStache)"/>
+</svg>`,
+  // كبسولة دواء + علامة زائد
+  pill: `
+<svg class="mh-logo" viewBox="0 0 120 150" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="pgPillA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8E7FC0"/><stop offset="1" stop-color="#55467F"/></linearGradient>
+  </defs>
+  <g transform="rotate(-40 60 80)">
+    <rect x="14" y="58" width="92" height="44" rx="22" fill="#FFFFFF" stroke="#6B5B95" stroke-width="4"/>
+    <path d="M36 58 H60 V102 H36 A22 22 0 0 1 36 58 Z" fill="url(#pgPillA)"/>
+    <line x1="60" y1="58" x2="60" y2="102" stroke="#6B5B95" stroke-width="3"/>
+    <rect x="66" y="64" width="26" height="6" rx="3" fill="#6B5B95" fill-opacity=".18"/>
+  </g>
+  <g fill="#1D6F64"><rect x="88" y="14" width="10" height="32" rx="3"/><rect x="77" y="25" width="32" height="10" rx="3"/></g>
+</svg>`
+};
+
+function pgEsc(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function pgNewId(prefix){
+  return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+}
+function pgUnit(bk){ return PG_BOXES[bk].cfg.unitLabel || 'Session'; }
+function pgUnitAr(bk){ return PG_BOXES[bk].cfg.flat ? 'الوحدة' : 'الجلسة'; }
+
+/* ---- مصدر البيانات: قاعدة البيانات إذا تعدلت من الموقع، وإلا الملف ---- */
+function pgSeriesAll(bk){
+  const d = appData[PG_BOXES[bk].dataKey];
+  if(d && Array.isArray(d.series)) return d.series;
+  return PG_BOXES[bk].cfg.series || [];
+}
+function pgEnsureEditable(bk){
+  const k = PG_BOXES[bk].dataKey;
+  if(!appData[k] || !Array.isArray(appData[k].series)){
+    appData[k] = { series: JSON.parse(JSON.stringify(PG_BOXES[bk].cfg.series || [])) };
+  }
+  return appData[k].series;
+}
+function pgVisibleSessions(series){
+  return (series.sessions || []).filter(s => s && s.hidden !== true);
+}
+
+/* ---- رمز المسؤول: نتحقق مرة وتبقى الصلاحية 5 دقائق (حتى ما يتكرر الطلب مع كل زر) ---- */
+async function pgAdmin(msg){
+  if(Date.now() < pgState.adminUntil) return true;
+  const pin = prompt(msg || 'أدخل رمز المسؤول:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return false; }
+  pgState.adminUntil = Date.now() + 5 * 60 * 1000;
+  return true;
+}
+
+/* ---------------- العرض ---------------- */
+function pgSessionHtml(bk, series, s, idx, total){
+  const rid = PG_BOXES[bk].regPrefix + s.id;      // مفتاح التسجيل
+  const hasDate = !!s.date;
+  const isPast = hasDate && isPastActivity(s.date, s.time);
+  const regs = (appData.registrations && appData.registrations[rid]) ? appData.registrations[rid] : [];
+  const isEn = isEnglishText(s.desc || s.title);
+  const descHeaderTitle = isEn ? '🎯 Objectives, Topics & Details' : '🎯 الأهداف والمحاور والتفاصيل';
+  const readMoreText = isEn ? '🔽 Show Full Details' : '🔽 عرض باقي التفاصيل الكاملة';
+  const dParts = hasDate ? String(s.date).split('-') : [];
+  const sid = pgEsc(series.id), xid = pgEsc(s.id);
+
+  let action;
+  if(!hasDate){
+    action = '<span style="font-size:11.5px; color:var(--amber); font-weight:700;">⏳ سيُفتح التسجيل عند تحديد الموعد</span>';
+  } else if(isPast){
+    action = '<span style="font-size:11.5px; color:var(--muted); font-weight:700;">🔒 انتهى وقت التسجيل</span>';
+  } else {
+    action = `<button class="reg-btn" onclick="openRegModal('${pgEsc(rid)}', '${encodeURIComponent(s.title || '')}')">📝 تسجيل بالنشاط</button>`;
+  }
+
+  return `
+    <div class="item ${isPast ? 'past-item' : ''}">
+      <div class="item-content-wrapper">
+        <div class="date-pill" style="${isPast ? 'background:#E2E8F0; color:#64748B;' : ''}">
+          <span class="d">${hasDate ? pgEsc(dParts[2] || '--') : '--'}</span>
+          <span class="m">${hasDate ? pgEsc(dParts[1] || '') : ''}</span>
+        </div>
+        <div class="item-body">
+          <div><span class="cat-tag cat-teal">${pgEsc(pgUnit(bk))} ${idx + 1}</span></div>
+          <div class="item-title mh-item-title-en" dir="auto" style="text-align:start;">
+            ${pgEsc(s.title)}
+            ${s.units ? `<span style="font-size:11.5px; background:var(--amber-soft); color:var(--amber); padding:2px 8px; border-radius:4px; font-weight:800;">${pgEsc(s.units)}</span>` : ''}
+            ${isPast ? '<span class="past-badge">منتهي (Ended)</span>' : ''}
+          </div>
+          <div class="item-meta">
+            ${hasDate ? '' : '<span class="mh-tba">🗓️ Date to be announced</span>'}
+            ${s.speaker ? `<span>👤 ${pgEsc(s.speaker)}</span>` : ''}
+            ${s.time ? `<span>🕒 ${pgEsc(s.time)}</span>` : ''}
+            ${s.location ? `<span>📍 ${pgEsc(s.location)}</span>` : ''}
+          </div>
+          ${s.desc ? `
+          <div class="item-desc-box">
+            <div class="item-desc-title">${descHeaderTitle}</div>
+            <div class="item-desc-content ${isEn ? 'is-en' : ''}" id="desc_${pgEsc(rid)}">${formatDescriptionText(s.desc)}</div>
+            <button type="button" class="desc-readmore-btn" onclick="toggleDescClamp('${pgEsc(rid)}', this, ${isEn})">${readMoreText}</button>
+          </div>` : ''}
+          <div class="item-bottom-actions">
+            ${action}
+            ${hasDate ? `<button class="view-reg-btn" onclick="viewRegistrations('${pgEsc(rid)}')">🔒 المسجلين (${regs.length})</button>` : ''}
+          </div>
+        </div>
+      </div>
+      <div class="item-actions-left">
+        <button class="edit-btn" title="تعديل" onclick="pgOpenSessionModal('${bk}', '${sid}', '${xid}')">✏️</button>
+        <button class="del-btn" title="حذف" onclick="pgDeleteSession('${bk}', '${sid}', '${xid}')">🗑️</button>
+        <button class="edit-btn mh-move" title="تحريك للأعلى" ${idx === 0 ? 'disabled' : ''} onclick="pgMoveSession('${bk}', '${sid}', '${xid}', -1)">▲</button>
+        <button class="edit-btn mh-move" title="تحريك للأسفل" ${idx === total - 1 ? 'disabled' : ''} onclick="pgMoveSession('${bk}', '${sid}', '${xid}', 1)">▼</button>
+      </div>
+    </div>`;
+}
+
+function pgSeriesHtml(bk, series, sIdx, sTotal){
+  const sessions = pgVisibleSessions(series);
+  const open = pgState.boxes[bk].openSeries.has(series.id);
+  const sid = pgEsc(series.id);
+  const body = sessions.length
+    ? sessions.map((s, i) => pgSessionHtml(bk, series, s, i, sessions.length)).join('')
+    : `<div class="empty">${pgEsc(pgUnit(bk))}s will be announced soon</div>`;
+  return `
+    <div class="card mh-series ${open ? 'open' : ''}" id="pgSeries_${bk}_${sid}">
+      <div class="card-head mh-series-head">
+        <button type="button" class="mh-series-toggle" aria-expanded="${open}" onclick="pgToggleSeries('${bk}', '${sid}')">
+          <span class="mh-series-main">
+            <span class="mh-series-title" dir="auto" style="text-align:start;">📚 ${pgEsc(series.title)}</span>
+            ${series.titleAr ? `<span class="mh-series-ar">${pgEsc(series.titleAr)}</span>` : ''}
+          </span>
+          <span class="mh-chev">▾</span>
+        </button>
+        <span class="mh-series-actions">
+          <button class="edit-btn" title="تعديل السلسلة" onclick="pgOpenSeriesModal('${bk}', '${sid}')">✏️</button>
+          <button class="del-btn" title="حذف السلسلة" onclick="pgDeleteSeries('${bk}', '${sid}')">🗑️</button>
+          <button class="edit-btn mh-move" title="تحريك للأعلى" ${sIdx === 0 ? 'disabled' : ''} onclick="pgMoveSeries('${bk}', '${sid}', -1)">▲</button>
+          <button class="edit-btn mh-move" title="تحريك للأسفل" ${sIdx === sTotal - 1 ? 'disabled' : ''} onclick="pgMoveSeries('${bk}', '${sid}', 1)">▼</button>
+        </span>
+      </div>
+      <div class="mh-series-body">
+        ${series.intro ? `<div class="mh-series-intro" dir="auto">${pgEsc(series.intro)}</div>` : ''}
+        <div class="list">${body}</div>
+        <div class="add-row">
+          <button class="add-btn" onclick="pgOpenSessionModal('${bk}', '${sid}', null)">+ إضافة جلسة لهذه السلسلة</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function pgBodyHtml(bk, cfg, series){
+  // ----- نمط القائمة المباشرة (برنامج PEP): نظرة عامة ← وحدات ← اختبار -----
+  if(cfg.flat){
+    const ser = series[0];
+    const sessions = ser ? pgVisibleSessions(ser) : [];
+    const items = sessions.length
+      ? sessions.map((s, i) => pgSessionHtml(bk, ser, s, i, sessions.length)).join('')
+      : `<div class="empty">${pgEsc(pgUnit(bk))}s will be announced soon</div>`;
+    const overview = (cfg.overview || []).length ? `
+      <div class="pg-section">
+        <div class="pg-section-head" dir="ltr">${pgEsc(cfg.overviewTitle || 'Overview')}</div>
+        <div class="pg-overview" dir="ltr">${cfg.overview.map(p => `<p>${pgEsc(p)}</p>`).join('')}</div>
+      </div>` : '';
+    const exam = (cfg.exam || []).length ? `
+      <div class="pg-section">
+        <div class="pg-section-head" dir="ltr">${pgEsc(cfg.examTitle || 'Assessment')}</div>
+        <div class="pg-exam" dir="ltr">
+          ${cfg.exam.map(e => `<div class="pg-exam-tile"><span class="pg-exam-label">${pgEsc(e.label)}</span><span class="pg-exam-value">${pgEsc(e.value)}</span></div>`).join('')}
+        </div>
+      </div>` : '';
+    return `
+      ${overview}
+      <div class="pg-section">
+        <div class="pg-section-head" dir="ltr">${pgEsc(cfg.curriculumTitle || 'Curriculum')}</div>
+        <div class="list">${items}</div>
+        <div class="add-row">
+          <button class="add-btn" onclick="pgOpenSessionModal('${bk}', '${pgEsc(ser ? ser.id : '')}', null)">+ إضافة ${pgEsc(pgUnitAr(bk))} (${pgEsc(pgUnit(bk))}) جديدة</button>
+        </div>
+      </div>
+      ${exam}`;
+  }
+  // ----- نمط المسار والسلاسل (Men's Health) -----
+  return `
+    <div class="mh-track" dir="ltr">
+      <div class="mh-track-icon">🩺</div>
+      <h3 class="mh-track-title">${pgEsc(cfg.trackEn || '')}</h3>
+    </div>
+    ${series.length ? series.map((x, i) => pgSeriesHtml(bk, x, i, series.length)).join('') : '<div class="empty">Activities will be announced soon</div>'}
+    <div class="add-row" style="padding:16px 0 0;">
+      <button class="add-btn" onclick="pgOpenSeriesModal('${bk}', null)">+ إضافة سلسلة جديدة</button>
+    </div>`;
+}
+
+function renderProgramBoxes(){
+  Object.keys(PG_BOXES).forEach(bk => {
+    const root = document.getElementById('pgRoot_' + bk);
+    if(!root) return;
+    const cfg = PG_BOXES[bk].cfg;
+    if(!cfg || cfg.show === false){ root.innerHTML = ''; return; }
+
+    const series = pgSeriesAll(bk).filter(x => x && x.hidden !== true);
+    const open = pgState.boxes[bk].boxOpen;
+    const showHide = cfg.ctaHide || 'إخفاء الأنشطة / Hide Activities';
+    const showShow = cfg.ctaShow || 'عرض الأنشطة / View Activities';
+    const logo = (cfg.logo && PG_LOGOS[cfg.logo]) ? PG_LOGOS[cfg.logo] : '';
+
+    const badges = [];
+    if(cfg.trackEn) badges.push(`<span class="mh-badge">${pgEsc(cfg.trackEn)}</span>`);
+    (cfg.badges || []).forEach(b => badges.push(`<span class="mh-badge alt">${pgEsc(b)}</span>`));
+    if(!cfg.flat && series.length) badges.push(`<span class="mh-badge amber">${series.length} Series</span>`);
+
+    root.innerHTML = `
+      <div class="main-box mh-box ${cfg.theme === 'violet' ? 'pg-theme-violet' : ''} ${open ? 'open' : ''}" id="pgBox_${bk}">
+        <button type="button" class="mh-hero" aria-expanded="${open}" onclick="pgToggleBox('${bk}')">
+          ${logo ? `<span class="mh-logo-wrap">${logo}</span>` : ''}
+          <span class="mh-eyebrow">
+            ${cfg.eyebrowAr ? `<span>${pgEsc(cfg.eyebrowAr)}</span>` : ''}
+            ${cfg.eyebrowAr && cfg.eyebrowEn ? '<span class="mh-sep">|</span>' : ''}
+            ${cfg.eyebrowEn ? `<span class="en" dir="ltr">${pgEsc(cfg.eyebrowEn)}</span>` : ''}
+          </span>
+          <span class="mh-title" dir="ltr">${pgEsc(cfg.title)}</span>
+          ${cfg.tagline ? `<span class="mh-tagline" dir="ltr">${pgEsc(cfg.tagline)}</span>` : ''}
+          ${cfg.subtitle ? `<span class="mh-sub" dir="ltr">${pgEsc(cfg.subtitle)}</span>` : ''}
+          <span class="mh-badges">${badges.join('')}</span>
+          <span class="mh-cta"><span class="mh-cta-text">${pgEsc(open ? showHide : showShow)}</span><span class="mh-chev">▾</span></span>
+        </button>
+        <div class="mh-body">
+          ${pgBodyHtml(bk, cfg, series)}
+          <div style="text-align:center; margin-top:12px;">
+            <button type="button" class="mh-reset-btn" onclick="pgResetToFile('${bk}')">↺ استعادة البيانات الأولية من الملف (للمسؤول 🔒)</button>
+          </div>
+        </div>
+      </div>`;
+  });
+}
+
+function pgToggleBox(bk){
+  const box = document.getElementById('pgBox_' + bk);
+  if(!box) return;
+  const cfg = PG_BOXES[bk].cfg;
+  const st = pgState.boxes[bk];
+  st.boxOpen = !box.classList.contains('open');
+  box.classList.toggle('open', st.boxOpen);
+  const hero = box.querySelector('.mh-hero');
+  if(hero) hero.setAttribute('aria-expanded', String(st.boxOpen));
+  const t = box.querySelector('.mh-cta-text');
+  if(t) t.textContent = st.boxOpen ? (cfg.ctaHide || 'إخفاء الأنشطة / Hide Activities') : (cfg.ctaShow || 'عرض الأنشطة / View Activities');
+}
+
+function pgToggleSeries(bk, id){
+  const el = document.getElementById('pgSeries_' + bk + '_' + id);
+  if(!el) return;
+  const st = pgState.boxes[bk];
+  const nowOpen = !el.classList.contains('open');
+  el.classList.toggle('open', nowOpen);
+  if(nowOpen) st.openSeries.add(id); else st.openSeries.delete(id);
+  const btn = el.querySelector('.mh-series-toggle');
+  if(btn) btn.setAttribute('aria-expanded', String(nowOpen));
+}
+
+/* ---------------- التعديل من الموقع ---------------- */
+let pgEdit = { bk: null, seriesId: null, sessionId: null };
+
+function pgInsertFormat(startTag, endTag){
+  const ta = document.getElementById('mh-f-desc');
+  const start = ta.selectionStart, end = ta.selectionEnd;
+  const sel = ta.value.substring(start, end) || 'Text';
+  ta.value = ta.value.substring(0, start) + startTag + sel + endTag + ta.value.substring(end);
+  ta.focus();
+  ta.setSelectionRange(start + startTag.length, start + startTag.length + sel.length);
+}
+
+/* ---- الجلسات / الوحدات ---- */
+async function pgOpenSessionModal(bk, seriesId, sessionId){
+  if(!(await pgAdmin(sessionId ? 'أدخل رمز المسؤول للتعديل:' : 'أدخل رمز المسؤول للنشر:'))) return;
+  let s = {};
+  if(sessionId){
+    const ser = pgSeriesAll(bk).find(x => x.id === seriesId);
+    s = ser ? (ser.sessions || []).find(x => x.id === sessionId) : null;
+    if(!s){ showToast('تعذر العثور على العنصر'); return; }
+  }
+  pgEdit = { bk, seriesId, sessionId: sessionId || null };
+  const unitAr = pgUnitAr(bk);
+  document.getElementById('mhSessionModalTitle').textContent = sessionId ? 'تعديل ' + unitAr : 'إضافة ' + unitAr;
+  document.getElementById('mh-lbl-title').textContent = 'عنوان ' + unitAr + ' *';
+  document.getElementById('mh-lbl-desc').textContent = 'وصف وتفاصيل ' + unitAr;
+  document.getElementById('mh-f-title').value = s.title || '';
+  document.getElementById('mh-f-desc').value = s.desc || '';
+  document.getElementById('mh-f-speaker').value = s.speaker || '';
+  document.getElementById('mh-f-date').value = s.date || '';
+  document.getElementById('mh-f-time').value = s.time || '';
+  document.getElementById('mh-f-location').value = s.location || '';
+  document.getElementById('mh-f-units').value = s.units || '';
+  document.getElementById('mhSaveSessionBtn').textContent = sessionId ? 'حفظ التعديلات' : 'حفظ ونشر';
+  document.getElementById('mhSessionModal').classList.add('open');
+}
+
+function pgSaveSession(){
+  const title = document.getElementById('mh-f-title').value.trim();
+  if(!title){ showToast('يرجى إدخال العنوان'); return; }
+  const data = {
+    title,
+    desc: document.getElementById('mh-f-desc').value.trim(),
+    speaker: document.getElementById('mh-f-speaker').value.trim(),
+    date: document.getElementById('mh-f-date').value,
+    time: document.getElementById('mh-f-time').value,
+    location: document.getElementById('mh-f-location').value.trim(),
+    units: document.getElementById('mh-f-units').value.trim()
+  };
+  const bk = pgEdit.bk;
+  const list = pgEnsureEditable(bk);
+  const ser = list.find(x => x.id === pgEdit.seriesId);
+  if(!ser){ showToast('تعذر العثور على السلسلة'); return; }
+  if(!ser.sessions) ser.sessions = [];
+  const wasEdit = !!pgEdit.sessionId;
+  if(wasEdit){
+    const idx = ser.sessions.findIndex(x => x.id === pgEdit.sessionId);
+    if(idx === -1){ showToast('تعذر العثور على العنصر'); return; }
+    ser.sessions[idx] = { ...ser.sessions[idx], ...data };
+  } else {
+    ser.sessions.push({ id: pgNewId('s'), ...data });
+    pgState.boxes[bk].openSeries.add(ser.id);
+  }
+  saveData();
+  closeModal('mhSessionModal');
+  showToast(wasEdit ? 'تم حفظ التعديلات بنجاح' : 'تم النشر بنجاح');
+  pgEdit = { bk: null, seriesId: null, sessionId: null };
+}
+
+async function pgDeleteSession(bk, seriesId, sessionId){
+  if(!(await pgAdmin('أدخل رمز المسؤول للحذف:'))) return;
+  const cur = pgSeriesAll(bk).find(x => x.id === seriesId);
+  const target = cur ? (cur.sessions || []).find(x => x.id === sessionId) : null;
+  if(!target){ showToast('تعذر العثور على العنصر'); return; }
+  if(!confirm('حذف ' + pgUnitAr(bk) + ' "' + target.title + '"؟\nسيتم أيضاً حذف قائمة المسجلين فيها.')) return;
+  const ser = pgEnsureEditable(bk).find(x => x.id === seriesId);
+  ser.sessions = (ser.sessions || []).filter(x => x.id !== sessionId);
+  if(appData.registrations) delete appData.registrations[PG_BOXES[bk].regPrefix + sessionId];
+  saveData();
+  showToast('تم الحذف');
+}
+
+async function pgMoveSession(bk, seriesId, sessionId, dir){
+  if(!(await pgAdmin('أدخل رمز المسؤول:'))) return;
+  const ser = pgEnsureEditable(bk).find(x => x.id === seriesId);
+  if(!ser) return;
+  const arr = ser.sessions || [];
+  const visible = arr.filter(s => s && s.hidden !== true);   // الترتيب ضمن الظاهر فقط
+  const vi = visible.findIndex(s => s.id === sessionId);
+  const vj = vi + dir;
+  if(vi < 0 || vj < 0 || vj >= visible.length) return;
+  const i = arr.indexOf(visible[vi]), j = arr.indexOf(visible[vj]);
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+  saveData();
+}
+
+/* ---- السلاسل (Men's Health) ---- */
+async function pgOpenSeriesModal(bk, seriesId){
+  if(!(await pgAdmin(seriesId ? 'أدخل رمز المسؤول للتعديل:' : 'أدخل رمز المسؤول للنشر:'))) return;
+  let s = {};
+  if(seriesId){
+    s = pgSeriesAll(bk).find(x => x.id === seriesId);
+    if(!s){ showToast('تعذر العثور على السلسلة'); return; }
+  }
+  pgEdit = { bk, seriesId: seriesId || null, sessionId: null };
+  document.getElementById('mhSeriesModalTitle').textContent = seriesId ? 'تعديل السلسلة' : 'إضافة سلسلة';
+  document.getElementById('mh-s-title').value = s.title || '';
+  document.getElementById('mh-s-titleAr').value = s.titleAr || '';
+  document.getElementById('mh-s-intro').value = s.intro || '';
+  document.getElementById('mhSaveSeriesBtn').textContent = seriesId ? 'حفظ التعديلات' : 'حفظ ونشر السلسلة';
+  document.getElementById('mhSeriesModal').classList.add('open');
+}
+
+function pgSaveSeries(){
+  const title = document.getElementById('mh-s-title').value.trim();
+  if(!title){ showToast('يرجى إدخال عنوان السلسلة'); return; }
+  const titleAr = document.getElementById('mh-s-titleAr').value.trim();
+  const intro = document.getElementById('mh-s-intro').value.trim();
+  const bk = pgEdit.bk;
+  const list = pgEnsureEditable(bk);
+  const wasEdit = !!pgEdit.seriesId;
+  if(wasEdit){
+    const ser = list.find(x => x.id === pgEdit.seriesId);
+    if(!ser){ showToast('تعذر العثور على السلسلة'); return; }
+    ser.title = title; ser.titleAr = titleAr; ser.intro = intro;
+  } else {
+    const id = pgNewId('ser');
+    list.push({ id, title, titleAr, intro, hidden: false, sessions: [] });
+    pgState.boxes[bk].openSeries.add(id);
+    pgState.boxes[bk].boxOpen = true;
+  }
+  saveData();
+  closeModal('mhSeriesModal');
+  showToast(wasEdit ? 'تم حفظ التعديلات بنجاح' : 'تم نشر السلسلة بنجاح');
+  pgEdit = { bk: null, seriesId: null, sessionId: null };
+}
+
+async function pgDeleteSeries(bk, seriesId){
+  if(!(await pgAdmin('أدخل رمز المسؤول للحذف:'))) return;
+  const cur = pgSeriesAll(bk).find(x => x.id === seriesId);
+  if(!cur){ showToast('تعذر العثور على السلسلة'); return; }
+  const n = (cur.sessions || []).length;
+  if(!confirm('حذف السلسلة "' + cur.title + '" مع كل جلساتها (' + n + ') وقوائم المسجلين فيها؟\nهذا الإجراء لا يمكن التراجع عنه.')) return;
+  const list = pgEnsureEditable(bk);
+  const ser = list.find(x => x.id === seriesId);
+  (ser.sessions || []).forEach(s => { if(appData.registrations) delete appData.registrations[PG_BOXES[bk].regPrefix + s.id]; });
+  appData[PG_BOXES[bk].dataKey].series = list.filter(x => x.id !== seriesId);
+  pgState.boxes[bk].openSeries.delete(seriesId);
+  saveData();
+  showToast('تم الحذف');
+}
+
+async function pgMoveSeries(bk, seriesId, dir){
+  if(!(await pgAdmin('أدخل رمز المسؤول:'))) return;
+  const arr = pgEnsureEditable(bk);
+  const visible = arr.filter(s => s && s.hidden !== true);
+  const vi = visible.findIndex(s => s.id === seriesId);
+  const vj = vi + dir;
+  if(vi < 0 || vj < 0 || vj >= visible.length) return;
+  const i = arr.indexOf(visible[vi]), j = arr.indexOf(visible[vj]);
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+  saveData();
+}
+
+/* ---- الرجوع للبيانات الأولية الموجودة بالملف ---- */
+async function pgResetToFile(bk){
+  if(!(await pgAdmin('أدخل رمز المسؤول:'))) return;
+  const k = PG_BOXES[bk].dataKey;
+  if(!appData[k]){ showToast('البيانات الحالية هي نفسها الأولية بالملف'); return; }
+  if(!confirm('سيتم حذف كل التعديلات المحفوظة من الموقع على هذا البوكس والرجوع للبيانات الأولية الموجودة بالملف.\nقوائم المسجلين تبقى محفوظة.\nهل أنت متأكدة؟')) return;
+  delete appData[k];
+  saveData();
+  showToast('تمت استعادة البيانات الأولية');
+}
+
+
+loadData();
+</script>
+</body>
+</html>
