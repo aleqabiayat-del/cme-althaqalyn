@@ -403,6 +403,151 @@
     position:fixed; inset:0; background:var(--bg); display:flex; align-items:center; justify-content:center;
     z-index:100; font-size:14px; color:var(--muted); font-weight:700;
   }
+
+  /* ===== MEN'S HEALTH — NOVEMBER 2026 BOX ===== */
+  .mh-box{ animation:none; padding:0; overflow:hidden; border-color:var(--teal); border-width:1.5px; }
+  .mh-hero{
+    display:block; width:100%; text-align:center; cursor:pointer; font-family:inherit; color:var(--ink);
+    border:none; padding:30px 22px 26px;
+    background:linear-gradient(135deg, #FFFFFF 0%, var(--teal-soft) 100%);
+  }
+  .mh-hero:focus-visible{ outline:3px solid var(--teal); outline-offset:-3px; }
+  .mh-logo-wrap{ display:block; margin:0 auto 12px; }
+  .mh-logo{ width:96px; height:120px; display:block; margin:0 auto; filter:drop-shadow(0 4px 6px rgba(27,111,163,.22)); }
+  .mh-track-title{ font-family:'Inter',sans-serif; }
+  .mh-eyebrow{
+    display:inline-flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:4px 10px;
+    background:#fff; border:1px solid var(--teal); color:var(--teal);
+    border-radius:100px; padding:5px 16px; font-size:12.5px; font-weight:800; margin-bottom:16px;
+  }
+  .mh-eyebrow .mh-sep{ opacity:.45; }
+  .mh-title{
+    display:block; font-family:'Inter',sans-serif; font-weight:800; color:var(--teal);
+    font-size:clamp(34px,8vw,60px); line-height:1.05; letter-spacing:.05em; margin:0 0 10px;
+  }
+  .mh-tagline{
+    display:block; font-family:'Inter',sans-serif; font-weight:700; color:var(--ink);
+    font-size:clamp(15px,2.6vw,21px); line-height:1.4; margin:0 auto 10px; max-width:720px;
+  }
+  .mh-sub{
+    display:block; font-family:'Inter',sans-serif; font-weight:500; color:var(--muted);
+    font-size:clamp(12px,1.9vw,14px); line-height:1.6; margin:0 auto 16px; max-width:720px;
+  }
+  .mh-badges{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:20px; }
+  .mh-badge{
+    font-family:'Inter',sans-serif; font-size:11.5px; font-weight:800; padding:4px 12px;
+    border-radius:100px; background:var(--teal-soft); color:var(--teal); border:1px solid var(--teal);
+  }
+  .mh-badge.alt{ background:var(--violet-soft); color:var(--violet); border-color:var(--violet); }
+  .mh-badge.amber{ background:var(--amber-soft); color:var(--amber); border-color:var(--amber); }
+  .mh-cta{
+    display:inline-flex; align-items:center; gap:8px; padding:11px 26px; border-radius:10px;
+    background:var(--teal); color:#fff; font-size:14px; font-weight:800; transition:background .15s;
+  }
+  .mh-hero:hover .mh-cta{ background:#13574e; }
+  .mh-chev{ display:inline-block; transition:transform .2s; }
+  .mh-box.open .mh-chev{ transform:rotate(180deg); }
+
+  .mh-body{ display:none; padding:24px 26px 26px; border-top:1px solid var(--line); background:var(--paper); }
+  .mh-box.open .mh-body{ display:block; }
+
+  .mh-track{
+    display:flex; align-items:center; gap:12px; padding-bottom:16px; margin-bottom:18px;
+    border-bottom:2px solid var(--bg);
+  }
+  .mh-track-icon{
+    width:42px; height:42px; border-radius:12px; background:var(--teal-soft); color:var(--teal);
+    display:flex; align-items:center; justify-content:center; flex:none; font-size:20px;
+  }
+  .mh-track-title{ margin:0; font-size:18px; font-weight:800; color:var(--ink); }
+  .mh-track-title .en{ display:block; font-size:13px; color:var(--muted); font-weight:600; margin-top:2px; }
+
+  .mh-series{ margin-bottom:16px; }
+  .mh-series:last-child{ margin-bottom:0; }
+  .mh-series-head{ gap:12px; border-bottom:1px solid transparent; padding:12px 16px; }
+  .mh-series.open .mh-series-head{ border-bottom-color:var(--line); }
+  .mh-series-toggle{
+    flex:1; min-width:0; display:flex; align-items:center; gap:14px; justify-content:space-between;
+    background:none; border:none; padding:4px 0; font-family:inherit; color:inherit; cursor:pointer; text-align:start;
+  }
+  .mh-series-toggle:hover .mh-series-title{ color:var(--teal); }
+  .mh-series-toggle:focus-visible{ outline:3px solid var(--teal); outline-offset:2px; border-radius:8px; }
+  .mh-series-actions{ display:flex; align-items:center; gap:6px; flex:none; }
+  .mh-series-actions .edit-btn, .mh-series-actions .del-btn{ width:32px; height:32px; font-size:14px; }
+  .mh-move{ font-size:11px !important; }
+  .mh-move:disabled{ opacity:.35; cursor:not-allowed; }
+  .mh-move:disabled:hover{ background:#fff; color:var(--muted); border-color:var(--line); }
+  .mh-reset-btn{
+    background:none; border:none; cursor:pointer; font-family:inherit; font-size:11.5px; color:var(--muted);
+    text-decoration:underline; padding:6px;
+  }
+  .mh-reset-btn:hover{ color:var(--rose); }
+  .mh-series-main{ display:block; flex:1; min-width:0; }
+  .mh-series-title{ display:block; font-family:'Inter',sans-serif; font-weight:800; font-size:17px; color:var(--ink); line-height:1.4; }
+  .mh-series-ar{ display:block; font-size:12.5px; color:var(--muted); font-weight:700; margin-top:2px; }
+  .mh-series-side{ display:flex; align-items:center; gap:10px; flex:none; }
+  .mh-count{
+    font-family:'Inter',sans-serif; font-size:11.5px; font-weight:800; padding:3px 10px; border-radius:100px;
+    background:var(--teal-soft); color:var(--teal);
+  }
+  .mh-series.open .mh-chev{ transform:rotate(180deg); }
+  .mh-series-body{ display:none; }
+  .mh-series.open .mh-series-body{ display:block; }
+  .mh-series-intro{
+    padding:14px 20px 0; font-size:14px; color:var(--muted); line-height:1.7; font-family:'Inter',sans-serif;
+  }
+  .mh-series .list{ padding:14px 20px 18px; }
+  .mh-item-title-en{ font-family:'Inter',sans-serif; }
+  .mh-tba{ color:var(--amber); }
+
+  /* ===== PEP / بوكسات ببنية القائمة المباشرة + الثيم البنفسجي ===== */
+  .pg-theme-violet{ --teal:#6B5B95; --teal-soft:#ECE9F4; }
+  .pg-theme-violet .mh-hero{ background:linear-gradient(135deg, #FFFFFF 0%, #ECE9F4 100%); }
+  .pg-theme-violet .mh-hero:hover .mh-cta, .pg-theme-violet .reg-btn:hover{ background:#544675; }
+  .pg-theme-violet .view-reg-btn:hover{ background:#DDD7EC; }
+  .pg-theme-violet .mh-badge.amber{ background:var(--amber-soft); }
+
+  .pg-section{ margin-bottom:22px; }
+  .pg-section:last-of-type{ margin-bottom:0; }
+  .pg-section-head{
+    text-align:center; font-family:'Inter',sans-serif; font-weight:800; font-size:13.5px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--teal); background:var(--teal-soft);
+    border:1px solid var(--line); border-radius:10px; padding:11px 14px; margin-bottom:14px;
+  }
+  .pg-overview{
+    font-family:'Inter',sans-serif; background:#FAFCFB; border:1px solid var(--line);
+    border-inline-start:4px solid var(--teal); border-radius:12px; padding:16px 20px;
+  }
+  .pg-overview p{ margin:0 0 12px; font-size:14.5px; line-height:1.75; color:#1A202C; }
+  .pg-overview p:last-child{ margin-bottom:0; }
+  .pg-exam{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .pg-exam-tile{
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; text-align:center;
+    background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:18px 12px;
+  }
+  .pg-exam-label{ font-family:'Inter',sans-serif; font-size:11.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .pg-exam-value{ font-family:'Inter',sans-serif; font-size:clamp(18px,3.4vw,26px); font-weight:800; color:var(--teal); line-height:1.2; }
+  .pg-section .list{ padding:0; }
+  .pg-section .add-row{ padding:12px 0 0; }
+
+  /* إصلاح موجود بالموقع الأصلي: حقل الرقم الوظيفي كان يدفع زر البحث خارج الشاشة بالموبايل */
+  .lookup-row input{ min-width:0; }
+
+  @media (max-width:560px){
+    .pg-exam{ grid-template-columns:1fr; }
+    .pg-overview{ padding:14px 14px; }
+    .mh-eyebrow{ border-radius:16px; flex-direction:column; gap:2px; padding:7px 14px; }
+    .mh-eyebrow .mh-sep{ display:none; }
+    .mh-hero{ padding:24px 14px 22px; }
+    .mh-body{ padding:18px 12px 18px; }
+    .mh-series-head{ flex-wrap:wrap; padding:10px 12px; }
+    .mh-series-actions{ width:100%; justify-content:flex-end; }
+    .mh-series .item-actions-left{ flex-direction:row; flex-wrap:wrap; gap:6px; }
+    .mh-series .item{ flex-direction:column; }
+    .mh-series .item-actions-left .edit-btn, .mh-series .item-actions-left .del-btn{ width:32px; height:32px; }
+    .mh-series .list{ padding:12px 10px 14px; }
+    .mh-series .item{ padding:16px 12px; }
+  }
 </style>
 </head>
 <body>
@@ -427,6 +572,10 @@
     <span id="metaText">بوابة الأنشطة التدريبية المعتمدة لعام 2026</span>
   </div>
  
+  <!-- البوكسات الخاصة: MEN'S HEALTH + PEP LEVEL 1 (تُرسم من بيانات MENS_HEALTH و PEP_LEVEL1 داخل الـ script) -->
+  <div id="pgRoot_mh"></div>
+  <div id="pgRoot_pep"></div>
+
   <!-- SECTION 1: SPECIALIZED ACTIVITIES (75%) -->
   <div class="main-box">
     <div class="main-box-header">
@@ -581,6 +730,80 @@
  
 </div>
  
+<!-- MODAL: MEN'S HEALTH — ADD / EDIT SESSION -->
+<div class="overlay" id="mhSessionModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="mhSessionModalTitle">إضافة جلسة</h3>
+      <button class="modal-close" onclick="closeModal('mhSessionModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label id="mh-lbl-title">عنوان الجلسة *</label>
+        <input type="text" id="mh-f-title" placeholder="مثال: Diagnosis & Staging" dir="auto">
+      </div>
+      <div class="field">
+        <label id="mh-lbl-desc">وصف وتفاصيل الجلسة</label>
+        <div class="editor-toolbar">
+          <button type="button" class="tool-btn" onclick="pgInsertFormat('**', '**')"><b>B</b> عريض</button>
+          <button type="button" class="tool-btn" onclick="pgInsertFormat('*', '*')"><i>I</i> مائل</button>
+          <button type="button" class="tool-btn" onclick="pgInsertFormat('### ', '')">عنوان H</button>
+          <button type="button" class="tool-btn" onclick="pgInsertFormat('- ', '')">• نقطة</button>
+        </div>
+        <textarea id="mh-f-desc" rows="6" placeholder="Objectives, topics, learning outcomes..." dir="auto"></textarea>
+      </div>
+      <div class="field">
+        <label>المحاضر / المقدّم</label>
+        <input type="text" id="mh-f-speaker" placeholder="مثال: Dr. Ahmed" dir="auto">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>التاريخ (اتركيه فارغ إذا لم يُحدد بعد)</label>
+          <input type="date" id="mh-f-date">
+        </div>
+        <div class="field">
+          <label>الوقت</label>
+          <input type="time" id="mh-f-time">
+        </div>
+      </div>
+      <div class="field">
+        <label>المكان</label>
+        <input type="text" id="mh-f-location" placeholder="مثال: قاعة الندوات" dir="auto">
+      </div>
+      <div class="field">
+        <label>الوحدات المعتمدة (CME Units)</label>
+        <input type="text" id="mh-f-units" placeholder="مثال: 1 CME hour" dir="auto">
+      </div>
+      <button class="save-btn" id="mhSaveSessionBtn" onclick="pgSaveSession()">حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: MEN'S HEALTH — ADD / EDIT SERIES -->
+<div class="overlay" id="mhSeriesModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="mhSeriesModalTitle">إضافة سلسلة</h3>
+      <button class="modal-close" onclick="closeModal('mhSeriesModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>عنوان السلسلة (English) *</label>
+        <input type="text" id="mh-s-title" placeholder="مثال: The Patient Journey: Prostate Cancer" dir="auto">
+      </div>
+      <div class="field">
+        <label>العنوان بالعربي (اختياري)</label>
+        <input type="text" id="mh-s-titleAr" placeholder="مثال: رحلة المريض: سرطان البروستات">
+      </div>
+      <div class="field">
+        <label>وصف قصير للسلسلة (اختياري)</label>
+        <textarea id="mh-s-intro" rows="3" dir="auto"></textarea>
+      </div>
+      <button class="save-btn" id="mhSaveSeriesBtn" onclick="pgSaveSeries()">حفظ</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: ADD / EDIT ACTIVITY -->
 <div class="overlay" id="activityModal">
   <div class="modal">
@@ -853,6 +1076,7 @@ async function saveData(){
 }
 
 function renderAll(){
+  renderProgramBoxes();
   renderSpecialized();
   renderGeneral();
   renderExternal();
@@ -1753,6 +1977,596 @@ function showToast(msg){
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2400);
 }
+
+
+/* ==========================================================================
+   البوكسات الخاصة (Men's Health + برنامج PEP Level 1)
+
+   كيف تتعدل البيانات (طريقتين):
+
+   (1) من الموقع نفسه (الأسهل) — بدون GitHub:
+       افتحي البوكس، وراح تلكين أزرار:
+       ✏️ تعديل   🗑️ حذف   ▲▼ ترتيب   + إضافة جلسة/وحدة   (+ إضافة سلسلة بـ Men's Health)
+       كلها تطلب رمز المسؤول (PIN) وتنحفظ مباشرة وتظهر للكل.
+
+   (2) من هذا الملف (الكتل تحت):
+       - تحتوي نصوص الواجهة (العناوين، الشعار، الشارات، النظرة العامة، معلومات الاختبار...)
+         وهذي تتعدل من الملف فقط.
+       - وتحتوي السلاسل والجلسات (أو الوحدات) كبيانات "أولية". أول ما تعدلين أي شي منها من الموقع،
+         تنحفظ نسخة بقاعدة البيانات وتصير هي المعتمدة، وبعدها أي تغيير تسوينه عليها داخل الملف ما يظهر.
+       - إذا تريدين ترجعين للبيانات الأولية بالملف: رابط "↺ استعادة البيانات الأولية" بأسفل كل بوكس.
+
+   قواعد الكتابة داخل الملف:
+   - غيري النص بين علامات التنصيص '...' أو "..." (لا تحذفين الفوارز , ولا الأقواس).
+   - التاريخ 'YYYY-MM-DD' مثل '2026-11-10'، والوقت 24 ساعة مثل '14:00'.
+   - الوصف (desc) يدعم: **غامق**  *مائل*  وسطر يبدأ بـ - للنقاط  و ### لعنوان فرعي، وللسطر الجديد اكتبي \n
+   - إذا طلعت علامة ' داخل نص مكتوب بين '...' اكتبيها هيج \'  أو استخدمي "..." بدالها.
+   - لا تغيرين الـ id لجلسة/وحدة بعد ما يبدي الناس يسجلون بيها (التسجيلات مربوطة بالـ id).
+   ========================================================================== */
+
+/* ===================== 1) MEN'S HEALTH — نوفمبر 2026 ===================== */
+const MENS_HEALTH = {
+  show: true,               // false = إخفاء البوكس كله
+
+  // ---- الواجهة الرئيسية للبوكس ----
+  eyebrowAr: 'الأنشطة التعليمية | تشرين الثاني 2026',
+  eyebrowEn: 'Educational Activities · November 2026',
+  title: "MEN'S HEALTH",
+  tagline: 'Beyond Awareness: From Early Detection to Survivorship',
+  subtitle: "Men's Health Awareness & Prostate and Testicular Cancer Education Campaign | November 2026",
+  badges: ['Open to all healthcare professionals'],   // شارات إضافية (يضاف لها تلقائياً عدد السلاسل)
+  logo: 'ribbon',           // شعار الشريط الأزرق مع الشارب. اتركيها '' (فارغة) إذا تريدين تخفينه
+  ctaShow: 'عرض الأنشطة / View Activities',
+  ctaHide: 'إخفاء الأنشطة / Hide Activities',
+
+  // ---- المسار ----
+  trackEn: 'Healthcare Professionals Track',
+  unitLabel: 'Session',     // اسم الوحدة الصغيرة بالبطاقات (Session 1, Session 2...)
+
+  // ---- السلاسل والجلسات (بيانات أولية) ----
+  series: [
+    {
+      id: 'prostate',
+      title: 'The Patient Journey: Prostate Cancer',
+      titleAr: 'رحلة المريض: سرطان البروستات',
+      intro: '',            // وصف قصير للسلسلة (اختياري)
+      hidden: false,
+      sessions: [
+        // ↓↓↓ عناوين مقترحة كبداية، بدليها بكيفج ↓↓↓
+        { id: 'prostate-1', title: 'Risk Factors & Screening',            date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'prostate-2', title: 'Diagnosis & Staging',                 date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'prostate-3', title: 'Treatment Options',                   date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'prostate-4', title: 'Managing Side Effects & Supportive Care', date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'prostate-5', title: 'Survivorship & Follow-up',            date: '', time: '', speaker: '', location: '', units: '', desc: '' }
+      ]
+    },
+    {
+      id: 'testicular',
+      title: 'The Patient Journey: Testicular Cancer',
+      titleAr: 'رحلة المريض: سرطان الخصية',
+      intro: '',
+      hidden: false,
+      sessions: [
+        { id: 'testicular-1', title: 'Risk Factors, Awareness & Early Detection', date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'testicular-2', title: 'Diagnosis & Staging',                       date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'testicular-3', title: 'Treatment Options',                         date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'testicular-4', title: 'Fertility Preservation & Survivorship',     date: '', time: '', speaker: '', location: '', units: '', desc: '' }
+      ]
+    }
+  ]
+};
+
+/* ===================== 2) PEP — Pharmacy Education Program, Level 1 ===================== */
+const PEP_LEVEL1 = {
+  show: true,               // false = إخفاء البوكس كله
+  theme: 'violet',          // لون البوكس (بنفسجي مثل قسم الصيادلة)
+  flat: true,               // true = قائمة وحدات مباشرة بدون سلاسل
+
+  // ---- الواجهة الرئيسية للبوكس ----
+  eyebrowAr: 'برنامج التعليم الصيدلاني | المستوى الأول',
+  eyebrowEn: 'Pharmacy Education Program · Level 1',
+  title: 'PEP — LEVEL 1',
+  tagline: 'The foundational clinical gateway for Al-Thaqalyn Oncology Hospital',
+  subtitle: 'Clinical Pharmacist Preparation Program',
+  badges: ['Pharmacists'],
+  logo: 'pill',
+  ctaShow: 'عرض البرنامج / View Program',
+  ctaHide: 'إخفاء البرنامج / Hide Program',
+  unitLabel: 'Module',
+
+  // ---- Executive Overview (كل فقرة بين علامتين) ----
+  overviewTitle: 'Executive Overview',
+  overview: [
+    'The Pharmacy Education Program (PEP) – Level 1 provides foundational clinical training for dispensing pharmacists and newly recruited pharmacy staff at Al-Thaqalayn Oncology Hospital.',
+    'It focuses on practical clinical competencies, including medication safety, clinical calculations, oncology supportive care, error prevention, and patient counselling, ensuring pharmacists deliver safe and effective pharmaceutical care before transitioning to independent clinical practice.'
+  ],
+
+  // ---- Detailed Module Curriculum ----
+  curriculumTitle: 'Detailed Module Curriculum',
+  series: [
+    {
+      id: 'curriculum',
+      title: 'Detailed Module Curriculum',
+      titleAr: '',
+      intro: '',
+      hidden: false,
+      sessions: [
+        { id: 'pep-m1', title: 'Introduction to Oncology — Part 1 /2',                                      date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'pep-m2', title: 'Clinical Drug Calculations Workshop',                                       date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'pep-m3', title: 'Types and Calculation of patient hydration requirements.',                  date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'pep-m4', title: 'Electrolytes Dosing and infusion Rates',                                    date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'pep-m5', title: 'Infectious Diseases in Oncology',                                           date: '', time: '', speaker: '', location: '', units: '', desc: '' },
+        { id: 'pep-m6', title: 'Order Review Essentials & High-Alert Safety & Counter Counseling',         date: '', time: '', speaker: '', location: '', units: '', desc: '' }
+      ]
+    }
+  ],
+
+  // ---- Level 1 Exit Exam ----
+  examTitle: 'Level 1 Exit Exam & Competency Evaluation',
+  exam: [
+    { label: 'Exit Exam',         value: '50 Clinical MCQs' },
+    { label: 'Passing Threshold', value: '≥ 80 % overall' }
+  ]
+};
+/* ======================= نهاية منطقة التعديل ======================= */
+
+
+/* ---------- كود عرض البوكسات والتعديل (ما تحتاجين تعدلين تحت هذا الخط) ---------- */
+// مفاتيح داخلية: dataKey = مكان الحفظ بقاعدة البيانات، regPrefix = بادئة مفتاح التسجيل. لا تغيريها.
+const PG_BOXES = {
+  mh:  { cfg: MENS_HEALTH, dataKey: 'mensHealth', regPrefix: 'mh-' },
+  pep: { cfg: PEP_LEVEL1,  dataKey: 'pepLevel1',  regPrefix: 'pep-' }
+};
+const pgState = {
+  adminUntil: 0,
+  boxes: { mh: { boxOpen: false, openSeries: new Set() }, pep: { boxOpen: false, openSeries: new Set() } }
+};
+
+const PG_LOGOS = {
+  // الشريط الأزرق لتوعية سرطان البروستات + الشارب
+  ribbon: `
+<svg class="mh-logo" viewBox="0 0 120 150" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="mhRib" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8AD3F5"/><stop offset="1" stop-color="#2A98DA"/></linearGradient>
+    <linearGradient id="mhStache" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B2B2B"/><stop offset="1" stop-color="#0E0E0E"/></linearGradient>
+  </defs>
+  <path d="M26 144 L60 86 C80 56 92 34 78 16 C66 2 36 6 34 28 C32 50 48 66 62 84 L98 144" fill="none" stroke="url(#mhRib)" stroke-width="20"/>
+  <path d="M46 63 C51 71 56 77 62 84 L98 144" fill="none" stroke="#1B6FA3" stroke-opacity=".28" stroke-width="23"/>
+  <path d="M46 63 C51 71 56 77 62 84 L98 144" fill="none" stroke="url(#mhRib)" stroke-width="20"/>
+  <path d="M60 80 C54 70 40 68 27 76 C18 81 11 89 7 96 C16 92 24 94 33 94 C43 93 52 90 60 96 C68 90 77 93 87 94 C96 94 104 92 113 96 C109 89 102 81 93 76 C80 68 66 70 60 80 Z" fill="url(#mhStache)"/>
+</svg>`,
+  // كبسولة دواء + علامة زائد
+  pill: `
+<svg class="mh-logo" viewBox="0 0 120 150" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="pgPillA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8E7FC0"/><stop offset="1" stop-color="#55467F"/></linearGradient>
+  </defs>
+  <g transform="rotate(-40 60 80)">
+    <rect x="14" y="58" width="92" height="44" rx="22" fill="#FFFFFF" stroke="#6B5B95" stroke-width="4"/>
+    <path d="M36 58 H60 V102 H36 A22 22 0 0 1 36 58 Z" fill="url(#pgPillA)"/>
+    <line x1="60" y1="58" x2="60" y2="102" stroke="#6B5B95" stroke-width="3"/>
+    <rect x="66" y="64" width="26" height="6" rx="3" fill="#6B5B95" fill-opacity=".18"/>
+  </g>
+  <g fill="#1D6F64"><rect x="88" y="14" width="10" height="32" rx="3"/><rect x="77" y="25" width="32" height="10" rx="3"/></g>
+</svg>`
+};
+
+function pgEsc(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function pgNewId(prefix){
+  return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+}
+function pgUnit(bk){ return PG_BOXES[bk].cfg.unitLabel || 'Session'; }
+function pgUnitAr(bk){ return PG_BOXES[bk].cfg.flat ? 'الوحدة' : 'الجلسة'; }
+
+/* ---- مصدر البيانات: قاعدة البيانات إذا تعدلت من الموقع، وإلا الملف ---- */
+function pgSeriesAll(bk){
+  const d = appData[PG_BOXES[bk].dataKey];
+  if(d && Array.isArray(d.series)) return d.series;
+  return PG_BOXES[bk].cfg.series || [];
+}
+function pgEnsureEditable(bk){
+  const k = PG_BOXES[bk].dataKey;
+  if(!appData[k] || !Array.isArray(appData[k].series)){
+    appData[k] = { series: JSON.parse(JSON.stringify(PG_BOXES[bk].cfg.series || [])) };
+  }
+  return appData[k].series;
+}
+function pgVisibleSessions(series){
+  return (series.sessions || []).filter(s => s && s.hidden !== true);
+}
+
+/* ---- رمز المسؤول: نتحقق مرة وتبقى الصلاحية 5 دقائق (حتى ما يتكرر الطلب مع كل زر) ---- */
+async function pgAdmin(msg){
+  if(Date.now() < pgState.adminUntil) return true;
+  const pin = prompt(msg || 'أدخل رمز المسؤول:');
+  if(!(await checkPin(pin))){ showToast('رمز المسؤول غير صحيح'); return false; }
+  pgState.adminUntil = Date.now() + 5 * 60 * 1000;
+  return true;
+}
+
+/* ---------------- العرض ---------------- */
+function pgSessionHtml(bk, series, s, idx, total){
+  const rid = PG_BOXES[bk].regPrefix + s.id;      // مفتاح التسجيل
+  const hasDate = !!s.date;
+  const isPast = hasDate && isPastActivity(s.date, s.time);
+  const regs = (appData.registrations && appData.registrations[rid]) ? appData.registrations[rid] : [];
+  const isEn = isEnglishText(s.desc || s.title);
+  const descHeaderTitle = isEn ? '🎯 Objectives, Topics & Details' : '🎯 الأهداف والمحاور والتفاصيل';
+  const readMoreText = isEn ? '🔽 Show Full Details' : '🔽 عرض باقي التفاصيل الكاملة';
+  const dParts = hasDate ? String(s.date).split('-') : [];
+  const sid = pgEsc(series.id), xid = pgEsc(s.id);
+
+  let action;
+  if(!hasDate){
+    action = '<span style="font-size:11.5px; color:var(--amber); font-weight:700;">⏳ سيُفتح التسجيل عند تحديد الموعد</span>';
+  } else if(isPast){
+    action = '<span style="font-size:11.5px; color:var(--muted); font-weight:700;">🔒 انتهى وقت التسجيل</span>';
+  } else {
+    action = `<button class="reg-btn" onclick="openRegModal('${pgEsc(rid)}', '${encodeURIComponent(s.title || '')}')">📝 تسجيل بالنشاط</button>`;
+  }
+
+  return `
+    <div class="item ${isPast ? 'past-item' : ''}">
+      <div class="item-content-wrapper">
+        <div class="date-pill" style="${isPast ? 'background:#E2E8F0; color:#64748B;' : ''}">
+          <span class="d">${hasDate ? pgEsc(dParts[2] || '--') : '--'}</span>
+          <span class="m">${hasDate ? pgEsc(dParts[1] || '') : ''}</span>
+        </div>
+        <div class="item-body">
+          <div><span class="cat-tag cat-teal">${pgEsc(pgUnit(bk))} ${idx + 1}</span></div>
+          <div class="item-title mh-item-title-en" dir="auto" style="text-align:start;">
+            ${pgEsc(s.title)}
+            ${s.units ? `<span style="font-size:11.5px; background:var(--amber-soft); color:var(--amber); padding:2px 8px; border-radius:4px; font-weight:800;">${pgEsc(s.units)}</span>` : ''}
+            ${isPast ? '<span class="past-badge">منتهي (Ended)</span>' : ''}
+          </div>
+          <div class="item-meta">
+            ${hasDate ? '' : '<span class="mh-tba">🗓️ Date to be announced</span>'}
+            ${s.speaker ? `<span>👤 ${pgEsc(s.speaker)}</span>` : ''}
+            ${s.time ? `<span>🕒 ${pgEsc(s.time)}</span>` : ''}
+            ${s.location ? `<span>📍 ${pgEsc(s.location)}</span>` : ''}
+          </div>
+          ${s.desc ? `
+          <div class="item-desc-box">
+            <div class="item-desc-title">${descHeaderTitle}</div>
+            <div class="item-desc-content ${isEn ? 'is-en' : ''}" id="desc_${pgEsc(rid)}">${formatDescriptionText(s.desc)}</div>
+            <button type="button" class="desc-readmore-btn" onclick="toggleDescClamp('${pgEsc(rid)}', this, ${isEn})">${readMoreText}</button>
+          </div>` : ''}
+          <div class="item-bottom-actions">
+            ${action}
+            ${hasDate ? `<button class="view-reg-btn" onclick="viewRegistrations('${pgEsc(rid)}')">🔒 المسجلين (${regs.length})</button>` : ''}
+          </div>
+        </div>
+      </div>
+      <div class="item-actions-left">
+        <button class="edit-btn" title="تعديل" onclick="pgOpenSessionModal('${bk}', '${sid}', '${xid}')">✏️</button>
+        <button class="del-btn" title="حذف" onclick="pgDeleteSession('${bk}', '${sid}', '${xid}')">🗑️</button>
+        <button class="edit-btn mh-move" title="تحريك للأعلى" ${idx === 0 ? 'disabled' : ''} onclick="pgMoveSession('${bk}', '${sid}', '${xid}', -1)">▲</button>
+        <button class="edit-btn mh-move" title="تحريك للأسفل" ${idx === total - 1 ? 'disabled' : ''} onclick="pgMoveSession('${bk}', '${sid}', '${xid}', 1)">▼</button>
+      </div>
+    </div>`;
+}
+
+function pgSeriesHtml(bk, series, sIdx, sTotal){
+  const sessions = pgVisibleSessions(series);
+  const open = pgState.boxes[bk].openSeries.has(series.id);
+  const sid = pgEsc(series.id);
+  const body = sessions.length
+    ? sessions.map((s, i) => pgSessionHtml(bk, series, s, i, sessions.length)).join('')
+    : `<div class="empty">${pgEsc(pgUnit(bk))}s will be announced soon</div>`;
+  return `
+    <div class="card mh-series ${open ? 'open' : ''}" id="pgSeries_${bk}_${sid}">
+      <div class="card-head mh-series-head">
+        <button type="button" class="mh-series-toggle" aria-expanded="${open}" onclick="pgToggleSeries('${bk}', '${sid}')">
+          <span class="mh-series-main">
+            <span class="mh-series-title" dir="auto" style="text-align:start;">📚 ${pgEsc(series.title)}</span>
+            ${series.titleAr ? `<span class="mh-series-ar">${pgEsc(series.titleAr)}</span>` : ''}
+          </span>
+          <span class="mh-chev">▾</span>
+        </button>
+        <span class="mh-series-actions">
+          <button class="edit-btn" title="تعديل السلسلة" onclick="pgOpenSeriesModal('${bk}', '${sid}')">✏️</button>
+          <button class="del-btn" title="حذف السلسلة" onclick="pgDeleteSeries('${bk}', '${sid}')">🗑️</button>
+          <button class="edit-btn mh-move" title="تحريك للأعلى" ${sIdx === 0 ? 'disabled' : ''} onclick="pgMoveSeries('${bk}', '${sid}', -1)">▲</button>
+          <button class="edit-btn mh-move" title="تحريك للأسفل" ${sIdx === sTotal - 1 ? 'disabled' : ''} onclick="pgMoveSeries('${bk}', '${sid}', 1)">▼</button>
+        </span>
+      </div>
+      <div class="mh-series-body">
+        ${series.intro ? `<div class="mh-series-intro" dir="auto">${pgEsc(series.intro)}</div>` : ''}
+        <div class="list">${body}</div>
+        <div class="add-row">
+          <button class="add-btn" onclick="pgOpenSessionModal('${bk}', '${sid}', null)">+ إضافة جلسة لهذه السلسلة</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function pgBodyHtml(bk, cfg, series){
+  // ----- نمط القائمة المباشرة (برنامج PEP): نظرة عامة ← وحدات ← اختبار -----
+  if(cfg.flat){
+    const ser = series[0];
+    const sessions = ser ? pgVisibleSessions(ser) : [];
+    const items = sessions.length
+      ? sessions.map((s, i) => pgSessionHtml(bk, ser, s, i, sessions.length)).join('')
+      : `<div class="empty">${pgEsc(pgUnit(bk))}s will be announced soon</div>`;
+    const overview = (cfg.overview || []).length ? `
+      <div class="pg-section">
+        <div class="pg-section-head" dir="ltr">${pgEsc(cfg.overviewTitle || 'Overview')}</div>
+        <div class="pg-overview" dir="ltr">${cfg.overview.map(p => `<p>${pgEsc(p)}</p>`).join('')}</div>
+      </div>` : '';
+    const exam = (cfg.exam || []).length ? `
+      <div class="pg-section">
+        <div class="pg-section-head" dir="ltr">${pgEsc(cfg.examTitle || 'Assessment')}</div>
+        <div class="pg-exam" dir="ltr">
+          ${cfg.exam.map(e => `<div class="pg-exam-tile"><span class="pg-exam-label">${pgEsc(e.label)}</span><span class="pg-exam-value">${pgEsc(e.value)}</span></div>`).join('')}
+        </div>
+      </div>` : '';
+    return `
+      ${overview}
+      <div class="pg-section">
+        <div class="pg-section-head" dir="ltr">${pgEsc(cfg.curriculumTitle || 'Curriculum')}</div>
+        <div class="list">${items}</div>
+        <div class="add-row">
+          <button class="add-btn" onclick="pgOpenSessionModal('${bk}', '${pgEsc(ser ? ser.id : '')}', null)">+ إضافة ${pgEsc(pgUnitAr(bk))} (${pgEsc(pgUnit(bk))}) جديدة</button>
+        </div>
+      </div>
+      ${exam}`;
+  }
+  // ----- نمط المسار والسلاسل (Men's Health) -----
+  return `
+    <div class="mh-track" dir="ltr">
+      <div class="mh-track-icon">🩺</div>
+      <h3 class="mh-track-title">${pgEsc(cfg.trackEn || '')}</h3>
+    </div>
+    ${series.length ? series.map((x, i) => pgSeriesHtml(bk, x, i, series.length)).join('') : '<div class="empty">Activities will be announced soon</div>'}
+    <div class="add-row" style="padding:16px 0 0;">
+      <button class="add-btn" onclick="pgOpenSeriesModal('${bk}', null)">+ إضافة سلسلة جديدة</button>
+    </div>`;
+}
+
+function renderProgramBoxes(){
+  Object.keys(PG_BOXES).forEach(bk => {
+    const root = document.getElementById('pgRoot_' + bk);
+    if(!root) return;
+    const cfg = PG_BOXES[bk].cfg;
+    if(!cfg || cfg.show === false){ root.innerHTML = ''; return; }
+
+    const series = pgSeriesAll(bk).filter(x => x && x.hidden !== true);
+    const open = pgState.boxes[bk].boxOpen;
+    const showHide = cfg.ctaHide || 'إخفاء الأنشطة / Hide Activities';
+    const showShow = cfg.ctaShow || 'عرض الأنشطة / View Activities';
+    const logo = (cfg.logo && PG_LOGOS[cfg.logo]) ? PG_LOGOS[cfg.logo] : '';
+
+    const badges = [];
+    if(cfg.trackEn) badges.push(`<span class="mh-badge">${pgEsc(cfg.trackEn)}</span>`);
+    (cfg.badges || []).forEach(b => badges.push(`<span class="mh-badge alt">${pgEsc(b)}</span>`));
+    if(!cfg.flat && series.length) badges.push(`<span class="mh-badge amber">${series.length} Series</span>`);
+
+    root.innerHTML = `
+      <div class="main-box mh-box ${cfg.theme === 'violet' ? 'pg-theme-violet' : ''} ${open ? 'open' : ''}" id="pgBox_${bk}">
+        <button type="button" class="mh-hero" aria-expanded="${open}" onclick="pgToggleBox('${bk}')">
+          ${logo ? `<span class="mh-logo-wrap">${logo}</span>` : ''}
+          <span class="mh-eyebrow">
+            ${cfg.eyebrowAr ? `<span>${pgEsc(cfg.eyebrowAr)}</span>` : ''}
+            ${cfg.eyebrowAr && cfg.eyebrowEn ? '<span class="mh-sep">|</span>' : ''}
+            ${cfg.eyebrowEn ? `<span class="en" dir="ltr">${pgEsc(cfg.eyebrowEn)}</span>` : ''}
+          </span>
+          <span class="mh-title" dir="ltr">${pgEsc(cfg.title)}</span>
+          ${cfg.tagline ? `<span class="mh-tagline" dir="ltr">${pgEsc(cfg.tagline)}</span>` : ''}
+          ${cfg.subtitle ? `<span class="mh-sub" dir="ltr">${pgEsc(cfg.subtitle)}</span>` : ''}
+          <span class="mh-badges">${badges.join('')}</span>
+          <span class="mh-cta"><span class="mh-cta-text">${pgEsc(open ? showHide : showShow)}</span><span class="mh-chev">▾</span></span>
+        </button>
+        <div class="mh-body">
+          ${pgBodyHtml(bk, cfg, series)}
+          <div style="text-align:center; margin-top:12px;">
+            <button type="button" class="mh-reset-btn" onclick="pgResetToFile('${bk}')">↺ استعادة البيانات الأولية من الملف (للمسؤول 🔒)</button>
+          </div>
+        </div>
+      </div>`;
+  });
+}
+
+function pgToggleBox(bk){
+  const box = document.getElementById('pgBox_' + bk);
+  if(!box) return;
+  const cfg = PG_BOXES[bk].cfg;
+  const st = pgState.boxes[bk];
+  st.boxOpen = !box.classList.contains('open');
+  box.classList.toggle('open', st.boxOpen);
+  const hero = box.querySelector('.mh-hero');
+  if(hero) hero.setAttribute('aria-expanded', String(st.boxOpen));
+  const t = box.querySelector('.mh-cta-text');
+  if(t) t.textContent = st.boxOpen ? (cfg.ctaHide || 'إخفاء الأنشطة / Hide Activities') : (cfg.ctaShow || 'عرض الأنشطة / View Activities');
+}
+
+function pgToggleSeries(bk, id){
+  const el = document.getElementById('pgSeries_' + bk + '_' + id);
+  if(!el) return;
+  const st = pgState.boxes[bk];
+  const nowOpen = !el.classList.contains('open');
+  el.classList.toggle('open', nowOpen);
+  if(nowOpen) st.openSeries.add(id); else st.openSeries.delete(id);
+  const btn = el.querySelector('.mh-series-toggle');
+  if(btn) btn.setAttribute('aria-expanded', String(nowOpen));
+}
+
+/* ---------------- التعديل من الموقع ---------------- */
+let pgEdit = { bk: null, seriesId: null, sessionId: null };
+
+function pgInsertFormat(startTag, endTag){
+  const ta = document.getElementById('mh-f-desc');
+  const start = ta.selectionStart, end = ta.selectionEnd;
+  const sel = ta.value.substring(start, end) || 'Text';
+  ta.value = ta.value.substring(0, start) + startTag + sel + endTag + ta.value.substring(end);
+  ta.focus();
+  ta.setSelectionRange(start + startTag.length, start + startTag.length + sel.length);
+}
+
+/* ---- الجلسات / الوحدات ---- */
+async function pgOpenSessionModal(bk, seriesId, sessionId){
+  if(!(await pgAdmin(sessionId ? 'أدخل رمز المسؤول للتعديل:' : 'أدخل رمز المسؤول للنشر:'))) return;
+  let s = {};
+  if(sessionId){
+    const ser = pgSeriesAll(bk).find(x => x.id === seriesId);
+    s = ser ? (ser.sessions || []).find(x => x.id === sessionId) : null;
+    if(!s){ showToast('تعذر العثور على العنصر'); return; }
+  }
+  pgEdit = { bk, seriesId, sessionId: sessionId || null };
+  const unitAr = pgUnitAr(bk);
+  document.getElementById('mhSessionModalTitle').textContent = sessionId ? 'تعديل ' + unitAr : 'إضافة ' + unitAr;
+  document.getElementById('mh-lbl-title').textContent = 'عنوان ' + unitAr + ' *';
+  document.getElementById('mh-lbl-desc').textContent = 'وصف وتفاصيل ' + unitAr;
+  document.getElementById('mh-f-title').value = s.title || '';
+  document.getElementById('mh-f-desc').value = s.desc || '';
+  document.getElementById('mh-f-speaker').value = s.speaker || '';
+  document.getElementById('mh-f-date').value = s.date || '';
+  document.getElementById('mh-f-time').value = s.time || '';
+  document.getElementById('mh-f-location').value = s.location || '';
+  document.getElementById('mh-f-units').value = s.units || '';
+  document.getElementById('mhSaveSessionBtn').textContent = sessionId ? 'حفظ التعديلات' : 'حفظ ونشر';
+  document.getElementById('mhSessionModal').classList.add('open');
+}
+
+function pgSaveSession(){
+  const title = document.getElementById('mh-f-title').value.trim();
+  if(!title){ showToast('يرجى إدخال العنوان'); return; }
+  const data = {
+    title,
+    desc: document.getElementById('mh-f-desc').value.trim(),
+    speaker: document.getElementById('mh-f-speaker').value.trim(),
+    date: document.getElementById('mh-f-date').value,
+    time: document.getElementById('mh-f-time').value,
+    location: document.getElementById('mh-f-location').value.trim(),
+    units: document.getElementById('mh-f-units').value.trim()
+  };
+  const bk = pgEdit.bk;
+  const list = pgEnsureEditable(bk);
+  const ser = list.find(x => x.id === pgEdit.seriesId);
+  if(!ser){ showToast('تعذر العثور على السلسلة'); return; }
+  if(!ser.sessions) ser.sessions = [];
+  const wasEdit = !!pgEdit.sessionId;
+  if(wasEdit){
+    const idx = ser.sessions.findIndex(x => x.id === pgEdit.sessionId);
+    if(idx === -1){ showToast('تعذر العثور على العنصر'); return; }
+    ser.sessions[idx] = { ...ser.sessions[idx], ...data };
+  } else {
+    ser.sessions.push({ id: pgNewId('s'), ...data });
+    pgState.boxes[bk].openSeries.add(ser.id);
+  }
+  saveData();
+  closeModal('mhSessionModal');
+  showToast(wasEdit ? 'تم حفظ التعديلات بنجاح' : 'تم النشر بنجاح');
+  pgEdit = { bk: null, seriesId: null, sessionId: null };
+}
+
+async function pgDeleteSession(bk, seriesId, sessionId){
+  if(!(await pgAdmin('أدخل رمز المسؤول للحذف:'))) return;
+  const cur = pgSeriesAll(bk).find(x => x.id === seriesId);
+  const target = cur ? (cur.sessions || []).find(x => x.id === sessionId) : null;
+  if(!target){ showToast('تعذر العثور على العنصر'); return; }
+  if(!confirm('حذف ' + pgUnitAr(bk) + ' "' + target.title + '"؟\nسيتم أيضاً حذف قائمة المسجلين فيها.')) return;
+  const ser = pgEnsureEditable(bk).find(x => x.id === seriesId);
+  ser.sessions = (ser.sessions || []).filter(x => x.id !== sessionId);
+  if(appData.registrations) delete appData.registrations[PG_BOXES[bk].regPrefix + sessionId];
+  saveData();
+  showToast('تم الحذف');
+}
+
+async function pgMoveSession(bk, seriesId, sessionId, dir){
+  if(!(await pgAdmin('أدخل رمز المسؤول:'))) return;
+  const ser = pgEnsureEditable(bk).find(x => x.id === seriesId);
+  if(!ser) return;
+  const arr = ser.sessions || [];
+  const visible = arr.filter(s => s && s.hidden !== true);   // الترتيب ضمن الظاهر فقط
+  const vi = visible.findIndex(s => s.id === sessionId);
+  const vj = vi + dir;
+  if(vi < 0 || vj < 0 || vj >= visible.length) return;
+  const i = arr.indexOf(visible[vi]), j = arr.indexOf(visible[vj]);
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+  saveData();
+}
+
+/* ---- السلاسل (Men's Health) ---- */
+async function pgOpenSeriesModal(bk, seriesId){
+  if(!(await pgAdmin(seriesId ? 'أدخل رمز المسؤول للتعديل:' : 'أدخل رمز المسؤول للنشر:'))) return;
+  let s = {};
+  if(seriesId){
+    s = pgSeriesAll(bk).find(x => x.id === seriesId);
+    if(!s){ showToast('تعذر العثور على السلسلة'); return; }
+  }
+  pgEdit = { bk, seriesId: seriesId || null, sessionId: null };
+  document.getElementById('mhSeriesModalTitle').textContent = seriesId ? 'تعديل السلسلة' : 'إضافة سلسلة';
+  document.getElementById('mh-s-title').value = s.title || '';
+  document.getElementById('mh-s-titleAr').value = s.titleAr || '';
+  document.getElementById('mh-s-intro').value = s.intro || '';
+  document.getElementById('mhSaveSeriesBtn').textContent = seriesId ? 'حفظ التعديلات' : 'حفظ ونشر السلسلة';
+  document.getElementById('mhSeriesModal').classList.add('open');
+}
+
+function pgSaveSeries(){
+  const title = document.getElementById('mh-s-title').value.trim();
+  if(!title){ showToast('يرجى إدخال عنوان السلسلة'); return; }
+  const titleAr = document.getElementById('mh-s-titleAr').value.trim();
+  const intro = document.getElementById('mh-s-intro').value.trim();
+  const bk = pgEdit.bk;
+  const list = pgEnsureEditable(bk);
+  const wasEdit = !!pgEdit.seriesId;
+  if(wasEdit){
+    const ser = list.find(x => x.id === pgEdit.seriesId);
+    if(!ser){ showToast('تعذر العثور على السلسلة'); return; }
+    ser.title = title; ser.titleAr = titleAr; ser.intro = intro;
+  } else {
+    const id = pgNewId('ser');
+    list.push({ id, title, titleAr, intro, hidden: false, sessions: [] });
+    pgState.boxes[bk].openSeries.add(id);
+    pgState.boxes[bk].boxOpen = true;
+  }
+  saveData();
+  closeModal('mhSeriesModal');
+  showToast(wasEdit ? 'تم حفظ التعديلات بنجاح' : 'تم نشر السلسلة بنجاح');
+  pgEdit = { bk: null, seriesId: null, sessionId: null };
+}
+
+async function pgDeleteSeries(bk, seriesId){
+  if(!(await pgAdmin('أدخل رمز المسؤول للحذف:'))) return;
+  const cur = pgSeriesAll(bk).find(x => x.id === seriesId);
+  if(!cur){ showToast('تعذر العثور على السلسلة'); return; }
+  const n = (cur.sessions || []).length;
+  if(!confirm('حذف السلسلة "' + cur.title + '" مع كل جلساتها (' + n + ') وقوائم المسجلين فيها؟\nهذا الإجراء لا يمكن التراجع عنه.')) return;
+  const list = pgEnsureEditable(bk);
+  const ser = list.find(x => x.id === seriesId);
+  (ser.sessions || []).forEach(s => { if(appData.registrations) delete appData.registrations[PG_BOXES[bk].regPrefix + s.id]; });
+  appData[PG_BOXES[bk].dataKey].series = list.filter(x => x.id !== seriesId);
+  pgState.boxes[bk].openSeries.delete(seriesId);
+  saveData();
+  showToast('تم الحذف');
+}
+
+async function pgMoveSeries(bk, seriesId, dir){
+  if(!(await pgAdmin('أدخل رمز المسؤول:'))) return;
+  const arr = pgEnsureEditable(bk);
+  const visible = arr.filter(s => s && s.hidden !== true);
+  const vi = visible.findIndex(s => s.id === seriesId);
+  const vj = vi + dir;
+  if(vi < 0 || vj < 0 || vj >= visible.length) return;
+  const i = arr.indexOf(visible[vi]), j = arr.indexOf(visible[vj]);
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+  saveData();
+}
+
+/* ---- الرجوع للبيانات الأولية الموجودة بالملف ---- */
+async function pgResetToFile(bk){
+  if(!(await pgAdmin('أدخل رمز المسؤول:'))) return;
+  const k = PG_BOXES[bk].dataKey;
+  if(!appData[k]){ showToast('البيانات الحالية هي نفسها الأولية بالملف'); return; }
+  if(!confirm('سيتم حذف كل التعديلات المحفوظة من الموقع على هذا البوكس والرجوع للبيانات الأولية الموجودة بالملف.\nقوائم المسجلين تبقى محفوظة.\nهل أنت متأكدة؟')) return;
+  delete appData[k];
+  saveData();
+  showToast('تمت استعادة البيانات الأولية');
+}
+
 
 loadData();
 </script>
